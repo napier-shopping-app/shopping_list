@@ -7,7 +7,7 @@ var platform = require("platform");
 var app_routing_module_1 = require("./app-routing.module");
 var app_component_1 = require("./app.component");
 if (platform.isIOS) {
-    GMSServices.provideAPIKey("AIzaSyCd7i6undwT0TthNkDdqOsb5418DgaOpMk");
+    GMSServices.provideAPIKey("API KEY");
 }
 var AppModule = /** @class */ (function () {
     function AppModule() {
