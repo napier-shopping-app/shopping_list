@@ -1,3 +1,3 @@
 # Smart Shopping App
 
-source/app - contains all the main ui and logic
+src/app - contains all the main ui and logic
