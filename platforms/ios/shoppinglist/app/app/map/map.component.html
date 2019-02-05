@@ -15,7 +15,12 @@
     <Label class="action-bar-title" text="Map"></Label>
 </ActionBar>
 
+    <!--
+    Main view area of the page.
+    -->
+
 <GridLayout class="page page-content">
-    <Label class="page-icon fa" text="&#xf3c5;"></Label>
-    
+    <MapView [latitiude]="latitude" [longitude]="longitude" [zoom]="zoom" [minZoom]="minZoom" 
+        [maxZoom]="maxZoom" [bearing]="bearing" [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding"
+        (mapReady)="onMapReady($event)" (cameraMove)="onCameraMove($event)"></MapView>
 </GridLayout>

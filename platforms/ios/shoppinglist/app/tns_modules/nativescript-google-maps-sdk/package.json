@@ -1,0 +1,103 @@
+{
+  "_from": "nativescript-google-maps-sdk",
+  "_id": "nativescript-google-maps-sdk@2.7.0",
+  "_inBundle": false,
+  "_integrity": "sha512-B4T1jb0U9yQfK29M97juvcQ6GR6JwNy3BLrPytGDOt7CqEhFHrta970PfNJ5b2RDvwr6xEE+Mvpdprnn5hP9qQ==",
+  "_location": "/nativescript-google-maps-sdk",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "nativescript-google-maps-sdk",
+    "name": "nativescript-google-maps-sdk",
+    "escapedName": "nativescript-google-maps-sdk",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/nativescript-google-maps-sdk/-/nativescript-google-maps-sdk-2.7.0.tgz",
+  "_shasum": "2fd7118b7346fd019fa468032cb768bac2d12ee9",
+  "_spec": "nativescript-google-maps-sdk",
+  "_where": "/Users/rebeca/Callum_uni/shopping_list",
+  "author": {
+    "name": "Dan Prietti",
+    "email": "dprietti@gmail.com",
+    "url": "https://github.com/dapriett"
+  },
+  "bugs": {
+    "url": "https://github.com/dapriett/nativescript-google-maps-sdk/issues"
+  },
+  "bundleDependencies": false,
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "validate-commit-msg": {
+      "helpMessage": "\nPlease fix your commit message to match format.  For help, execute 'npm run cm'\n",
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "chore",
+        "revert",
+        "custom"
+      ],
+      "warnOnFail": false,
+      "autoFix": false
+    }
+  },
+  "deprecated": false,
+  "description": "Google Maps SDK plugin for Nativescript",
+  "devDependencies": {
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
+    "husky": "^0.14.2",
+    "semver": "^5.5.0",
+    "tns-core-modules": "^4.0.0",
+    "tns-platform-declarations": "^4.0.0",
+    "typescript": "^2.3.2",
+    "validate-commit-msg": "^2.12.2"
+  },
+  "homepage": "https://github.com/dapriett/nativescript-google-maps-sdk#readme",
+  "keywords": [
+    "Nativescript",
+    "Google",
+    "Maps",
+    "API",
+    "SDK"
+  ],
+  "license": "MIT",
+  "main": "map-view",
+  "name": "nativescript-google-maps-sdk",
+  "nativescript": {
+    "platforms": {
+      "android": "4.0.0",
+      "ios": "4.0.0"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dapriett/nativescript-google-maps-sdk.git"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -f *.js",
+    "cm": "git-cz",
+    "commitmsg": "validate-commit-msg",
+    "compile": "tsc",
+    "github-release": "conventional-github-releaser -p angular -n ./.github-release.json",
+    "plugin.link": "npm link && cd ../demo && npm link nativescript-google-maps-sdk && cd ../src",
+    "prepare": "node ./scripts/prepare.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "typings": "map-view.d.ts",
+  "version": "2.7.0"
+}

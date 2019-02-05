@@ -9,6 +9,7 @@
     "@angular/platform-browser-dynamic": true,
     "@angular/router": true,
     "nativescript-angular": true,
+    "nativescript-google-maps-sdk": true,
     "nativescript-theme-core": true,
     "nativescript-ui-sidedrawer": true,
     "reflect-metadata": true,

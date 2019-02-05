@@ -1,0 +1,9 @@
+use_frameworks!
+
+target "shoppinglist" do
+# Begin Podfile - /Users/rebeca/Callum_uni/shopping_list/node_modules/nativescript-google-maps-sdk/platforms/ios/Podfile
+source 'https://github.com/CocoaPods/Specs.git'
+
+pod 'GoogleMaps'
+# End Podfile
+end
