@@ -1,36 +1,27 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { registerElement } from 'nativescript-angular/element-registry';
-import * as map from 'nativescript-google-maps-sdk';
 import * as app from "tns-core-modules/application";
+import { MapboxViewApi, MapboxView } from "nativescript-mapbox";
+import { error } from "tns-core-modules/trace/trace";
 
-registerElement('MapView', () => map.MapView);
-
-var style = require('./style.json');
-
+registerElement("Mapbox", () => MapboxView);
 
 @Component({
     selector: "Map",
     moduleId: module.id,
     templateUrl: "./map.component.html",
-    styleUrls: ['/map.css'],
 })
+
 export class MapComponent implements OnInit {
 
-    latitude = 56.06;       // temp lat and lng values to be overwritten with location data
-    longitude = -3.424;     //
-    zoom = 5; //initial zoom value
-    minZoom = 0;
-    maxZoom = 22;
-    bearing = 0;
-    tilt = 0;
-    padding = [40,40,40,40];
-    mapView: map.MapView;
-
-    lastCamera: String;
+    private map: MapboxViewApi;
+    latitude: number = 37.33233141;
+    longitude: number = -122.0312186;
 
     constructor() {
         // Use the component constructor to inject providers.
+
     }
 
     ngOnInit(): void {
@@ -43,25 +34,22 @@ export class MapComponent implements OnInit {
     }
 
     //on map load add marker on the location
-    onMapReady(event){
+    onMapReady(args): void{
 
-        
-        this.mapView = event.object;
+        this.map = args.map;
+        console.log("Map Ready");
 
-        this.mapView.setStyle(style);
-        this.mapView.settings.myLocationButtonEnabled = true;
-        this.mapView.settings.zoomGesturesEnabled = true;
-        this.mapView.myLocationEnabled = true;
-
-        var userMarker = new map.Marker();
-        userMarker.position = map.Position.positionFromLatLng(this.latitude, this.longitude);
-        userMarker.userData = {index: 1};
-        this.mapView.addMarker(userMarker);
-
-        
+        this.map.getUserLocation().then(
+            function(userLocation){
+                console.log(userLocation.location.lat + ", " + userLocation.location.lng);
+            }
+        ), function(error) {
+            console.error(error);
+        }
     }
 
+    /*
     onCameraMove(args) {
         console.log("Camera moving: " + JSON.stringify(args.camera));
-    }
+    }*/
 }

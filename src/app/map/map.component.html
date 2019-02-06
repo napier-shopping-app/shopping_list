@@ -20,7 +20,22 @@
     -->
 
 <GridLayout class="page page-content">
-    <MapView [latitiude]="latitude" [longitude]="longitude" [zoom]="zoom" [minZoom]="minZoom" 
-        [maxZoom]="maxZoom" [bearing]="bearing" [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding"
-        (mapReady)="onMapReady($event)" (cameraMove)="onCameraMove($event)"></MapView>
+    <ContentView width="100%" height="100%" [class.map-marker]="isIOS">
+        <MapBox
+            showUserLocation="true"
+            [latitude]="latitude"
+            [longitude]="longitude"
+            zoomLevel="6"
+            delay="250"
+            hideCompass="false"
+            disableZoom="false"
+            disableRotation="false"
+            disableScroll="false"
+            disableTilt="false"
+            mapStyle="streets"
+            (mapReady)="onMapReady($event)"
+            accessToken="pk.eyJ1IjoiY3dpbHNvbjkwIiwiYSI6ImNqcnRlOWIxajBoYTE0YXRjNjJvMTdwcHkifQ.Bdf25GbLbokpGuIzjnp85Q"
+        >
+        </MapBox>
+    </ContentView>
 </GridLayout>
