@@ -1,6 +1,7 @@
 # Compiled source #
 ###################
 platforms/
+.cloud/
 *.com
 *.class
 *.dll
