@@ -6,6 +6,7 @@ A location based shopping app
 1. Updated the master branch from local repo due to failures in loading to devices
 2. Fixed issues with maps on Android
 3. Removed node_modules (FYI these will need to be installed locally though sidekick should prompt)
+4. Added FAB (floating action button) and add shopping list with basic functionality
 
 # Map
 
