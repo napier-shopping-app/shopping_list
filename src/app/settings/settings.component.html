@@ -15,6 +15,26 @@
     <Label class="action-bar-title" text="Settings"></Label>
 </ActionBar>
 
-<GridLayout class="page page-content">
-    
+<GridLayout rows="auto *" columns="*" sdkToggleNavButton>
+    <GridLayout row="0" col="0" rows="* *" backgroundColor="#adadad">
+        <StackLayout row="0" backgroundColor="#adadad">
+        </StackLayout>
+        <StackLayout row="0" rowSpan="2" class="p-t-15">
+            <StackLayout class="m-20 p-l-15 p-r-15">
+                <Image src="res://icon" height="80" width="80" class="img-circle" borderWidth="1" borderColor="white"></Image>
+                <Label [text]="username" class="h2 text-center" textWrap="true"></Label>
+                <Label [text]="memberType" class="h4 text-center" textWrap="true"></Label>
+            </StackLayout>
+        </StackLayout>
+    </GridLayout>
+    <GridLayout row="1" col="0">
+        <ListView class="list-group" [items]="settings" (itemTap)="onItemTap($event)">
+            <ng-template let-settings="item">
+                <StackLayout class="list-group-item">
+                    <Label [text]="settings.labels"></Label>
+                    <Label [text]="settings.values"></Label>
+                </StackLayout>
+            </ng-template>
+        </ListView>
+    </GridLayout>
 </GridLayout>
