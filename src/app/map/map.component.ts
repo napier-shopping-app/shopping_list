@@ -18,8 +18,8 @@ registerElement("Mapbox", () => MapboxView);
 export class MapComponent implements OnInit {
 
     private map: MapboxViewApi;
-    public latitude: number = 56.060442;
-    public longitude: number = -3.424992;
+    public latitude: number = 55.953251; // Edinburgh Lat/Long
+    public longitude: number = -3.188267;
 
     constructor(private page: Page) {
         // Use the component constructor to inject providers.
