@@ -12,10 +12,16 @@
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
-    <Label class="action-bar-title" text="Search"></Label>
+    <Label class="action-bar-title" text="List"></Label>
 </ActionBar>
 
-<GridLayout class="page page-content">
-    <Label class="page-icon fa" text="&#xf002;"></Label>
-    <Label class="page-placeholder" text="<!-- Page content goes here -->"></Label>
+<GridLayout class="page page-content" row="1" col="0">
+    <ListView class="list-group" [items]="list" (longPress)="onLongPress($event)">
+        <ng-template let-list="item">
+            <StackLayout class="list-group-item">
+                <Label [text]="list.categories"></Label>
+                <Label [text]="list.values"></Label>
+            </StackLayout>
+        </ng-template>
+    </ListView>
 </GridLayout>

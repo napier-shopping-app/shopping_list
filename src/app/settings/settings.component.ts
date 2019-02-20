@@ -3,7 +3,7 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { Switch } from "tns-core-modules/ui/switch";
 import { Page, Observable } from "tns-core-modules/ui/page";
-import { ObservableArray, ChangedData } from "tns-core-modules/data/observable-array";
+
 
 let labels = ["Account", "Membership Type", "Shared with:"];
 let values = ["email@test.com", "Premium", "N/A"];
@@ -55,9 +55,10 @@ export class SettingsComponent implements OnInit {
         sideDrawer.showDrawer();
     }
 
-    onItemTap(event) {
+    onItemTap(args) {
 
-
+        const settingIndex = args.index;
+        console.log(settingIndex);
     }
 }
 

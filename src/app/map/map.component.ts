@@ -2,11 +2,12 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { registerElement } from 'nativescript-angular/element-registry';
 import * as app from "tns-core-modules/application";
-import { MapboxViewApi, MapboxView } from "nativescript-mapbox";
+import { MapboxViewApi, MapboxView, latitudeProperty, longitudeProperty } from "nativescript-mapbox";
 import { error } from "tns-core-modules/trace/trace";
 import { Page } from "tns-core-modules/ui/page";
 
 registerElement("Mapbox", () => MapboxView);
+
 
 @Component({
     selector: "Map",
@@ -17,8 +18,8 @@ registerElement("Mapbox", () => MapboxView);
 export class MapComponent implements OnInit {
 
     private map: MapboxViewApi;
-    latitude: number = 55.933205;
-    longitude: number = -3.213681;
+    public latitude: number = 56.060442;
+    public longitude: number = -3.424992;
 
     constructor(private page: Page) {
         // Use the component constructor to inject providers.
@@ -30,8 +31,9 @@ export class MapComponent implements OnInit {
 
         this.page.on('navigatingFrom', (data) => {
 
-            this.map.destroy();
+            this.map.destroy(); //used for android, stops app from crashing when navigating away from page
         })
+
     }
 
     onDrawerButtonTap(): void {
@@ -45,41 +47,17 @@ export class MapComponent implements OnInit {
         this.map = args.map;
         console.log("Map Ready");
 
-        this.map.getUserLocation().then(
-            function(userLocation){
-                console.log(userLocation.location.lat + ", " + userLocation.location.lng);
-                this.latitude = userLocation.location.lat;
-                this.longitude = userLocation.location.lng;
-            }
-        ), function(error) {
-            console.error(error);
-        }
-
         this.map.trackUser({
             mode: "FOLLOW",
-            animated: true
-        });
-
-        this.map.setCenter({
-
-            lat: this.latitude,
-            lng: this.longitude,
-            animated: true,
-
+            animated:true
         })
 
         this.map.setZoomLevel(
             {
               level: 15, // mandatory, 0-20
-              animated: true // default true
+              animated: false // default true
             }
         )
     }
 
-    
-
-    /*
-    onCameraMove(args) {
-        console.log("Camera moving: " + JSON.stringify(args.camera));
-    }*/
 }
