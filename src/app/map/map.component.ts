@@ -4,6 +4,7 @@ import { registerElement } from 'nativescript-angular/element-registry';
 import * as app from "tns-core-modules/application";
 import { MapboxViewApi, MapboxView } from "nativescript-mapbox";
 import { error } from "tns-core-modules/trace/trace";
+import { Page } from "tns-core-modules/ui/page";
 
 registerElement("Mapbox", () => MapboxView);
 
@@ -19,13 +20,18 @@ export class MapComponent implements OnInit {
     latitude: number = 55.933205;
     longitude: number = -3.213681;
 
-    constructor() {
+    constructor(private page: Page) {
         // Use the component constructor to inject providers.
 
     }
 
     ngOnInit(): void {
         // Init your component properties here.
+
+        this.page.on('navigatingFrom', (data) => {
+
+            this.map.destroy();
+        })
     }
 
     onDrawerButtonTap(): void {
@@ -52,6 +58,8 @@ export class MapComponent implements OnInit {
             animated: true
         });
     }
+
+    
 
     /*
     onCameraMove(args) {

@@ -5,7 +5,7 @@ import { Switch } from "tns-core-modules/ui/switch";
 import { Page, Observable } from "tns-core-modules/ui/page";
 import { ObservableArray, ChangedData } from "tns-core-modules/data/observable-array";
 
-let labels = ["Email", "Membership Type", "Shared with:"];
+let labels = ["Account", "Membership Type", "Shared with:"];
 let values = ["email@test.com", "Premium", "N/A"];
 
 @Component({
@@ -39,6 +39,7 @@ export class SettingsComponent implements OnInit {
     ngOnInit(): void {
         // Init your component properties here.
         this.page.on('navigatedTo', (data) => {
+
         })
 
     }
@@ -52,6 +53,11 @@ export class SettingsComponent implements OnInit {
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
+    }
+
+    onItemTap(event) {
+
+
     }
 }
 
