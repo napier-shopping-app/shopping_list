@@ -48,6 +48,8 @@ export class MapComponent implements OnInit {
         this.map.getUserLocation().then(
             function(userLocation){
                 console.log(userLocation.location.lat + ", " + userLocation.location.lng);
+                this.latitude = userLocation.location.lat;
+                this.longitude = userLocation.location.lng;
             }
         ), function(error) {
             console.error(error);
@@ -57,6 +59,21 @@ export class MapComponent implements OnInit {
             mode: "FOLLOW",
             animated: true
         });
+
+        this.map.setCenter({
+
+            lat: this.latitude,
+            lng: this.longitude,
+            animated: true,
+
+        })
+
+        this.map.setZoomLevel(
+            {
+              level: 15, // mandatory, 0-20
+              animated: true // default true
+            }
+        )
     }
 
     
