@@ -26,7 +26,7 @@
     "@angular/router": "~7.1.0",
     "nativescript-angular": "~7.1.0",
     "nativescript-floatingactionbutton": "5.0.0",
-    "nativescript-mapbox": "4.4.1",
+    "nativescript-mapbox": "4.3.1",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-ui-sidedrawer": "~5.1.0",
     "reflect-metadata": "~0.1.12",
