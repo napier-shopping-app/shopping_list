@@ -5,7 +5,9 @@ import * as view from "ui/core/view";
 import { ObservableArray, ChangedData } from "tns-core-modules/data/observable-array";
 import { Validators } from "@angular/forms";
 import { Page } from "tns-core-modules/ui/page";
-
+import { Data } from "../providers/data/data";
+import {Router, NavigationExtras} from "@angular/router";
+import { RouterExtensions } from "nativescript-angular/router";
 
 @Component({
     selector: "AddList",
@@ -14,8 +16,8 @@ import { Page } from "tns-core-modules/ui/page";
 })
 
 export class AddListComponent implements OnInit {
-
-    constructor() {
+    private _activatedUrl: string;
+    constructor(private router: Router,private data: Data,private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
     }
 
@@ -37,13 +39,20 @@ export class AddListComponent implements OnInit {
         this.listColor = button.id; 
     }
 
-    save() {
+    save(): void {
        
        alert("The list: " + this.title + " with color: " + this.listColor + " has been created!");
        const tempList = [this.title, this.listColor];
        this.list = new ObservableArray(tempList);
-     
+       this.data.storage = {
+        "title": this.title,
+        "listColor": this.listColor,
+        
     }
     
+    
+    
+}
+
 }
 

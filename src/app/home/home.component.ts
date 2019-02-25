@@ -7,6 +7,8 @@ import { registerElement } from 'nativescript-angular/element-registry';
 import { NavigationEnd, Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 
+import { Data } from "../providers/data/data";
+
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 
 @Component({
@@ -17,9 +19,23 @@ registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 
 export class HomeComponent implements OnInit {
     private _activatedUrl: string;
+    public title = "";
+    public listColor = "";
+    
+    
 
-    constructor(private router: Router, private routerExtensions: RouterExtensions) {
+    constructor(private router: Router, private routerExtensions: RouterExtensions,private data: Data) {
         // Use the component constructor to inject services.
+        
+        console.log(JSON.stringify(this.data.storage));
+        if (typeof this.data.storage !== 'undefined'){
+            this.title = this.data.storage.title;
+            this.listColor = this.data.storage.listColor;
+           
+        }
+       
+       
+        
     }
 
 
