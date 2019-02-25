@@ -7,7 +7,7 @@ A location based shopping app
 2. Fixed issues with maps on Android
 3. Removed node_modules (FYI these will need to be installed locally though sidekick should prompt)
 4. Added FAB (floating action button) and add shopping list with basic functionality
-5. Added addList page
+5. Added addList page - passes list between addList and Home via data provider under providers/data/
 
 # Map
 
