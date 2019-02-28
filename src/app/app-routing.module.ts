@@ -6,6 +6,7 @@ const routes: Routes = [
     { path: "", redirectTo: "/home", pathMatch: "full" },
     { path: "home", loadChildren: "~/app/home/home.module#HomeModule" },
     { path: "map", loadChildren: "~/app/map/map.module#MapModule" },
+    { path: "login", loadChildren: "~/app/login/login.module#LoginModule" },
     { path: "list", loadChildren: "~/app/list/list.module#ListModule" },
     { path: "addList", loadChildren: "~/app/addList/addList.module#AddListModule" },
     { path: "featured", loadChildren: "~/app/featured/featured.module#FeaturedModule" },
@@ -17,4 +18,6 @@ const routes: Routes = [
     exports: [NativeScriptRouterModule]
 })
 export class AppRoutingModule { }
+
+
 // { path: "addList", loadChildren: "~/app/addList/addList.module#AddListModule" },

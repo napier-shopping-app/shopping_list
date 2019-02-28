@@ -13,6 +13,8 @@ import * as app from "tns-core-modules/application";
 export class AppComponent implements OnInit {
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;
+    public userName;
+    public emailAdd;
 
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
@@ -25,6 +27,9 @@ export class AppComponent implements OnInit {
         this.router.events
         .pipe(filter((event: any) => event instanceof NavigationEnd))
         .subscribe((event: NavigationEnd) => this._activatedUrl = event.urlAfterRedirects);
+
+        this.userName = "temp user";
+        this.emailAdd = "temp@gmail.com";
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {

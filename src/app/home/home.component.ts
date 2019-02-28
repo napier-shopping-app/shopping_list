@@ -31,11 +31,7 @@ export class HomeComponent implements OnInit {
         if (typeof this.data.storage !== 'undefined'){
             this.title = this.data.storage.title;
             this.listColor = this.data.storage.listColor;
-           
         }
-       
-       
-        
     }
 
 
