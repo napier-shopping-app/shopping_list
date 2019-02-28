@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
     isLoggingIn = true;
     user: User;
     processing = false;
+    userName = "user@napier.org";
+    userPass = "password";
     @ViewChild("password") password: ElementRef;
     @ViewChild("confirmPassword") confirmPassword: ElementRef;
 
@@ -50,40 +52,37 @@ export class LoginComponent implements OnInit {
         }
 
         this.processing = true;
-        /* if (this.isLoggingIn) {
+
+        if (this.isLoggingIn) {
             this.login();
         } else {
             this.register();
-        } */
+        }
     }
 
-/*     login() {
-        this.userService.login(this.user)
-            .then(() => {
-                this.processing = false;
-                this.routerExtensions.navigate(["/home"], { clearHistory: true });
-            })
-            .catch(() => {
-                this.processing = false;
-                this.alert("Unfortunately we could not find your account.");
-            });
+    login() {
+
+        if (this.user.email == this.userName && this.user.password == this.userPass) {
+
+            this.processing = false;
+            this.routerExtensions.navigate(["/home"], { clearHistory: true });
+        }
+        else{
+
+            this.processing = false;
+            this.alert("No account found");
+        };
     }
 
     register() {
         if (this.user.password != this.user.confirmPassword) {
             this.alert("Your passwords do not match.");
+            this.processing = false;
             return;
         }
-        this.userService.register(this.user)
-            .then(() => {
-                this.processing = false;
-                this.alert("Your account was successfully created.");
-                this.isLoggingIn = true;
-            })
-            .catch(() => {
-                this.processing = false;
-                this.alert("Unfortunately we were unable to create your account.");
-            });
+        else{
+
+        }
     }
 
     forgotPassword() {
@@ -94,17 +93,8 @@ export class LoginComponent implements OnInit {
             defaultText: "",
             okButtonText: "Ok",
             cancelButtonText: "Cancel"
-        }).then((data) => {
-            if (data.result) {
-                this.userService.resetPassword(data.text.trim())
-                    .then(() => {
-                        this.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
-                    }).catch(() => {
-                        this.alert("Unfortunately, an error occurred resetting your password.");
-                    });
-            }
         });
-    } */
+    }
 
     focusPassword() {
         this.password.nativeElement.focus();

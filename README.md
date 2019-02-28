@@ -10,6 +10,14 @@ A location based shopping app
 5. Added addList page - passes list between addList and Home via data provider under providers/data/
 6. Added login page - accessed through the menu bar and clicking on the avatar at the top
 
+# Home
+
+Page to display the shops and a list that relates to it
+
 # Map
 
 Just the maps which will show the current location and surrounding shops (user defined area and shops)
+
+# Settings
+
+Displays userinfo and app preferences

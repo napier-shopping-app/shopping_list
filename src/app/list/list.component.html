@@ -19,8 +19,7 @@
     <ListView class="list-group" [items]="list" (longPress)="onLongPress($event)">
         <ng-template let-list="item">
             <StackLayout class="list-group-item">
-                <Label [text]="list.categories"></Label>
-                <Label [text]="list.values"></Label>
+                <Label [text]="list.values" (tap)="selectItem($event)" style="text-decoration: none"></Label>
             </StackLayout>
         </ng-template>
     </ListView>

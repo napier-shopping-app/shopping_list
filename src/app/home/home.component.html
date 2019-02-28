@@ -1,4 +1,3 @@
-
 <ActionBar class="action-bar">
     <!-- 
     Use the NavigationButton as a side-drawer button in Android
@@ -14,29 +13,32 @@
         ios.position="left">
     </ActionItem>
     <Label class="action-bar-title" text="Home"></Label>
-    
+
 </ActionBar>
 
 <StackLayout orientation="vertical">
-       
+
+    <ScrollView orientation="horizontal" verticalAlignment="top">
+        <StackLayout orientation="vertical">
+
+        </StackLayout>
+    </ScrollView>
 
     <GridLayout>
-            
         <ListView class="hr-light" [items]="dataItems" verticalAlignment="bottom" width="100%" height="60%">
-            
             <ng-template tkListItemTemplate let-item="item">
                 <StackLayout orientation="vertical">
                     <Label class="nameLabel" [text]="item.name"></Label>
                     <Label class="image" [text]="item.image"></Label>
-                    
                 </StackLayout>
             </ng-template>
             <ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal"></ListViewLinearLayout>
-           
         </ListView>
-        <FAB [class.selected]="isComponentSelected('/addList')" (tap)="onNavItemTap('/addList')" 
-        style="height: 12%;width: 20%;margin: 10%;background-color: #ff4081;horizontal-align: right;vertical-align: bottom;" 
-        icon="res://icon-plus" rippleColor="#f1f1f1" class="fab-button"></FAB>
+
+        <FAB [class.selected]="isComponentSelected('/addList')" (tap)="onNavItemTap('/addList')"
+            style="height: 10%;width: 20%;margin: 10%;background-color: #ff4081;horizontal-align: right;vertical-align: bottom;"
+            icon="res://icon-plus" rippleColor="#f1f1f1" class="fab-button"></FAB>
+
     </GridLayout>
-    
+
 </StackLayout>
