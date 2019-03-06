@@ -5,8 +5,8 @@ import { Switch } from "tns-core-modules/ui/switch";
 import { Page, Observable } from "tns-core-modules/ui/page";
 
 
-let labels = ["Account", "Membership Type", "Shared with:"];
-let values = ["email@test.com", "Premium", "N/A"];
+let labels = ["Account", "Membership Type", "Shared with:", "Map Radius"];
+let values = ["email@test.com", "Premium", "N/A", "0.5km"];
 
 @Component({
     selector: "Settings",

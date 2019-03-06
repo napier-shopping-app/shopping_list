@@ -18,6 +18,3 @@ const routes: Routes = [
     exports: [NativeScriptRouterModule]
 })
 export class AppRoutingModule { }
-
-
-// { path: "addList", loadChildren: "~/app/addList/addList.module#AddListModule" },
