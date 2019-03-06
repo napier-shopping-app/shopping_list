@@ -19,14 +19,14 @@ export class LoginComponent implements OnInit {
     isLoggingIn = true;
     user: User;
     processing = false;
-    userName = "user@napier.org";
-    userPass = "password";
+    // userName = "user@napier.org";
+    // userPass = "password";
     @ViewChild("password") password: ElementRef;
     @ViewChild("confirmPassword") confirmPassword: ElementRef;
 
     constructor(private page: Page, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
-        //this.page.actionBarHidden = true;
+        this.page.actionBarHidden = true;
         this.user = new User();
         this.user.email = "user@nativescript.org";
         this.user.password = "password";
@@ -62,16 +62,7 @@ export class LoginComponent implements OnInit {
 
     login() {
 
-        if (this.user.email == this.userName && this.user.password == this.userPass) {
-
-            this.processing = false;
-            this.routerExtensions.navigate(["/home"], { clearHistory: true });
-        }
-        else{
-
-            this.processing = false;
-            this.alert("No account found");
-        };
+        this.routerExtensions.navigate(["/home"], { clearHistory: true });
     }
 
     register() {
