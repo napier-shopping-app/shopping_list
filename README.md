@@ -9,6 +9,7 @@ A location based shopping app
 4. Added FAB (floating action button) and add shopping list with basic functionality
 5. Added addList page - passes list between addList and Home via data provider under providers/data/
 6. Added login page - accessed through the menu bar and clicking on the avatar at the top
+7. Login page saves a user data, this can be changed to store until logout or only while app is open
 
 # Home
 
@@ -21,3 +22,7 @@ Just the maps which will show the current location and surrounding shops (user d
 # Settings
 
 Displays userinfo and app preferences
+
+# Login
+
+Login is done through email and password, login with gmail/facebook needs to be added
