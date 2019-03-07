@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
         var tempUser = localStorage.getItem('user');
         this.user = JSON.parse(tempUser);
 
-        console.log(this.user.email);
+        //console.log(this.user.email);
         this.emailAddy = this.user.email;
 
         return this._sideDrawerTransition;

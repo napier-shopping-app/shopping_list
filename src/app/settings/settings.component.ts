@@ -50,7 +50,7 @@ export class SettingsComponent implements OnInit {
     getUserInfo(): void{
         
         var tempUser = localStorage.getItem('user');
-        console.log("Keys: ", localStorage.length);
+        //console.log("Keys: ", localStorage.length);
         
         this.user = JSON.parse(tempUser);
 
@@ -76,7 +76,7 @@ export class SettingsComponent implements OnInit {
     onItemTap(args) {
 
         const settingIndex = args.index;
-        console.log(settingIndex);
+        //console.log(settingIndex);
     }
 }
 

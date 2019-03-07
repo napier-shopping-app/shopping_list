@@ -71,9 +71,9 @@ export class LoginComponent implements OnInit {
 
     login() {
 
-        console.log("User Details: " + this.txtEmail + " " + this.txtPassword);
+        //console.log("User Details: " + this.txtEmail + " " + this.txtPassword);
         localStorage.setItemObject('user', JSON.stringify(this.user)); //saves user object locally
-        console.log("Keys Stored: ", localStorage.length);
+        //console.log("Keys Stored: ", localStorage.length);
         this.routerExtensions.navigate(["/home"], { clearHistory: true }); //reroutes the login pages on login to home page
     }
 
