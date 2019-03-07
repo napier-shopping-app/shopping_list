@@ -8,6 +8,7 @@ import { Page } from "tns-core-modules/ui/page";
 import { Data } from "../providers/data/data";
 import {Router, NavigationExtras} from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
+import * as localStorage from "nativescript-localstorage";
 
 @Component({
     selector: "AddList",
@@ -17,8 +18,11 @@ import { RouterExtensions } from "nativescript-angular/router";
 
 export class AddListComponent implements OnInit {
     private _activatedUrl: string;
+    public shops = [];
     constructor(private router: Router,private data: Data,private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
+        this.shops = JSON.parse(localStorage.getItem("Shops"));
+
     }
 
     ngOnInit(): void {
@@ -29,7 +33,7 @@ export class AddListComponent implements OnInit {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
     }
-    list = new ObservableArray(2);
+    
     title = "";
     listColor = "";
     
@@ -42,16 +46,13 @@ export class AddListComponent implements OnInit {
     save(): void {
        
        alert("The list: " + this.title + " with color: " + this.listColor + " has been created!");
-       const tempList = [this.title, this.listColor];
-       this.list = new ObservableArray(tempList);
-       
-       this.data.storage = {
-        "title": this.title,
-        "listColor": this.listColor,
-        
-    }
-    //this.routerExtensions.navigate(['/home']);
+      
+       this.shops.push(this.title + "|" + this.listColor);
+       localStorage.setItem("Shops", JSON.stringify(this.shops));
+      
+   
 }
 
 }
+
 
