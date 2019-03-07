@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
         this.user.email = "user@nativescript.org";
         this.user.password = "password";
         var shops = JSON.stringify(this.list);
+        
         localstorage.setItem("Shops", shops);
         
     }

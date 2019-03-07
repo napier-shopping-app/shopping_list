@@ -12,7 +12,7 @@
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
-    <Label class="action-bar-title" text="List"></Label>
+    <Label class="action-bar-title" text="List" #listTitle></Label>
 </ActionBar>
 
 <GridLayout class="page page-content" row="1" col="0">
@@ -23,4 +23,7 @@
             </StackLayout>
         </ng-template>
     </ListView>
+    <FAB (tap)="addItem()"
+    style="height: 10%;width: 20%;margin: 10%;background-color: #ff4081;horizontal-align: right;vertical-align: bottom;"
+    icon="res://icon-plus" rippleColor="#f1f1f1" class="fab-button"></FAB>
 </GridLayout>

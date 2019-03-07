@@ -10,7 +10,7 @@ import { Button } from "tns-core-modules/ui/button";
 import {StackLayout} from "ui/layouts/stack-layout";
 import * as localstorage from "nativescript-localstorage";
 
-import { Data } from "../providers/data/data";
+
 
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 
@@ -29,48 +29,48 @@ export class HomeComponent implements OnInit {
     public newShops = [];
     
 
-    constructor(private router: Router, private routerExtensions: RouterExtensions,private data: Data) {
+    constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
-        this.shops = JSON.parse(localstorage.getItem("Shops"));
-        var i;
        
+    }
+    ngAfterViewInit() {
+        this.shops = JSON.parse(localstorage.getItem("Shops"));
+        
+        localstorage.removeItem("selectedList")
         if(this.shops.length != 0){
-            for (i = 0; i < this.shops.length; i++) {
+            for (let i = 0; i < (this.shops.length); i++) {
                 this.newShops = this.shops[i].split("|")
                 console.log(this.shops[i]);
+                let myButton = new Button();
+                        
+                myButton.text = this.newShops[0];
+                myButton.width = 240;
+                myButton.height = 240; 
+                
+                myButton.backgroundColor = this.newShops[1]; 
+                this.stackLay.nativeElement.addChild(myButton);
+                myButton.on("tap", function(args: EventData) {
+                    let button = <Button>args.object;
+                    button.borderWidth = 2;
+                    button.borderColor = "black";
+                    
+                    
+                    localstorage.setItem("selectedList", button.text)
+                })
               } 
               
              
         }
+        console.log(this.newShops.length);
+        console.log(this.shops.length);
+       
+       
+       
     }
-    ngAfterViewInit() {
+    viewList(args:EventData){
         
-        if(this.shops.length != 0 ){
-            if (this.newShops.length > 2){
-                for (let i = 0; i < (this.newShops.length-1); i+2) {
-                    for(let j = 1; j < this.newShops.length; j+2){
-                        let myButton = new Button();
-                        
-                        myButton.text = this.newShops[i];
-                        myButton.backgroundColor = this.newShops[j]; 
-                        this.stackLay.nativeElement.addChild(myButton);
-                    }
-                   
-                  } 
-            }else{
-                let myButton = new Button();
-                        
-                        myButton.text = this.newShops[0];
-                        myButton.backgroundColor = this.newShops[1]; 
-                        this.stackLay.nativeElement.addChild(myButton);
-            }
-            
-           
-        }
-       
-       
+        this.routerExtensions.navigate(["/list"], { clearHistory: true });
     }
-
     ngOnInit(): void {
         // Init your component properties here.
 

@@ -19,13 +19,14 @@
 <StackLayout orientation="vertical">
 
     <ScrollView orientation="horizontal" verticalAlignment="top">
-        <StackLayout orientation="vertical" #stackLay>
+        <StackLayout orientation="horizontal" backgroundColor="{{ selected ? 'red' : 'white'}}" #stackLay>
 
         </StackLayout>
     </ScrollView>
+<Button class="btn btn-primary btn-active" id="button" text="View List" (tap)="viewList($event)"></Button>
 
     <GridLayout>
-        <ListView class="hr-light" [items]="dataItems" verticalAlignment="bottom" width="100%" height="60%">
+        <ListView class="hr-light" [items]="dataItems" verticalAlignment="bottom" width="100%" height="70%">
             <ng-template tkListItemTemplate let-item="item">
                 <StackLayout orientation="vertical">
                     <Label class="nameLabel" [text]="item.name"></Label>
