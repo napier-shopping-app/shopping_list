@@ -27,11 +27,21 @@ export class HomeComponent implements OnInit {
     public listColor = "";
     public shops = [];
     public newShops = [];
-    
+    public latitude: number = 55.953251; // Edinburgh Lat/Long
+    public longitude: number = -3.188267;
 
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
        
+
+fetch('https://api.foursquare.com/v2/venues/explore?client_id=1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2&client_secret=WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45&v=20180323&limit=1&ll=55.953251,-3.188267&query=coffee')
+.then((response) => response.json())
+.then((r) => {
+  console.log(r);
+}).catch((err) => {
+});
+
+
     }
     ngAfterViewInit() {
         this.shops = JSON.parse(localstorage.getItem("Shops"));
