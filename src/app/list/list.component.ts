@@ -3,7 +3,7 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 
 let categories = ["Fresh Food", "Frozen Food", "Dry Goods", "Dairy Products"];
-let values = ["Cheese", "Potatoes", "Bread", "Coffee"];
+let values = ["Cheese", "Potatoes", "Bread", "Coffee", "Milk", "Water", "Tea"];
 
 
 @Component({
@@ -21,10 +21,9 @@ export class ListComponent implements OnInit {
         // Use the component constructor to inject providers.
         this.list = [];
 
-        for (let i = 0; i < categories.length; i++) {
+        for (let i = 0; i < values.length; i++) {
 
             this.list.push(new Lists(categories[i], values[i]));
-
         }
 
     }
@@ -37,6 +36,22 @@ export class ListComponent implements OnInit {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
     }
+
+    selectItem(args) {
+
+        var elem = args.object;
+
+        if(elem.style.textDecoration == "line-through"){
+
+            elem.style.textDecoration = "none";
+        }
+        else{
+
+            elem.style.textDecoration = "line-through";
+            elem.style.textDecorationColor = "red";
+        }
+    }
+
 
 }
 

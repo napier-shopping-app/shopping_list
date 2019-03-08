@@ -44,14 +44,13 @@ export class AddListComponent implements OnInit {
        alert("The list: " + this.title + " with color: " + this.listColor + " has been created!");
        const tempList = [this.title, this.listColor];
        this.list = new ObservableArray(tempList);
+       
        this.data.storage = {
         "title": this.title,
         "listColor": this.listColor,
         
     }
-    
-    
-    
+    //this.routerExtensions.navigate(['/home']);
 }
 
 }
