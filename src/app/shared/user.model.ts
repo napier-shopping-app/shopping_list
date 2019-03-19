@@ -1,5 +1,13 @@
 export class User {
-    email: string;
-    password: string;
-    confirmPassword: string;
+
+    public email: string;
+    public password: string;
+    public confirmPassword: string;
+    public memberType: string;
+
+    constructor(email, password) {
+        
+        this.email = email;
+        this.password = password;
+    }
 }

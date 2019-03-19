@@ -10,25 +10,22 @@
         <PreviousNextView>
             <GridLayout rows="auto, auto, auto">
                 <StackLayout row="0" class="input-field">
-                    <TextField class="input" hint="Email" [isEnabled]="!processing"
-                        keyboardType="email" autocorrect="false"
-                        autocapitalizationType="none" [(ngModel)]="user.email"
-                        returnKeyType="next" (returnPress)="focusPassword()"></TextField>
+                    <TextField #email class="input" hint="Email" [isEnabled]="!processing" keyboardType="email"
+                        autocorrect="false" autocapitalizationType="none" returnKeyType="next"
+                        (returnPress)="focusPassword()"></TextField>
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
 
                 <StackLayout row="1" class="input-field">
-                    <TextField #password class="input" [isEnabled]="!processing"
-                        hint="Password" secure="true" [(ngModel)]="user.password"
-                        [returnKeyType]="isLoggingIn ? 'done' : 'next'"
-                        (returnPress)="focusConfirmPassword()"></TextField>
+                    <TextField #password class="input" [isEnabled]="!processing" hint="Password" secure="true"
+                        [returnKeyType]="isLoggingIn ? 'done' : 'next'" (returnPress)="focusConfirmPassword()">
+                    </TextField>
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
 
                 <StackLayout row="2" *ngIf="!isLoggingIn" class="input-field">
-                    <TextField #confirmPassword class="input" [isEnabled]="!processing"
-                        hint="Confirm password" secure="true" [(ngModel)]="user.confirmPassword"
-                        returnKeyType="done"></TextField>
+                    <TextField #confirmPassword class="input" [isEnabled]="!processing" hint="Confirm password"
+                        secure="true" returnKeyType="done"></TextField>
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
 
@@ -36,10 +33,9 @@
             </GridLayout>
         </PreviousNextView>
 
-        <Button [text]="isLoggingIn ? 'Log In' : 'Sign Up'" [isEnabled]="!processing"
-            (tap)="submit()" class="btn btn-primary m-t-20"></Button>
-        <Label *ngIf="isLoggingIn" text="Forgot your password?" class="login-label"
-            (tap)="forgotPassword()"></Label>
+        <Button [text]="isLoggingIn ? 'Log In' : 'Sign Up'" [isEnabled]="!processing" (tap)="submit(email.text, password.text)"
+            class="btn btn-primary m-t-20"></Button>
+        <Label *ngIf="isLoggingIn" text="Forgot your password?" class="login-label" (tap)="forgotPassword()"></Label>
     </StackLayout>
 
     <Label class="login-label sign-up-label" (tap)="toggleForm()">
