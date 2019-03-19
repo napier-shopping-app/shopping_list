@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "996358647306",
+    "firebase_url": "https://napier-group-project.firebaseio.com",
+    "project_id": "napier-group-project",
+    "storage_bucket": "napier-group-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996358647306:android:b43f15220cc32752",
+        "android_client_info": {
+          "package_name": "org.nativescript.napierShoppingList1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996358647306-nh5b93utih49kjnkncurcuq1cg27841o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8R33EYvQQfAQCdzdaDS0b0dPpuwkxWNE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

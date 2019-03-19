@@ -4,6 +4,7 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
 import { filter } from "rxjs/operators";
 import * as app from "tns-core-modules/application";
+import * as firebase from "nativescript-plugin-firebase";
 import * as localStorage from "nativescript-localstorage";
 import { User } from "./shared/user.model";
 
@@ -34,6 +35,18 @@ export class AppComponent implements OnInit {
         .pipe(filter((event: any) => event instanceof NavigationEnd))
         .subscribe((event: NavigationEnd) => this._activatedUrl = event.urlAfterRedirects);
 
+        this.userName = "temp user";
+        this.emailAdd = "temp@gmail.com";
+
+        firebase.init({
+        }).then(
+          instance => {
+            console.log("firebase.init done");
+          },
+          error => {
+            console.log(`firebase.init error: ${error}`);
+          }
+        );
         this.userName = "Placeholder";
         this.emailAddy = "placeholder@place.holder";
     }
