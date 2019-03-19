@@ -6,6 +6,7 @@ import { EventData, backgroundImageProperty } from "tns-core-modules/ui/page/pag
 import { registerElement } from 'nativescript-angular/element-registry';
 import { NavigationEnd, Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
+import * as firebase from "nativescript-plugin-firebase";
 
 import { Data } from "../providers/data/data";
 
@@ -56,6 +57,41 @@ export class HomeComponent implements OnInit {
     }
     isComponentSelected(url: string): boolean {
         return this._activatedUrl === url;
+    }
+
+    google() {
+        firebase.login({
+            type: firebase.LoginType.GOOGLE,
+            // Optional 
+            googleOptions: {
+              hostedDomain: "mygsuitedomain.com"
+            }
+          }).then(
+              function (result) {
+                JSON.stringify(result);
+              },
+              function (errorMessage) {
+                console.log(errorMessage);
+              }
+          );
+    }
+
+    facebook() {
+        firebase.login({
+            type: firebase.LoginType.FACEBOOK,
+            // Optional
+            facebookOptions: {
+              // defaults to ['public_profile', 'email']
+              scope: ['public_profile', 'email']
+            }
+          }).then(
+              function (result) {
+                JSON.stringify(result);
+              },
+              function (errorMessage) {
+                console.log(errorMessage);
+              }
+          );
     }
 }
 
