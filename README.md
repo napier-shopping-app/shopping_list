@@ -10,6 +10,7 @@ A location based shopping app
 5. Added addList page - passes list between addList and Home via data provider under providers/data/
 6. Added login page - accessed through the menu bar and clicking on the avatar at the top
 7. Login page saves a user data, this can be changed to store until logout or only while app is open
+8. List functional 100% - data is retained / items able to be added.
 
 # Home
 

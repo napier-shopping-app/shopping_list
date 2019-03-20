@@ -9,6 +9,7 @@ const routes: Routes = [
     { path: "login", loadChildren: "~/app/login/login.module#LoginModule" },
     { path: "list", loadChildren: "~/app/list/list.module#ListModule" },
     { path: "addList", loadChildren: "~/app/addList/addList.module#AddListModule" },
+    { path: "addItem", loadChildren: "~/app/addItem/addItem.module#AddItemModule" },
     { path: "featured", loadChildren: "~/app/featured/featured.module#FeaturedModule" },
     { path: "settings", loadChildren: "~/app/settings/settings.module#SettingsModule" }
 ];
