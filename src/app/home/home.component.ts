@@ -9,7 +9,6 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { Button } from "tns-core-modules/ui/button";
 import {StackLayout} from "ui/layouts/stack-layout";
 import * as localstorage from "nativescript-localstorage";
-import * as firebase from "nativescript-plugin-firebase";
 
 
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
@@ -34,12 +33,12 @@ export class HomeComponent implements OnInit {
         // Use the component constructor to inject services.
        
 
-fetch('https://api.foursquare.com/v2/venues/explore?client_id=1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2&client_secret=WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45&v=20180323&limit=1&ll=55.953251,-3.188267&query=coffee')
-.then((response) => response.json())
-.then((r) => {
-  console.log(r);
-}).catch((err) => {
-});
+    fetch('https://api.foursquare.com/v2/venues/explore?client_id=1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2&client_secret=WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45&v=20180323&limit=1&ll=55.953251,-3.188267&query=coffee')
+    .then((response) => response.json())
+    .then((r) => {
+      console.log(r);
+    }).catch((err) => {
+    });
 
 
     }
@@ -71,6 +70,7 @@ fetch('https://api.foursquare.com/v2/venues/explore?client_id=1QWWA3GAGXBLY0P2DX
               
              
         }
+
         console.log(this.newShops.length);
         console.log(this.shops.length);
        
@@ -101,42 +101,8 @@ fetch('https://api.foursquare.com/v2/venues/explore?client_id=1QWWA3GAGXBLY0P2DX
         sideDrawer.closeDrawer();
     }
     isComponentSelected(url: string): boolean {
+
         return this._activatedUrl === url;
-    }
-
-    google() {
-        firebase.login({
-            type: firebase.LoginType.GOOGLE,
-            // Optional 
-            googleOptions: {
-              hostedDomain: "mygsuitedomain.com"
-            }
-          }).then(
-              function (result) {
-                JSON.stringify(result);
-              },
-              function (errorMessage) {
-                console.log(errorMessage);
-              }
-          );
-    }
-
-    facebook() {
-        firebase.login({
-            type: firebase.LoginType.FACEBOOK,
-            // Optional
-            facebookOptions: {
-              // defaults to ['public_profile', 'email']
-              scope: ['public_profile', 'email']
-            }
-          }).then(
-              function (result) {
-                JSON.stringify(result);
-              },
-              function (errorMessage) {
-                console.log(errorMessage);
-              }
-          );
     }
 }
 

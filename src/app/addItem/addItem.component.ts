@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import * as view from "ui/core/view";
+import * as view from "tns-core-modules/ui/core/view";
 import { ObservableArray, ChangedData } from "tns-core-modules/data/observable-array";
 import { Validators } from "@angular/forms";
 import { Page } from "tns-core-modules/ui/page";
