@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { alert, prompt } from "tns-core-modules/ui/dialogs";
+import { TextField } from "tns-core-modules/ui/text-field";
 import * as app from "tns-core-modules/application";
 import { User } from "../shared/user.model";
 import { Page } from "tns-core-modules/ui/page/page";
 import { RouterExtensions } from "nativescript-angular/router";
-import * as localstorage from "nativescript-localstorage";
+import * as localStorage from "nativescript-localstorage"; //conflict sorted was all lowercase previously **NEEDS CHECKED**
 
 @Component({
     selector: "Login",
@@ -19,8 +20,9 @@ export class LoginComponent implements OnInit {
     isLoggingIn = true;
     user: User;
     processing = false;
-    // userName = "user@napier.org";
-    // userPass = "password";
+    txtEmail = "";
+    txtPassword = "";
+    txtConfirmPassword = "";
     @ViewChild("password") password: ElementRef;
     @ViewChild("confirmPassword") confirmPassword: ElementRef;
     list = []; 
@@ -33,8 +35,9 @@ export class LoginComponent implements OnInit {
         this.user.password = "password";
         var shops = JSON.stringify(this.list);
         
-        localstorage.setItem("Shops", shops);
-        
+        localStorage.setItem("Shops", shops);
+        //this.user.email = this.txtEmail;
+        //this.user.password = this.txtPassword;
     }
 
     ngOnInit(): void {
@@ -50,8 +53,15 @@ export class LoginComponent implements OnInit {
         this.isLoggingIn = !this.isLoggingIn;
     }
 
-    submit() {
-        if (!this.user.email || !this.user.password) {
+    submit(txtEmail, txtPassword, txtConfirmPassword) {
+
+        this.txtEmail = txtEmail;
+        this.txtPassword = txtPassword;
+        this.txtConfirmPassword = txtConfirmPassword;
+        this.user = new User(this.txtEmail, this.txtPassword);
+        localStorage.clear();
+
+        if (!this.txtEmail || !this.txtPassword) {
             this.alert("Please provide both an email address and password.");
             return;
         }
@@ -67,11 +77,14 @@ export class LoginComponent implements OnInit {
 
     login() {
 
-        this.routerExtensions.navigate(["/home"], { clearHistory: true });
+        //console.log("User Details: " + this.txtEmail + " " + this.txtPassword);
+        localStorage.setItemObject('user', JSON.stringify(this.user)); //saves user object locally
+        //console.log("Keys Stored: ", localStorage.length);
+        this.routerExtensions.navigate(["/home"], { clearHistory: true }); //reroutes the login pages on login to home page
     }
 
     register() {
-        if (this.user.password != this.user.confirmPassword) {
+        if (this.txtPassword != this.txtConfirmPassword) {
             this.alert("Your passwords do not match.");
             this.processing = false;
             return;

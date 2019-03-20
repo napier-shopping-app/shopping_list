@@ -9,7 +9,7 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { Button } from "tns-core-modules/ui/button";
 import {StackLayout} from "ui/layouts/stack-layout";
 import * as localstorage from "nativescript-localstorage";
-
+import * as firebase from "nativescript-plugin-firebase";
 
 
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
@@ -102,6 +102,41 @@ fetch('https://api.foursquare.com/v2/venues/explore?client_id=1QWWA3GAGXBLY0P2DX
     }
     isComponentSelected(url: string): boolean {
         return this._activatedUrl === url;
+    }
+
+    google() {
+        firebase.login({
+            type: firebase.LoginType.GOOGLE,
+            // Optional 
+            googleOptions: {
+              hostedDomain: "mygsuitedomain.com"
+            }
+          }).then(
+              function (result) {
+                JSON.stringify(result);
+              },
+              function (errorMessage) {
+                console.log(errorMessage);
+              }
+          );
+    }
+
+    facebook() {
+        firebase.login({
+            type: firebase.LoginType.FACEBOOK,
+            // Optional
+            facebookOptions: {
+              // defaults to ['public_profile', 'email']
+              scope: ['public_profile', 'email']
+            }
+          }).then(
+              function (result) {
+                JSON.stringify(result);
+              },
+              function (errorMessage) {
+                console.log(errorMessage);
+              }
+          );
     }
 }
 

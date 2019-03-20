@@ -15,8 +15,11 @@
     <Label class="action-bar-title" text="List" #listTitle></Label>
 </ActionBar>
 
-<GridLayout class="page page-content" row="1" col="0">
-    <ListView class="list-group" [items]="list" (longPress)="onLongPress($event)">
+<StackLayout class="page page-content" orientation="vertical">
+    <StackLayout verticalAlignment="top" width="100%">
+        <TextField hint="Add Item" autocorrect="true" returnKeyType="done" height="10%"></TextField>
+    </StackLayout>
+    <ListView class="list-group" [items]="list" verticalAlignment="bottom" width="100%" height="75%" (longPress)="onLongPress($event)">
         <ng-template let-list="item">
             <StackLayout class="list-group-item">
                 <Label [text]="list.values" (tap)="selectItem($event)" style="text-decoration: none"></Label>
@@ -26,4 +29,5 @@
     <FAB (tap)="addItem()"
     style="height: 10%;width: 20%;margin: 10%;background-color: #ff4081;horizontal-align: right;vertical-align: bottom;"
     icon="res://icon-plus" rippleColor="#f1f1f1" class="fab-button"></FAB>
-</GridLayout>
+<!-- </GridLayout> this was a conflict on merge, needs to be tested -->
+</StackLayout>
