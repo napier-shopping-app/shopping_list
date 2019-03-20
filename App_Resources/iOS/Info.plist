@@ -45,5 +45,9 @@
 		<string>UIStatusBarStyleLightContent</string>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
+		<key>com.apple.keystore.access-keychain-keys</key>
+    	<true/>
+    	<key>com.apple.keystore.device</key>
+    	<true/>
 	</dict>
 </plist>

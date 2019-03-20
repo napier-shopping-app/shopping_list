@@ -39,9 +39,8 @@ export class HomeComponent implements OnInit {
                 console.log(r);
             }).catch((err) => {
             });
-
-
     }
+
     ngAfterViewInit() {
         this.shops = JSON.parse(localstorage.getItem("Shops"));
 
@@ -67,20 +66,17 @@ export class HomeComponent implements OnInit {
                     localstorage.setItem("selectedList", button.text)
                 })
             }
-
-
         }
 
         console.log(this.newShops.length);
         console.log(this.shops.length);
-
-
-
     }
+
     viewList(args: EventData) {
 
         this.routerExtensions.navigate(["/list"], { clearHistory: true });
     }
+
     ngOnInit(): void {
         // Init your component properties here.
 
@@ -90,6 +86,7 @@ export class HomeComponent implements OnInit {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
     }
+
     onNavItemTap(navItemRoute: string): void {
         this.routerExtensions.navigate([navItemRoute], {
             transition: {
@@ -100,6 +97,7 @@ export class HomeComponent implements OnInit {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.closeDrawer();
     }
+
     isComponentSelected(url: string): boolean {
 
         return this._activatedUrl === url;

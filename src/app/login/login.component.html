@@ -16,13 +16,18 @@
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
 
-                <StackLayout row="2">
+                <!-- <StackLayout row="2">
                     <Button class="btn btn-primary" text="Login with Facebook" (tap)="facebook()";>
                     </Button>
                     <StackLayout class="hr-light"></StackLayout>
+                </StackLayout> -->
+
+                <StackLayout row="2">
+                    <Button class="btn btn-primary" text="Bypass" (tap)="bypassLogin()">
+                    </Button>
                 </StackLayout>
 
-                <ActivityIndicator rowSpan="3" [busy]="processing"></ActivityIndicator>
+                <!--<ActivityIndicator rowSpan="4" [busy]="processing"></ActivityIndicator>-->
             </GridLayout>
         </PreviousNextView>
     </StackLayout>
