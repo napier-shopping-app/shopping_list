@@ -35,9 +35,6 @@ export class AppComponent implements OnInit {
         .pipe(filter((event: any) => event instanceof NavigationEnd))
         .subscribe((event: NavigationEnd) => this._activatedUrl = event.urlAfterRedirects);
 
-        this.userName = "temp user";
-        this.emailAdd = "temp@gmail.com";
-
         firebase.init({
         }).then(
           instance => {
@@ -47,6 +44,7 @@ export class AppComponent implements OnInit {
             console.log(`firebase.init error: ${error}`);
           }
         );
+        
         this.userName = "Placeholder";
         this.emailAddy = "placeholder@place.holder";
     }
