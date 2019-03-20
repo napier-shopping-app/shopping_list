@@ -11,17 +11,20 @@ import { RouterExtensions } from "nativescript-angular/router";
 import * as localStorage from "nativescript-localstorage";
 
 @Component({
-    selector: "AddList",
+    selector: "AddItem",
     moduleId: module.id,
-    templateUrl: "./addList.component.html"
+    templateUrl: "./addItem.component.html"
 })
 
-export class AddListComponent implements OnInit {
+export class AddItemComponent implements OnInit {
     private _activatedUrl: string;
-    public shops = [];
+    public itemList = [];
+    public title: string; 
     constructor(private router: Router,private data: Data,private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
-        this.shops = JSON.parse(localStorage.getItem("Shops"));
+        this.title = localStorage.getItem("selectedList")
+        console.log(this.title);
+        this.itemList = JSON.parse(localStorage.getItem(this.title));
 
     }
 
@@ -34,24 +37,18 @@ export class AddListComponent implements OnInit {
         sideDrawer.showDrawer();
     }
     
-    title = "";
+    shoppingItem = "";
     listColor = "";
-    items = [];
-    
-    color(args){
-        var button = args.object;
-        alert(button.id + " has been selected!");
-        this.listColor = button.id; 
-    }
 
+    
     save(): void {
        
-       //alert("The list: " + this.title + " with color: " + this.listColor + " has been created!");
-      
-       this.shops.push(this.title + "|" + this.listColor);
-       localStorage.setItem("Shops", JSON.stringify(this.shops));
-       localStorage.setItem(this.title, JSON.stringify(this.items));
-       this.routerExtensions.navigate(["/home"], { clearHistory: true });
+       //alert("Added item: " + this.shoppingItem + " to " + this.title);
+       this.itemList.push(this.shoppingItem);
+
+       localStorage.setItem(this.title, JSON.stringify(this.itemList));
+       this.routerExtensions.navigate(["/list"], { clearHistory: true });
+       
    
 }
 

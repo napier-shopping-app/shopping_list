@@ -6,8 +6,7 @@ import * as app from "tns-core-modules/application";
 import { User } from "../shared/user.model";
 import { Page } from "tns-core-modules/ui/page/page";
 import { RouterExtensions } from "nativescript-angular/router";
-import * as localStorage from "nativescript-localstorage";
-
+import * as localStorage from "nativescript-localstorage"; //conflict sorted was all lowercase previously **NEEDS CHECKED**
 
 @Component({
     selector: "Login",
@@ -26,10 +25,17 @@ export class LoginComponent implements OnInit {
     txtConfirmPassword = "";
     @ViewChild("password") password: ElementRef;
     @ViewChild("confirmPassword") confirmPassword: ElementRef;
-
+    list = []; 
+    
     constructor(private page: Page, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
         this.page.actionBarHidden = true;
+        this.user = new User();
+        this.user.email = "user@nativescript.org";
+        this.user.password = "password";
+        var shops = JSON.stringify(this.list);
+        
+        localStorage.setItem("Shops", shops);
         //this.user.email = this.txtEmail;
         //this.user.password = this.txtPassword;
     }
