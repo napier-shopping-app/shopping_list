@@ -78,7 +78,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.user = JSON.parse(tempUser);
 
         //console.log(this.user.email);
-        this.emailAddy = this.user.email;
+        //this.emailAddy = this.user.email;
 
         return this._sideDrawerTransition;
     }

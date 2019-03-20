@@ -7,6 +7,8 @@ import { User } from "../shared/user.model";
 import { Page } from "tns-core-modules/ui/page/page";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as firebase from "nativescript-plugin-firebase";
+import * as localStorage from "nativescript-localstorage";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -45,6 +47,12 @@ export class LoginComponent implements OnInit {
               }).then(
                   function (result) {
                     JSON.stringify(result);
+                    console.log(result.email);
+                    console.log(result.uid);
+                    //this.user = new User(result.email, result.name);
+                    //this.user.isLoggedIn = true;
+                    //localStorage.setItemObject('user', JSON.stringify(this.user));
+                    //this.routerExtensions.navigate(["/home"], { clearHistory: true});
                   },
                   function (errorMessage) {
                     console.log(errorMessage);
@@ -64,6 +72,12 @@ export class LoginComponent implements OnInit {
               }).then(
                   function (result) {
                     JSON.stringify(result);
+                    console.log(result.email);
+                    console.log(result.uid);
+                    //this.user = new User(result.email, result.name);
+                    //this.user.isLoggedIn = true;
+                    //localStorage.setItemObject('user', JSON.stringify(this.user));
+                    //this.routerExtensions.navigate(["/home"], { clearHistory: true});
                   },
                   function (errorMessage) {
                     console.log(errorMessage);

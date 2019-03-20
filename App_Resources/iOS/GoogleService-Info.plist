@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>996358647306-vlqhh055kvigv6kr3lth3hc4lqg3d78o.apps.googleusercontent.com</string>
+	<string>996358647306-61o5rbkvq0v28oukckv528kh70q4afpb.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.996358647306-vlqhh055kvigv6kr3lth3hc4lqg3d78o</string>
+	<string>com.googleusercontent.apps.996358647306-61o5rbkvq0v28oukckv528kh70q4afpb</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCQKiYoR9s6gWeKVch1eFbtwi5MjHPjNDg</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>org.nativescript.napierShoppingList1</string>
+	<string>org.nativescript.napierShoppingList</string>
 	<key>PROJECT_ID</key>
 	<string>napier-group-project</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:996358647306:ios:dbb27fa98cb24df5</string>
+	<string>1:996358647306:ios:b43f15220cc32752</string>
 	<key>DATABASE_URL</key>
 	<string>https://napier-group-project.firebaseio.com</string>
 </dict>
