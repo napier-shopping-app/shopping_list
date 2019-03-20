@@ -40,15 +40,6 @@ export class AppComponent implements OnInit {
         .subscribe((event: NavigationEnd) => this._activatedUrl = event.urlAfterRedirects);
 
         firebase.init({
-            onAuthStateChanged: function(data) {
-                
-                console.log(data.loggedIn ? "Logged in to firebase" : "Logged out from firebase");
-
-                if(data.loggedIn){
-                    console.log("user's uid: " + (data.user.uid ? data.user.uid : "N/A"));
-                    //this.loggedIn(data.user);
-                }
-            }
         }).then(
           instance => {
             console.log("firebase.init done");
@@ -87,10 +78,13 @@ export class AppComponent implements OnInit {
         return this._sideDrawerTransition;
     }
 
-    loggedIn(user): void {
+    loggedIn(): void {
 
-        this.routerExtensions.navigate(["/home"], { clearHistory: true});
-        localStorage.setItemObject('user', user);
+        this.routerExtensions.navigate(['/login'], {
+            transition: {
+                name: "fade"
+            }
+        });
     }
 
     isComponentSelected(url: string): boolean {

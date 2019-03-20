@@ -3,10 +3,9 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import * as localstorage from "nativescript-localstorage";
 import { RouterExtensions } from "nativescript-angular/router";
-
-let categories = ["Fresh Food", "Frozen Food", "Dry Goods", "Dairy Products"];
-//let values = ["Cheese", "Potatoes", "Bread", "Coffee", "Milk", "Water", "Tea"];
-
+import { ObservableArray } from "tns-core-modules/data/observable-array";
+import { Observable } from "tns-core-modules/data/observable";
+import { Item } from "../shared/item.model";
 
 @Component({
     selector: "List",
@@ -15,30 +14,19 @@ let categories = ["Fresh Food", "Frozen Food", "Dry Goods", "Dairy Products"];
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit{
     @ViewChild('listTitle') listTitle: ElementRef;
     public list: Array<Lists>;
     public items = [];
     public tempItems = [];
     private _activatedUrl: string;
-    constructor(private routerExtensions: RouterExtensions) {
-       
-        // Use the component constructor to inject providers.
-        this.list = [];
 
-       
+    constructor(private routerExtensions: RouterExtensions) {
 
     }
 
     ngOnInit(): void {
-        this.listTitle.nativeElement.text = localstorage.getItem("selectedList");
-        // Init your component properties here.
-        this.items = JSON.parse(localstorage.getItem(localStorage.getItem("selectedList")));
-
-        for (let i = 0; i < (this.items.length); i++) {
-            this.list.push(new Lists(this.items[i]));
         
-        }
         
     }
 
