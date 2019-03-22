@@ -35,9 +35,10 @@ export class LoginComponent implements OnInit {
     const sideDrawer = <RadSideDrawer>app.getRootView();
     sideDrawer.showDrawer();
   }
-
+  shops = [];
   bypassLogin(){
-
+    
+    localStorage.setItemObject('Shops', JSON.stringify(this.shops));
     this.routerExtensions.navigate(['/home'], { clearHistory: true });
   }
 

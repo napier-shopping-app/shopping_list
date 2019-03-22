@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef,ViewContainerRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { ActionItems } from "tns-core-modules/ui/action-bar/action-bar";
@@ -7,6 +7,7 @@ import { registerElement } from 'nativescript-angular/element-registry';
 import { NavigationEnd, Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import { Button } from "tns-core-modules/ui/button";
+import {Label} from "tns-core-modules/ui/label";
 import { StackLayout } from "ui/layouts/stack-layout";
 import * as localstorage from "nativescript-localstorage";
 
@@ -21,6 +22,7 @@ registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 
 export class HomeComponent implements OnInit {
     @ViewChild('stackLay') stackLay: ElementRef;
+    @ViewChild('test') test: ElementRef;
     private _activatedUrl: string;
     public title = "";
     public listColor = "";
@@ -31,7 +33,7 @@ export class HomeComponent implements OnInit {
 
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
-
+      
 
         fetch('https://api.foursquare.com/v2/venues/explore?client_id=1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2&client_secret=WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45&v=20180323&limit=1&ll=55.953251,-3.188267&query=coffee')
             .then((response) => response.json())
@@ -40,7 +42,7 @@ export class HomeComponent implements OnInit {
             }).catch((err) => {
             });
     }
-
+  
     ngAfterViewInit() {
         this.shops = JSON.parse(localstorage.getItem("Shops"));
 
@@ -48,12 +50,15 @@ export class HomeComponent implements OnInit {
         if (this.shops.length != 0) {
             for (let i = 0; i < (this.shops.length); i++) {
                 this.newShops = this.shops[i].split("|")
-                console.log(this.shops[i]);
+            
                 let myButton = new Button();
 
                 myButton.text = this.newShops[0];
-                myButton.width = 240;
-                myButton.height = 240;
+                myButton.width = 140;
+                myButton.height = 140;
+                myButton.marginLeft = 10;
+                myButton.marginTop = 3; 
+                myButton.borderRadius = 7; 
 
                 myButton.backgroundColor = this.newShops[1];
                 this.stackLay.nativeElement.addChild(myButton);
@@ -75,6 +80,23 @@ export class HomeComponent implements OnInit {
     viewList(args: EventData) {
 
         this.routerExtensions.navigate(["/list"], { clearHistory: true });
+    }
+    addItem(args: EventData) {
+        
+        let a = new StackLayout();
+        let t = new Label(); 
+        let b = new Button(); 
+       
+        a.height = 100; 
+        a.backgroundColor = "gray"; 
+        b.text = "Button";
+
+        t.text = "test";
+        a.addChild(b);
+        a.addChild(t); 
+
+        this.test.nativeElement.addChild(a);
+        //this.routerExtensions.navigate(["/list"], { clearHistory: true });
     }
 
     ngOnInit(): void {

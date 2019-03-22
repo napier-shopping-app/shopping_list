@@ -72,14 +72,14 @@ export class AppComponent implements OnInit {
         }
     } */
 
-/*     onLoaded(){
+    // onLoaded(){
 
-        if(isAndroid){
+    //     // if(isAndroid){
 
-            this.drawer.android.setTouchTargetThreshold(0);
-        }
+    //     //     this.drawer.android.setTouchTargetThreshold(0);
+    //     // }
 
-    } */
+    // } 
 
     get sideDrawerTransition(): DrawerTransitionBase {
 
