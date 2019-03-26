@@ -3,11 +3,11 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { alert, prompt } from "tns-core-modules/ui/dialogs";
 import { TextField } from "tns-core-modules/ui/text-field";
 import * as app from "tns-core-modules/application";
-import { User } from "../shared/user.model";
 import { Page } from "tns-core-modules/ui/page/page";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as firebase from "nativescript-plugin-firebase";
 import * as localStorage from "nativescript-localstorage";
+import * as user from "../shared/user.model";
 import { Router } from "@angular/router";
 import { registerContentQuery } from "@angular/core/src/render3";
 
@@ -29,6 +29,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // Init your component properties here.
+
+    var listener = { 
+      onAuthStateChanged: function(data) {
+
+        console.log(data.loggedIn ? "Logged in to firebase" : "Logged out from firebase");
+
+        if (data.loggedIn) {
+
+          console.log("User info", data.user);
+          this.routerExtensions.navigate(['/home'], { clearHistory: true });
+        }
+      },
+      thisArg: this
+    };
+
+    firebase.addAuthStateListener(listener);
+    firebase.hasAuthStateListener(listener);
+
   }
 
   onDrawerButtonTap(): void {
@@ -55,10 +73,9 @@ export class LoginComponent implements OnInit {
         JSON.stringify(user);
         console.log(user.email);
         console.log(user.uid);
-        //this.user = new User(user.email, user.name);
         //this.user.isLoggedIn = true;
         //localStorage.setItemObject('user', JSON.stringify(this.user));
-        //this.routerExtensions.navigate(["/home"], { clearHistory: true});
+        this.routerExtensions.navigate(["/home"], { clearHistory: true});
       },
       function (errorMessage) {
         console.log(errorMessage);
@@ -100,6 +117,7 @@ export class LoginComponent implements OnInit {
         JSON.stringify(user);
         console.log(user.email);
         console.log(user.uid);
+
         //this.user = new User(user.email, user.name);
         //this.user.isLoggedIn = true;
         //localStorage.setItemObject('user', JSON.stringify(this.user));
