@@ -44,7 +44,7 @@ export class SettingsComponent implements OnInit {
     getUser(): void {
 
         firebase.getCurrentUser()
-            .then(user => values.unshift(user.email))
+            .then(user => values.unshift(user.name))
             .catch(error => console.log("Firebase User Error: " + error));
     }
 
