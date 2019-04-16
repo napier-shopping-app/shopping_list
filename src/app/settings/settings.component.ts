@@ -30,28 +30,28 @@ export class SettingsComponent implements OnInit {
     constructor(private page: Page) {
         // Use the component constructor to inject providers.
         this.getUser();
-        this.loadUserInfo();
     }
 
     ngOnInit(): void {
         // Init your component properties here.
-        this.page.on('navigatedTo', (data) => {
+        this.page.on('navigatingTo', (data) => {
+
+            this.loadUserInfo();
 
         })
-
     }
 
     getUser(): void {
 
         firebase.getCurrentUser()
-            .then(user => values.unshift(user.name))
+            .then(user => values[0] = user.name)
             .catch(error => console.log("Firebase User Error: " + error));
     }
 
     loadUserInfo(): void {
 
         this.username = values[0];
-        this.memberType = values[1];
+        //this.memberType = values[1];
     }
 
     onDrawerButtonTap(): void {

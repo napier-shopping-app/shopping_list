@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef,ViewC
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { ActionItems } from "tns-core-modules/ui/action-bar/action-bar";
-import { EventData, backgroundImageProperty } from "tns-core-modules/ui/page/page";
+import { EventData, backgroundImageProperty, eachDescendant } from "tns-core-modules/ui/page/page";
 import { registerElement } from 'nativescript-angular/element-registry';
 import { NavigationEnd, Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -10,6 +10,9 @@ import { Button } from "tns-core-modules/ui/button";
 import {Label} from "tns-core-modules/ui/label";
 import { StackLayout } from "ui/layouts/stack-layout";
 import * as localstorage from "nativescript-localstorage";
+import * as firebase from "nativescript-plugin-firebase";
+import { Item } from "../shared/item.model";
+import { forEach } from "@angular/router/src/utils/collection";
 
 
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
@@ -24,86 +27,59 @@ export class HomeComponent implements OnInit {
     @ViewChild('stackLay') stackLay: ElementRef;
     @ViewChild('test') test: ElementRef;
     private _activatedUrl: string;
-    public title = "";
-    public listColor = "";
-    public shops = [];
-    public newShops = [];
-    public latitude: number = 55.953251; // Edinburgh Lat/Long
-    public longitude: number = -3.188267;
-    private client_id = "1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2";
-    private client_secret = "WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45";
-    private shopQuery = ""; 
+
+    public itemList: Array<Item>;
+    public list: Array<string>;
+
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
       
+        firebase.getCurrentUser()
+        .then(user => localStorage.setItem("userID", user.uid))
+        .catch(error => console.log(error));
 
-        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret='+ this.client_secret + '&v=20180323&limit=5&ll=55.953251,-3.188267&query=' + this.shopQuery)
-            .then((response) => response.json())
-            .then((r) => {
-                console.log(r.response.groups[0].items[0].venue.name);
-            }).catch((err) => {
-            });
     }
   
     ngAfterViewInit() {
-        this.shops = JSON.parse(localstorage.getItem("Shops"));
-
-        localstorage.removeItem("selectedList")
-        if (this.shops.length != 0) {
-            for (let i = 0; i < (this.shops.length); i++) {
-                this.newShops = this.shops[i].split("|")
-            
-                let myButton = new Button();
-
-                myButton.text = this.newShops[0];
-                myButton.width = 140;
-                myButton.height = 140;
-                myButton.marginLeft = 10;
-                myButton.marginTop = 3; 
-                myButton.borderRadius = 7; 
-
-                myButton.backgroundColor = this.newShops[1];
-                this.stackLay.nativeElement.addChild(myButton);
-                myButton.on("tap", function (args: EventData) {
-                    let button = <Button>args.object;
-                    button.borderWidth = 2;
-                    button.borderColor = "black";
-
-
-                    localstorage.setItem("selectedList", button.text)
-                })
-            }
-        }
-
-        console.log(this.newShops.length);
-        console.log(this.shops.length);
-    }
-
-    viewList(args: EventData) {
-
-        this.routerExtensions.navigate(["/list"], { clearHistory: true });
-    }
-    addItem(args: EventData) {
-        
-        let a = new StackLayout();
-        let t = new Label(); 
-        let b = new Button(); 
-       
-        a.height = 100; 
-        a.backgroundColor = "gray"; 
-        b.text = "Button";
-
-        t.text = "test";
-        a.addChild(b);
-        a.addChild(t); 
-
-        this.test.nativeElement.addChild(a);
-        //this.routerExtensions.navigate(["/list"], { clearHistory: true });
+    
     }
 
     ngOnInit(): void {
         // Init your component properties here.
 
+        this.itemList = [];
+
+          var onValueEvent = function(result) {
+            //console.log("Event type: " + result.type);
+            //console.log("Key: " + result.key);
+            console.log("Value: " + JSON.stringify(result.value));
+
+            var jsonObj = JSON.parse(result.value);
+            //console.log("JSON Response: " + JSON.stringify(result));
+            //JSON.stringify(result);
+            //console.log("JSON Response: " + JSON.stringify(result.value.Fresh.Strawberries));
+            for(let i = 0; i < jsonObj.length; i++){
+
+                this.list.push(jsonObj[i].name);
+                console.log(jsonObj[i].name);
+            }
+
+          };
+        
+          // listen to changes in the /companies path
+          firebase.addValueEventListener(onValueEvent, "/users/" + localStorage.getItem("userID")).then(
+            function(listenerWrapper) {
+              var path = listenerWrapper.path;
+              var listeners = listenerWrapper.listeners; // an Array of listeners added
+              // you can store the wrapper somewhere to later call 'removeEventListeners'
+            }
+          );
+          this.list = [];
+
+     /*    for(let i = 0; i < this.itemList.length; i++){
+
+            this.list.push(new Item(this.itemList[i]));
+        } */
     }
 
     onDrawerButtonTap(): void {
