@@ -20,22 +20,35 @@
     -->
 
 <GridLayout class="page page-content">
-    <ContentView width="100%" height="100%" [class.map-marker]="isIOS">
-        <MapBox
-            showUserLocation="true"
-            [latitude]="latitude"
-            [longitude]="longitude"
-            zoomLevel="6"
-            delay="250"
-            hideCompass="false"
-            disableZoom="false"
-            disableRotation="false"
-            disableScroll="false"
-            disableTilt="false"
-            mapStyle="streets"
-            (mapReady)="onMapReady($event)"
-            accessToken="pk.eyJ1IjoiY3dpbHNvbjkwIiwiYSI6ImNqcnRlOWIxajBoYTE0YXRjNjJvMTdwcHkifQ.Bdf25GbLbokpGuIzjnp85Q"
-        >
-        </MapBox>
-    </ContentView>
+    <ios>
+            <ContentView width="100%" height="100%" [class.map-marker]="isIOS">
+                    <MapBox
+                        showUserLocation="true"
+                        [latitude]="latitude"
+                        [longitude]="longitude"
+                        zoomLevel="6"
+                        delay="250"
+                        hideCompass="false"
+                        disableZoom="false"
+                        disableRotation="false"
+                        disableScroll="false"
+                        disableTilt="false"
+                        mapStyle="streets"
+                        (mapReady)="onMapReady($event)"
+                        accessToken="pk.eyJ1IjoiY3dpbHNvbjkwIiwiYSI6ImNqcnRlOWIxajBoYTE0YXRjNjJvMTdwcHkifQ.Bdf25GbLbokpGuIzjnp85Q"
+                    >
+                    </MapBox>
+                </ContentView>
+            </ios>
+    <android>
+                    <maps:mapView latitude="{{ latitude }}" longitude="{{ longitude }}" mapAnimationsEnabled="{{ mapAnimationsEnabled }}"
+                                                    zoom="{{ zoom }}" bearing="{{ bearing }}" 
+                                                    tilt="{{ tilt }}" padding="{{ padding }}" mapReady="onMapReady"  
+                                                   markerSelect="onMarkerSelect" markerBeginDragging="onMarkerBeginDragging"
+                                                   markerEndDragging="onMarkerEndDragging" markerDrag="onMarkerDrag"
+                                                   cameraChanged="onCameraChanged" 
+                                                cameraMove="onCameraMove">
+                    </maps:mapView>
+                </android>
+    
 </GridLayout>

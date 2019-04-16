@@ -26,6 +26,8 @@
     "@angular/router": "~7.1.0",
     "nativescript-angular": "~7.1.0",
     "nativescript-floatingactionbutton": "5.0.0",
+    "nativescript-geolocation": "5.0.0",
+    "nativescript-google-maps-sdk": "2.7.0",
     "nativescript-localstorage": "^2.0.0",
     "nativescript-mapbox": "4.3.1",
     "nativescript-plugin-firebase": "8.0.1",
