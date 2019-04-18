@@ -89,68 +89,19 @@ export class MapComponent implements OnInit {
     onMapReady(args): void {
         console.log("testReady");
         if (isIOS) {
-            console.log("testIOS");
+            this.mapView = args.object;
+            this.mapView.latitude = this.latitude;
+            this.mapView.longitude = this.longitude; 
+            this.mapView.zoom = 15;
+            
+            var marker = new Marker();
+            marker.position = Position.positionFromLatLng(this.latitude, this.longitude);
+            marker.title = "Your location";
 
-            // fetch('https://api.foursquare.com/v2/venues/'+ r.response.groups[0].items[i].venue.id + '?client_id=1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2&client_secret=WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45&v=20180323')
+            marker.userData = { index: 1 };
 
-            fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=40&ll=55.953251,-3.188267&query=' + this.shopQuery)
-                .then((response) => response.json())
-                .then((r) => {
-                    //console.log(r.response.groups[0].items[0].venue.name);
-                    for (let i = 0; i < 40; i++) {
-                        if ((r.response.groups[0].items[i].venue.name).toString().includes("Tesco")) {
-                            args.map.addMarkers([
-                                {
-                                    lat: r.response.groups[0].items[i].venue.location.lat,
-                                    lng: r.response.groups[0].items[i].venue.location.lng,
-                                    title: r.response.groups[0].items[i].venue.name,
-                                    subtitle: r.response.groups[0].items[i].venue.location.address,
-                                    iconPath: 'app/images/blue.png',
-                                }]
-                            );
-                        } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Asda")) {
-                            args.map.addMarkers([
-                                {
-                                    lat: r.response.groups[0].items[i].venue.location.lat,
-                                    lng: r.response.groups[0].items[i].venue.location.lng,
-                                    title: r.response.groups[0].items[i].venue.name,
-                                    subtitle: r.response.groups[0].items[i].venue.location.address,
-                                    iconPath: 'app/images/green.png',
-                                }]
-                            );
-                        } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Sainsbury's")) {
-                            args.map.addMarkers([
-                                {
-                                    lat: r.response.groups[0].items[i].venue.location.lat,
-                                    lng: r.response.groups[0].items[i].venue.location.lng,
-                                    title: r.response.groups[0].items[i].venue.name,
-                                    subtitle: r.response.groups[0].items[i].venue.location.address,
-                                    iconPath: 'app/images/yellow.png',
-                                }]
-                            );
-                        }
-
-
-                    }
-
-                }).catch((err) => {
-                });
-
-
-            this.map = args.map;
-            console.log("Map Ready");
-
-            this.map.trackUser({
-                mode: "FOLLOW",
-                animated: true
-            })
-
-            this.map.setZoomLevel(
-                {
-                    level: 15, // mandatory, 0-20
-                    animated: false // default true
-                }
-            )
+            this.mapView.addMarker(marker);
+            this.addMarker();
         } else if (isAndroid) {
             console.log("testAndroid");
             this.mapView = args.object;
@@ -174,56 +125,101 @@ export class MapComponent implements OnInit {
     
 
     private addMarker(): void {
-        console.log("Setting a marker...");
-        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=40&ll=55.953251,-3.188267&query=' + this.shopQuery)
-            .then((response) => response.json())
-            .then((r) => {
-                //console.log(r.response.groups[0].items[0].venue.name);
-                for (let i = 0; i < 40; i++) {
-                    if ((r.response.groups[0].items[i].venue.name).toString().includes("Tesco")) {
-                        var marker = new Marker();
-                        marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
-                        marker.title = r.response.groups[0].items[i].venue.name;
-                        marker.snippet = r.response.groups[0].items[i].venue.location.address;
-                        marker.userData = { index: 1 };
-                        marker.color = "blue";
-                        let icon = new Image();
-                        icon.src = '~/app/images/blue2.png';
-                        icon.imageSource = imageSource.fromFile('~/app/images/blue2.png');
-                        marker.icon = icon;
-                        this.mapView.addMarker(marker);
-
-                    } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Asda")) {
-                        var marker = new Marker();
-                        marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
-                        marker.title = r.response.groups[0].items[i].venue.name;
-                        marker.snippet = r.response.groups[0].items[i].venue.location.address;
-                        marker.userData = { index: 1 };
-                        marker.color = "green";
-                        let icon = new Image();
-                        icon.src = '~/app/images/green2.png';
-                        icon.imageSource = imageSource.fromFile('~/app/images/green2.png');
-                        marker.icon = icon;
-                        this.mapView.addMarker(marker);
-                    } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Sainsbury's")) {
-                        var marker = new Marker();
-                        marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
-                        marker.title = r.response.groups[0].items[i].venue.name;
-                        marker.snippet = r.response.groups[0].items[i].venue.location.address;
-                        marker.userData = { index: 1 };
-                        marker.color = "orange";
-                        let icon = new Image();
-                        icon.src = '~/app/images/yellow2.png';
-                        icon.imageSource = imageSource.fromFile('~/app/images/yellow2.png');
-                        marker.icon = icon;
-                        this.mapView.addMarker(marker);
+        if (isIOS) {
+            console.log("Setting a marker...");
+            fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=40&ll=55.953251,-3.188267&query=' + this.shopQuery)
+                .then((response) => response.json())
+                .then((r) => {
+                    //console.log(r.response.groups[0].items[0].venue.name);
+                    for (let i = 0; i < 40; i++) {
+                        if ((r.response.groups[0].items[i].venue.name).toString().includes("Tesco")) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = "blue";
+                          
+                            this.mapView.addMarker(marker);
+    
+                        } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Asda")) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = "green";
+                        
+                            this.mapView.addMarker(marker);
+                        } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Sainsbury's")) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = "orange";
+                           
+                            this.mapView.addMarker(marker);
+                        }
+    
+    
                     }
-
-
-                }
-
-            }).catch((err) => {
-            });
+    
+                }).catch((err) => {
+                });
+        }else{
+            console.log("Setting a marker...");
+            fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=40&ll=55.953251,-3.188267&query=' + this.shopQuery)
+                .then((response) => response.json())
+                .then((r) => {
+                    //console.log(r.response.groups[0].items[0].venue.name);
+                    for (let i = 0; i < 40; i++) {
+                        if ((r.response.groups[0].items[i].venue.name).toString().includes("Tesco")) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = "blue";
+                            let icon = new Image();
+                            icon.src = '~/app/images/blue2.png';
+                            icon.imageSource = imageSource.fromFile('~/app/images/blue.png');
+                            marker.icon = icon;
+                            this.mapView.addMarker(marker);
+    
+                        } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Asda")) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = "green";
+                            let icon = new Image();
+                            icon.src = '~/app/images/green2.png';
+                            icon.imageSource = imageSource.fromFile('~/app/images/green.png');
+                            marker.icon = icon;
+                            this.mapView.addMarker(marker);
+                        } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Sainsbury's")) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = "orange";
+                            let icon = new Image();
+                            icon.src = '~/app/images/yellow2.png';
+                            icon.imageSource = imageSource.fromFile('~/app/images/yellow.png');
+                            marker.icon = icon;
+                            this.mapView.addMarker(marker);
+                        }
+    
+    
+                    }
+    
+                }).catch((err) => {
+                });
+        }
+        
 
     }
 
