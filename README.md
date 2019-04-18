@@ -1,6 +1,6 @@
 # shopping_list
 A location based shopping app
-If you require api key for google maps, message Ryan 
+-If you require api key for google maps, message Ryan 
 
 # Updates
 
