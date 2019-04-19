@@ -26,21 +26,55 @@
 		<string>LaunchScreen</string>
 		<key>UIRequiresFullScreen</key>
 		<true/>
-		<key>UIRequiredDeviceCapabilities</key>
+	<key>UIRequiredDeviceCapabilities</key>
 		<array>
 			<string>armv7</string>
 		</array>
+	<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+					<string>Editor</string>
+				<key>CFBundleURLName</key>
+					<string>REVERSED_CLIENT_ID</string>
+				<key>CFBundleURLSchemes</key>
+					<array>
+						<string>com.googleusercontent.apps.996358647306-61o5rbkvq0v28oukckv528kh70q4afpb</string>
+					</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>org.nativescript.napierShoppingList</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb649757818813153</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+		<string>649757818813153</string>
+	<key>FacebookDisplayName</key>
+		<string>NapierShopping</string>
+	<key>LSApplicationQueriesSchemes</key>
+			<array>
+				<string>fbapi</string>
+				<string>fb-messenger-share-api</string>
+				<string>fbauth2</string>
+				<string>fbshareextension</string>
+			</array>
 		<key>UISupportedInterfaceOrientations</key>
-		<array>
-			<string>UIInterfaceOrientationPortrait</string>
-		</array>
+			<array>
+				<string>UIInterfaceOrientationPortrait</string>
+			</array>
 		<key>UISupportedInterfaceOrientations~ipad</key>
-		<array>
-			<string>UIInterfaceOrientationLandscapeLeft</string>
-			<string>UIInterfaceOrientationLandscapeRight</string>
-			<string>UIInterfaceOrientationPortrait</string>
-			<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		</array>
+			<array>
+				<string>UIInterfaceOrientationLandscapeLeft</string>
+				<string>UIInterfaceOrientationLandscapeRight</string>
+				<string>UIInterfaceOrientationPortrait</string>
+				<string>UIInterfaceOrientationPortraitUpsideDown</string>
+			</array>
 		<key>UIStatusBarStyle</key>
 		<string>UIStatusBarStyleLightContent</string>
 		<key>UIViewControllerBasedStatusBarAppearance</key>

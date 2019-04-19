@@ -19,13 +19,13 @@
     <StackLayout verticalAlignment="top" width="100%">
         <TextField hint="Add Item" autocorrect="true" returnKeyType="done" height="10%"></TextField>
     </StackLayout>
-    <ListView class="list-group" [items]="list" verticalAlignment="bottom" width="100%" height="75%" (longPress)="onLongPress($event)">
-        <ng-template let-list="item">
-            <StackLayout class="list-group-item">
-                <Label [text]="list.values" (tap)="selectItem($event)" style="text-decoration: none"></Label>
+    <RadListView class="list-group" [items]="list" verticalAlignment="bottom" width="100%" height="75%" (longPress)="onLongPress($event)">
+        <ng-template tkListItemTemplate let-list="item">
+            <StackLayout orientation="vertical" class="list-group-item">
+                <Label class="nameLabel" [text]="item.name"></Label>
             </StackLayout>
         </ng-template>
-    </ListView>
+    </RadListView>
     <FAB (tap)="addItem()"
     style="height: 10%;width: 20%;margin: 10%;background-color: #ff4081;horizontal-align: right;vertical-align: bottom;"
     icon="res://icon-plus" rippleColor="#f1f1f1" class="fab-button"></FAB>

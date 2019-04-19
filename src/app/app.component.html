@@ -3,9 +3,9 @@ RadSideDrawer is a UI component part of the Progress NativeScript UI set of comp
 Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
 http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
 -->
-<RadSideDrawer [drawerTransition]="sideDrawerTransition" [loaded]="loaded()">
+<RadSideDrawer [drawerTransition]="sideDrawerTransition" >
     <GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
-        <StackLayout row="0" class="sidedrawer-header" >
+        <StackLayout row="0" class="sidedrawer-header">
             <Label class="sidedrawer-header-image fa" text="&#xf2bd;" (tap)="onNavItemTap('/login')"></Label>
             <Label class="sidedrawer-header-brand" [text]="userName"></Label>
             <Label class="footnote" [text]="emailAddy"></Label>
@@ -25,11 +25,11 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
                     <Label col="1" text="Map" class="p-r-10"></Label>
                 </GridLayout>
 
-                <GridLayout columns="auto, *" class="sidedrawer-list-item"
+                <!-- <GridLayout columns="auto, *" class="sidedrawer-list-item"
                     [class.selected]="isComponentSelected('/list')" (tap)="onNavItemTap('/list')">
                     <Label col="0" text="&#xf279;" class="fa"></Label>
                     <Label col="1" text="List" class="p-r-10"></Label>
-                </GridLayout>
+                </GridLayout> -->
 
                 <StackLayout class="hr-light"></StackLayout>
 
@@ -37,6 +37,13 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
                     [class.selected]="isComponentSelected('/settings')" (tap)="onNavItemTap('/settings')">
                     <Label col="0" text="&#xf013;" class="fa"></Label>
                     <Label col="1" text="Settings" class="p-r-10"></Label>
+                </GridLayout>
+
+                <StackLayout class="hr-light"></StackLayout>
+
+                <GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="logout()">
+                    <Label col="0" text="&#xf1f1;" class="fa"></Label>
+                    <Label col="1" text="Logout" class="p-r-10"></Label>
                 </GridLayout>
             </StackLayout>
         </ScrollView>

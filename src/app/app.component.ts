@@ -16,15 +16,15 @@ import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular/side-
     templateUrl: "app.component.html"
 })
 
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
 
-    @ViewChild(RadSideDrawerComponent) public drawerComponent: RadSideDrawerComponent;
-    private drawer: RadSideDrawer;
+    //@ViewChild(RadSideDrawerComponent) public drawerComponent: RadSideDrawerComponent;
+    //private drawer: RadSideDrawer;
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;
     public userName;
     public emailAddy;
-    public user: User;
+    //public user: User;
 
     constructor(private router: Router, private routerExtensions: RouterExtensions, private changeDetectionRef: ChangeDetectorRef) {
         // Use the component constructor to inject services.
@@ -53,34 +53,38 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.emailAddy = "placeholder@place.holder";
     }
 
-    ngAfterViewInit(): void{
+    /* ngAfterViewInit(): void{
 
-        this.drawer = this.drawerComponent.sideDrawer;
+         this.drawer = this.drawerComponent.sideDrawer;
         this.changeDetectionRef.detectChanges();
 
         if(isIOS){
             this.drawer.ios.defaultSideDrawer.allowEdgeSwipe = false;
         }
-    }
+    } */
 
-    onLoaded(){
+    // onLoaded(){
 
-        if(isAndroid){
+    //     // if(isAndroid){
 
-            this.drawer.android.setTouchTargetThreshold(0);
-        }
+    //     //     this.drawer.android.setTouchTargetThreshold(0);
+    //     // }
 
-    }
+    // } 
 
     get sideDrawerTransition(): DrawerTransitionBase {
 
-        var tempUser = localStorage.getItem('user');
-        this.user = JSON.parse(tempUser);
-
-        //console.log(this.user.email);
-        //this.emailAddy = this.user.email;
-
+        
         return this._sideDrawerTransition;
+    }
+
+    loggedIn(): void {
+
+        this.routerExtensions.navigate(['/login'], {
+            transition: {
+                name: "fade"
+            }
+        });
     }
 
     isComponentSelected(url: string): boolean {
@@ -89,6 +93,20 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     onNavItemTap(navItemRoute: string): void {
         this.routerExtensions.navigate([navItemRoute], {
+            transition: {
+                name: "fade"
+            }
+        });
+
+        const sideDrawer = <RadSideDrawer>app.getRootView();
+        sideDrawer.closeDrawer();
+    }
+
+    logout(){
+
+        firebase.logout();
+        localStorage.clear();
+        this.routerExtensions.navigate(['/login'], {
             transition: {
                 name: "fade"
             }

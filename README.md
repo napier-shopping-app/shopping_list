@@ -1,5 +1,6 @@
 # shopping_list
 A location based shopping app
+-If you require api key for google maps, message Ryan 
 
 # Updates
 
@@ -11,6 +12,11 @@ A location based shopping app
 6. Added login page - accessed through the menu bar and clicking on the avatar at the top
 7. Login page saves a user data, this can be changed to store until logout or only while app is open
 8. List functional 100% - data is retained / items able to be added.
+9. Login page is now start page, unless user is logged in already then it's home
+10. user details now need to be pulled from firebase instead of locally (?)
+11. Facebook login still has issues with the app being in development mode
+12. Map functionality added for both iPhone and Android using Google Maps (Request api key for development use).
+13. Added map scroll bar for shops - allows user to select shop and show markers based on shop + user location. 
 
 # Home
 
@@ -22,8 +28,8 @@ Just the maps which will show the current location and surrounding shops (user d
 
 # Settings
 
-Displays userinfo and app preferences
+Displays userinfo and app preferences (needs some more work)
 
 # Login
 
-Login is done through email and password, login with gmail/facebook needs to be added
+Login is done through gmail/facebook option for Anon or to bypass completely
