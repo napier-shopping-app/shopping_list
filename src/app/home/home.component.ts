@@ -30,13 +30,13 @@ export class HomeComponent implements OnInit {
 
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
-
         //gets user ID from firebase
         firebase.getCurrentUser()
             .then(user => localStorage.setItem("userID", user.uid))
             .catch(error => console.log(error));
 
         this.loadList();
+
     }
 
     ngAfterViewInit() {
@@ -147,8 +147,8 @@ export class HomeComponent implements OnInit {
             console.log(elem.text);
         }
     }
-
-    refreshList(args){
+    
+        refreshList(args){
 
         var pullRefresh: PullToRefresh = args.object;
 

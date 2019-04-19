@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // Init your component properties here.
-
+    localStorage.setItem('Shops', JSON.stringify(this.shops));
     var listener = { 
       onAuthStateChanged: function(data) {
 
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
   shops = [];
   bypassLogin(){
     
-    localStorage.setItemObject('Shops', JSON.stringify(this.shops));
+    //localStorage.setItemObject('Shops', JSON.stringify(this.shops));
     this.routerExtensions.navigate(['/home'], { clearHistory: true });
   }
 

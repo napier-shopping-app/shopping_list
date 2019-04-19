@@ -30,5 +30,7 @@ if (platform.isIOS) {
         NO_ERRORS_SCHEMA
     ],
     providers: [Data]
+    
 })
+
 export class AppModule { }
