@@ -10,7 +10,7 @@ import { Button } from "tns-core-modules/ui/button";
 import {Label} from "tns-core-modules/ui/label";
 import { StackLayout } from "ui/layouts/stack-layout";
 import * as localstorage from "nativescript-localstorage";
-
+import * as Geolocation from "nativescript-geolocation";
 
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 
@@ -37,12 +37,7 @@ export class HomeComponent implements OnInit {
         // Use the component constructor to inject services.
       
 
-        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret='+ this.client_secret + '&v=20180323&limit=5&ll=55.953251,-3.188267&query=' + this.shopQuery)
-            .then((response) => response.json())
-            .then((r) => {
-                console.log(r.response.groups[0].items[0].venue.name);
-            }).catch((err) => {
-            });
+        
     }
   
     ngAfterViewInit() {
@@ -103,7 +98,28 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         // Init your component properties here.
-
+        Geolocation.isEnabled().then(function (isEnabled) {
+            if (!isEnabled) {
+                Geolocation.enableLocationRequest().then(function () {
+                }, function (e) {
+                    console.log("Error: " + (e.message || e));
+                });
+            }else{
+                let location = Geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).
+                then(function(loc) {
+                    if (loc) {
+                        console.log(loc.latitude);
+                        localStorage.setItem("latitude", String(loc.latitude));
+                        localStorage.setItem("longitude",  String(loc.longitude));
+                    }
+                }, function(e){
+                    console.log("Error: " + e.message);
+                });
+            }
+        }, function (e) {
+            console.log("Error: " + (e.message || e));
+        });
+        console.log("Current location is: " + localStorage.getItem("latitude") + "/" + localStorage.getItem("longitude"));
     }
 
     onDrawerButtonTap(): void {

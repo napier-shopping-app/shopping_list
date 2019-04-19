@@ -15,30 +15,31 @@
     <Label class="action-bar-title" text="Map"></Label>
 </ActionBar>
 
-    <!--
+<!--
     Main view area of the page.
     -->
 
-<GridLayout class="page page-content">
-    <ios>
-        <maps:mapView latitude="{{ latitude }}" longitude="{{ longitude }}" mapAnimationsEnabled="{{ mapAnimationsEnabled }}"
-        zoom="{{zoom}}" bearing="{{ bearing }}" 
-        tilt="{{ tilt }}" padding="{{ padding }}" (mapReady)="onMapReady($event)"  
-       markerSelect="onMarkerSelect" markerBeginDragging="onMarkerBeginDragging"
-       markerEndDragging="onMarkerEndDragging" markerDrag="onMarkerDrag"
-       cameraChanged="onCameraChanged" 
-    cameraMove="onCameraMove">
-</maps:mapView>
-            </ios>
-    <android>
-                    <maps:mapView latitude="{{ latitude }}" longitude="{{ longitude }}" mapAnimationsEnabled="{{ mapAnimationsEnabled }}"
-                                                    zoom="{{zoom}}" bearing="{{ bearing }}" 
-                                                    tilt="{{ tilt }}" padding="{{ padding }}" (mapReady)="onMapReady($event)"  
-                                                   markerSelect="onMarkerSelect" markerBeginDragging="onMarkerBeginDragging"
-                                                   markerEndDragging="onMarkerEndDragging" markerDrag="onMarkerDrag"
-                                                   cameraChanged="onCameraChanged" 
-                                                cameraMove="onCameraMove">
-                    </maps:mapView>
-                </android>
-    
+<StackLayout class="page page-content">
+    <ScrollView orientation="horizontal">
+        <StackLayout orientation="horizontal" style="margin-left:2%;margin-right:2%;height:10%;">
+            <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#00539F;" id="deepskyblue" text="Tesco"></Button>
+            <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:orange;" text="Sainsbury's"></Button>
+            <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#78BE20;" text="Asda"></Button>
+            <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#FFDA1A;" text="IKEA"></Button>
+            <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#00563F;" text="Morrisons"></Button>
+
+        </StackLayout>
+
+    </ScrollView>
+
+<GridLayout>
+        <maps:mapView latitude="{{ latitude }}" longitude="{{ longitude }}"
+        mapAnimationsEnabled="{{ mapAnimationsEnabled }}" zoom="{{zoom}}" bearing="{{ bearing }}" tilt="{{ tilt }}"
+        padding="{{ padding }}" (mapReady)="onMapReady($event)" markerSelect="onMarkerSelect"
+        markerBeginDragging="onMarkerBeginDragging" markerEndDragging="onMarkerEndDragging" markerDrag="onMarkerDrag"
+        cameraChanged="onCameraChanged" cameraMove="onCameraMove">
+    </maps:mapView>
 </GridLayout>
+    
+
+</StackLayout>

@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { registerElement } from 'nativescript-angular/element-registry';
 import * as app from "tns-core-modules/application";
-import { MapboxViewApi, MapboxView, latitudeProperty, longitudeProperty } from "nativescript-mapbox";
+//import { MapboxViewApi, MapboxView, latitudeProperty, longitudeProperty } from "nativescript-mapbox";
 
 import { Page } from "tns-core-modules/ui/page";
 
-registerElement("Mapbox", () => MapboxView);
+//registerElement("Mapbox", () => MapboxView);
 registerElement("MapView", () => require("nativescript-google-maps-sdk").MapView);
 import { isAndroid, isIOS, device, screen } from "tns-core-modules/platform";
 
@@ -14,7 +14,7 @@ import * as imageSource from "tns-core-modules/image-source";
 import * as Geolocation from "nativescript-geolocation";
 
 import { Image } from "tns-core-modules/ui/image";
-import { MapboxMarker } from "nativescript-mapbox";
+//import { MapboxMarker } from "nativescript-mapbox";
 import { MapView, Position, Marker } from "nativescript-google-maps-sdk";
 import * as localStorage from "nativescript-localstorage";
 
@@ -26,13 +26,13 @@ import * as localStorage from "nativescript-localstorage";
 
 export class MapComponent implements OnInit {
 
-    private map: MapboxViewApi;
+    //private map: MapboxViewApi;
     public latitude: number = 55.953251; // Edinburgh Lat/Long
     public longitude: number = -3.188267;
     
     private client_id = "1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2";
     private client_secret = "WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45";
-    private shopQuery = "tesco,asda,sainsbury's";
+    private shopQuery = "tesco,asda,sainsbury's,ikea,morrisons";
     private mapView: MapView;
     constructor(private page: Page) {
       
@@ -86,6 +86,84 @@ export class MapComponent implements OnInit {
     private userLat = "";
     private userLng = "";
 
+    select(args): void{
+        this.mapView.removeAllMarkers();
+        var button = args.object;
+        
+        var shop = button.text; 
+       
+        var marker = new Marker();
+        marker.position = Position.positionFromLatLng(this.latitude, this.longitude);
+        marker.title = "Your location";
+            
+        marker.userData = { index: 1 };
+
+        this.mapView.addMarker(marker);
+       
+
+        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=55.953251,-3.188267&query=' + this.shopQuery)
+        .then((response) => response.json())
+        .then((r) => {
+            //console.log(r.response.groups[0].items[0].venue.name);
+            for (let i = 0; i < 40; i++) {
+                if ((r.response.groups[0].items[i].venue.name).toString().includes("Tesco") && shop.includes("Tesco")) {
+                    var marker = new Marker();
+                    marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                    marker.title = r.response.groups[0].items[i].venue.name;
+                    marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                    marker.userData = { index: 1 };
+                    marker.color = 200;
+                  
+                    this.mapView.addMarker(marker);
+
+                } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Asda") && shop.includes("Asda")) {
+                    var marker = new Marker();
+                    marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                    marker.title = r.response.groups[0].items[i].venue.name;
+                    marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                    marker.userData = { index: 1 };
+                    marker.color = 120;
+                
+                    this.mapView.addMarker(marker);
+                } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Sainsbury's") && shop.includes("Sainsbury's")) {
+                    var marker = new Marker();
+                    marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                    marker.title = r.response.groups[0].items[i].venue.name;
+                    marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                    marker.userData = { index: 1 };
+                    marker.color = 25;
+                   
+                    this.mapView.addMarker(marker);
+                }
+                else if ((r.response.groups[0].items[i].venue.name).toString().includes("Morrisons") && shop.includes("Morrisons")) {
+                    var marker = new Marker();
+                    marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                    marker.title = r.response.groups[0].items[i].venue.name;
+                    marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                    marker.userData = { index: 1 };
+                    marker.color = 170;
+                   
+                    this.mapView.addMarker(marker);
+                }
+                else if ((r.response.groups[0].items[i].venue.name).toString().includes("IKEA") && shop.includes("IKEA")) {
+                    var marker = new Marker();
+                    marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                    marker.title = r.response.groups[0].items[i].venue.name;
+                    marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                    marker.userData = { index: 1 };
+                    marker.color = 16.5;
+                   
+                    this.mapView.addMarker(marker);
+                }
+
+
+            }
+
+        }).catch((err) => {
+        });
+}
+        
+        
     onMapReady(args): void {
         console.log("testReady");
         if (isIOS) {
@@ -97,7 +175,7 @@ export class MapComponent implements OnInit {
             var marker = new Marker();
             marker.position = Position.positionFromLatLng(this.latitude, this.longitude);
             marker.title = "Your location";
-
+                
             marker.userData = { index: 1 };
 
             this.mapView.addMarker(marker);
@@ -118,15 +196,19 @@ export class MapComponent implements OnInit {
             this.mapView.addMarker(marker);
             this.addMarker();
             
+            
         }
 
 
     }
     
 
+    
     private addMarker(): void {
+        
         if (isIOS) {
             console.log("Setting a marker...");
+            
             fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=40&ll=55.953251,-3.188267&query=' + this.shopQuery)
                 .then((response) => response.json())
                 .then((r) => {
@@ -138,7 +220,7 @@ export class MapComponent implements OnInit {
                             marker.title = r.response.groups[0].items[i].venue.name;
                             marker.snippet = r.response.groups[0].items[i].venue.location.address;
                             marker.userData = { index: 1 };
-                            marker.color = "blue";
+                            marker.color = 200;
                           
                             this.mapView.addMarker(marker);
     
@@ -148,7 +230,7 @@ export class MapComponent implements OnInit {
                             marker.title = r.response.groups[0].items[i].venue.name;
                             marker.snippet = r.response.groups[0].items[i].venue.location.address;
                             marker.userData = { index: 1 };
-                            marker.color = "green";
+                            marker.color = 120;
                         
                             this.mapView.addMarker(marker);
                         } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Sainsbury's")) {
@@ -157,7 +239,27 @@ export class MapComponent implements OnInit {
                             marker.title = r.response.groups[0].items[i].venue.name;
                             marker.snippet = r.response.groups[0].items[i].venue.location.address;
                             marker.userData = { index: 1 };
-                            marker.color = "orange";
+                            marker.color = 25;
+                           
+                            this.mapView.addMarker(marker);
+                        }
+                        else if ((r.response.groups[0].items[i].venue.name).toString().includes("Morrisons") ) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = 170;
+                           
+                            this.mapView.addMarker(marker);
+                        }
+                        else if ((r.response.groups[0].items[i].venue.name).toString().includes("IKEA")) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = 16.5;
                            
                             this.mapView.addMarker(marker);
                         }
@@ -180,11 +282,8 @@ export class MapComponent implements OnInit {
                             marker.title = r.response.groups[0].items[i].venue.name;
                             marker.snippet = r.response.groups[0].items[i].venue.location.address;
                             marker.userData = { index: 1 };
-                            marker.color = "blue";
-                            let icon = new Image();
-                            icon.src = '~/app/images/blue2.png';
-                            icon.imageSource = imageSource.fromFile('~/app/images/blue.png');
-                            marker.icon = icon;
+                            marker.color = 200;
+                          
                             this.mapView.addMarker(marker);
     
                         } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Asda")) {
@@ -193,11 +292,8 @@ export class MapComponent implements OnInit {
                             marker.title = r.response.groups[0].items[i].venue.name;
                             marker.snippet = r.response.groups[0].items[i].venue.location.address;
                             marker.userData = { index: 1 };
-                            marker.color = "green";
-                            let icon = new Image();
-                            icon.src = '~/app/images/green2.png';
-                            icon.imageSource = imageSource.fromFile('~/app/images/green.png');
-                            marker.icon = icon;
+                            marker.color = 120;
+                        
                             this.mapView.addMarker(marker);
                         } else if ((r.response.groups[0].items[i].venue.name).toString().includes("Sainsbury's")) {
                             var marker = new Marker();
@@ -205,11 +301,28 @@ export class MapComponent implements OnInit {
                             marker.title = r.response.groups[0].items[i].venue.name;
                             marker.snippet = r.response.groups[0].items[i].venue.location.address;
                             marker.userData = { index: 1 };
-                            marker.color = "orange";
-                            let icon = new Image();
-                            icon.src = '~/app/images/yellow2.png';
-                            icon.imageSource = imageSource.fromFile('~/app/images/yellow.png');
-                            marker.icon = icon;
+                            marker.color = 25;
+                           
+                            this.mapView.addMarker(marker);
+                        }
+                        else if ((r.response.groups[0].items[i].venue.name).toString().includes("Morrisons") ) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = 170;
+                           
+                            this.mapView.addMarker(marker);
+                        }
+                        else if ((r.response.groups[0].items[i].venue.name).toString().includes("IKEA")) {
+                            var marker = new Marker();
+                            marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
+                            marker.title = r.response.groups[0].items[i].venue.name;
+                            marker.snippet = r.response.groups[0].items[i].venue.location.address;
+                            marker.userData = { index: 1 };
+                            marker.color = 16.5;
+                           
                             this.mapView.addMarker(marker);
                         }
     

@@ -10,8 +10,9 @@ import * as platform from "platform";
 declare var GMSServices: any;
 
 if (platform.isIOS) { 
-    GMSServices.provideAPIKey("AIzaSyAJ_ZYLoGFy9LiBBAVM0ArWvjWd3NXK82Q");
+    GMSServices.provideAPIKey("");
   }
+  //Message Ryan for api key
 @NgModule({
     bootstrap: [
         AppComponent
