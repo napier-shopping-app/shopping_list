@@ -5,14 +5,15 @@ import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angul
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { Data } from "./providers/data/data";
-
 import * as platform from "platform";
+
 declare var GMSServices: any;
 
+//
 if (platform.isIOS) { 
     GMSServices.provideAPIKey("");
   }
-  //Message Ryan for api key
+
 @NgModule({
     bootstrap: [
         AppComponent

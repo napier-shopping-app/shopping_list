@@ -9,14 +9,10 @@ export class User {
    public email: string;
    public name: string;
    public profileImageURL: string;
-   public isNewUser: boolean;
-   public providerId: string;
-   public creationTimeStamp: Date;
-   public lastSignInTimeStamp: Date;
-
-    constructor() {
-
-    }
+   //public isNewUser: boolean;
+   //public providerId: string;
+   //public creationTimeStamp: Date;
+   //public lastSignInTimeStamp: Date;
 
 }
 

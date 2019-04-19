@@ -10,8 +10,9 @@ import { Router, NavigationExtras } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as localStorage from "nativescript-localstorage";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
-let pokemonList = [" ", "Tesco", "ASDA", "Morrisons", "Sainsburies", "IKEA",
-    "M&S", "ALDI", "LIDL", "Co-Op", "Costcutter"];
+import * as firebase from "nativescript-plugin-firebase";
+let categoryList = [" ", "Frozen", "Fresh", "Vegetables", "Fruit", "Meat",
+    "Dairy", "Grain", "Drinks"];
 
 @Component({
     selector: "AddList",
@@ -25,32 +26,32 @@ export class AddListComponent implements OnInit {
     picker: ListPicker;
     private _activatedUrl: string;
     public shops = [];
-    public pokemons: Array<string> = [];
+    public categories: Array<string> = [];
     public picked: string;
+    public uID: string;
+
     constructor(private router: Router, private data: Data, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
         this.shops = JSON.parse(localStorage.getItem("Shops"));
-        for (let pokemon of pokemonList) {
-            this.pokemons.push(pokemon);
+        for (let category of categoryList) {
+            this.categories.push(category);
         }
     }
     showPicker() {
+        
         this.test.nativeElement.style.visibility = "visible";
-
-    }
-
-    update() {
-
 
     }
 
     public selectedIndexChanged(args) {
         let picker = <ListPicker>args.object;
         this.picker = picker;
-        this.picked = this.pokemons[picker.selectedIndex];
+        this.picked = this.categories[picker.selectedIndex];
     }
+
     ngOnInit(): void {
         // Init your component properties here.
+        this.uID = localStorage.getItem("userID");
     }
 
     onDrawerButtonTap(): void {
@@ -75,7 +76,35 @@ export class AddListComponent implements OnInit {
         this.shops.push(this.title + "|" + this.listColor);
         localStorage.setItem("Shops", JSON.stringify(this.shops));
         localStorage.setItem(this.title, JSON.stringify(this.items));
-        this.routerExtensions.navigate(["/home"], { clearHistory: true });
+
+    }
+
+    //adds new item to firebase RTDB
+    addItem(): void {
+
+        console.log(this.uID);
+
+        var item = this.title;
+        //var listID = this.uID;
+
+        if (item === "") {
+
+            alert("Please enter an Item Name");
+
+        }
+
+        else {
+            firebase.update(
+                '/users/' + this.uID + '/' + item,
+                {
+                    name: item,
+                    category: this.picked,
+                    completed: 0
+                }
+            )
+
+            this.routerExtensions.navigate(["/home"], { clearHistory: true });
+        }
     }
 
 }

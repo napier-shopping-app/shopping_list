@@ -12,23 +12,23 @@
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
-    <Label class="action-bar-title" text="Create a Shopping List"></Label>
+    <Label class="action-bar-title" text="Add New Item"></Label>
 </ActionBar>
 
 <StackLayout orientation="vertical">
     
     <!-- <Label class="shopName" text="Shop Name" style="margin-top:5%;margin-left:30%;"></Label> -->
 
-    <TextField  class="input input-border" autocorrect="false" hint="Name your list..." text="" returnKeyType="done" style="margin-top:2%;margin-left:5%;margin-right:5%;font-size:30%;font-weight:bold;" [(ngModel)]="title" (returnPress)="update($event)" #textField></TextField>
+    <TextField  class="input input-border" autocorrect="false" hint="Item Name..." text="" returnKeyType="done" style="margin-top:2%;margin-left:5%;margin-right:5%;font-size:20%;font-weight:bold;" [(ngModel)]="title" (returnPress)="update($event)" #textField></TextField>
     <!-- <StackLayout class="hr-light" style="margin-top:2%;margin-bottom:2%;"></StackLayout> -->
-    <Label class="shopTitle" text="Select your shop" style="margin-top:4%;margin-left:6%;margin-right:5%;font-size:20%;color:rgb(138, 138, 138)"></Label>
+    <Label class="shopTitle" text="Select Category" style="margin-top:15%;margin-left:6%;margin-right:5%;font-size:20%;color:rgb(138, 138, 138)"></Label>
     
         
-    <ListPicker [items]="pokemons" style="background-color:white;margin-top:1%;margin-left:5%;margin-right:5%;" selectedIndex="0" (selectedIndexChange)="selectedIndexChanged($event)" class="p-15"  #picker></ListPicker>
+    <ListPicker [items]="categories" style="background-color:white;margin-top:1%;margin-left:5%;margin-right:5%;" selectedIndex="0" (selectedIndexChange)="selectedIndexChanged($event)" class="p-15"  #picker></ListPicker>
     <!-- <StackLayout class="hr-light" style="margin-top:2%;margin-bottom:2%;"></StackLayout> -->
-    <Label class="shopColor" text="Select list colour" style="margin-top:4%;margin-left:6%;margin-right:5%;font-size:20%;color:rgb(138, 138, 138)"></Label>
-    
-    <ScrollView orientation="horizontal" >
+<!--     <Label class="shopColor" text="Select list colour" style="margin-top:4%;margin-left:6%;margin-right:5%;font-size:20%;color:rgb(138, 138, 138)"></Label>
+ -->    
+   <!--  <ScrollView orientation="horizontal" >
            <StackLayout orientation="horizontal" style="margin-left:2%;margin-right:2%;">
                 <Button (tap)="color($event)" class="btn btn-primary btn-active"style="border-radius:5%;width:40%;height:40%;background-color:deepskyblue;" id="deepskyblue" ></Button>
                 <Button (tap)="color($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:crimson;" id="crimson"></Button>
@@ -38,11 +38,11 @@
                 <Button (tap)="color($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:hotpink;" id="hotpink"></Button>
            </StackLayout>
             
-    </ScrollView>
+    </ScrollView> -->
     <GridLayout>
   
    
-    <Button (tap)="save()"  class="btn btn-primary btn-active"style="width:40%;height:40%;border-radius:5%;margin-right:4.5%;margin-bottom:4.5%" text="Add List"></Button>
+    <Button (tap)="addItem()"  class="btn btn-primary btn-active"style="width:65%;height:30%;border-radius:5%;margin-right:4.5%;margin-bottom:4.5%" text="Add Item"></Button>
     
 </GridLayout>
 

@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
     private _sideDrawerTransition: DrawerTransitionBase;
     public userName;
     public emailAddy;
+    public userIcon;
+    public uID;
     //public user: User;
 
     constructor(private router: Router, private routerExtensions: RouterExtensions, private changeDetectionRef: ChangeDetectorRef) {
@@ -48,9 +50,21 @@ export class AppComponent implements OnInit {
             console.log(`firebase.init error: ${error}`);
           }
         );
+
+        firebase.getCurrentUser()
+        .then(user => this.userIcon = user.profileImageURL)
+        .catch(error => console.error(error));
+
+        firebase.getCurrentUser()
+        .then(user => this.userName = user.name)
+        .catch(error => console.error(error));
+
+        firebase.getCurrentUser()
+        .then(user => this.emailAddy = user.email)
+        .catch(error => console.error(error));
         
-        this.userName = "Placeholder";
-        this.emailAddy = "placeholder@place.holder";
+        //this.userName = "Placeholder";
+        //this.emailAddy = "placeholder@place.holder";
     }
 
     /* ngAfterViewInit(): void{
@@ -85,6 +99,21 @@ export class AppComponent implements OnInit {
                 name: "fade"
             }
         });
+    }
+
+    updateList(){
+
+        let itemList = localStorage.getItem("listArray");
+
+        for(let i = 0; i < itemList.length; i++){
+
+            if(itemList[i].completed == 1){
+
+                firebase.remove("/users/" + localStorage.getItem("userID") + "/" + itemList[i].itemName);
+            }
+        }
+
+        this.onNavItemTap('/home');
     }
 
     isComponentSelected(url: string): boolean {

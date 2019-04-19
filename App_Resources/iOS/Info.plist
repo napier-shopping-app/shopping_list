@@ -49,12 +49,12 @@
 			<string>org.nativescript.napierShoppingList</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb649757818813153</string>
+				<string>fb992183597836688</string>
 			</array>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>
-		<string>649757818813153</string>
+		<string>992183597836688</string>
 	<key>FacebookDisplayName</key>
 		<string>NapierShopping</string>
 	<key>LSApplicationQueriesSchemes</key>

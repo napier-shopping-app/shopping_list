@@ -23,6 +23,7 @@ export class SettingsComponent implements OnInit {
 
     public username = "";
     public memberType = "";
+    public userIcon = "";
     public settings: Array<Settings>;
     public tempUser: User;
 
@@ -30,28 +31,27 @@ export class SettingsComponent implements OnInit {
     constructor(private page: Page) {
         // Use the component constructor to inject providers.
         this.getUser();
-        this.loadUserInfo();
+        this.loadSettings();
     }
 
     ngOnInit(): void {
         // Init your component properties here.
-        this.page.on('navigatedTo', (data) => {
-
-        })
 
     }
 
     getUser(): void {
 
         firebase.getCurrentUser()
-            .then(user => values.unshift(user.name))
-            .catch(error => console.log("Firebase User Error: " + error));
+        .then(user => this.username = user.name)
+        .catch(error => console.error(error));
+
+        firebase.getCurrentUser()
+        .then(user => this.userIcon = user.profileImageURL)
+        .catch(error => console.error(error));
     }
 
-    loadUserInfo(): void {
-
-        this.username = values[0];
-        this.memberType = values[1];
+    loadSettings(): void {
+        
     }
 
     onDrawerButtonTap(): void {

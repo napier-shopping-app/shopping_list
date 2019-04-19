@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
       type: firebase.LoginType.GOOGLE,
       // Optional 
       googleOptions: {
-        hostedDomain: "mygsuitedomain.com"
+        //hostedDomain: "google.com"
       }
     }).then(
       function (user) {
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
         console.log(user.email);
         console.log(user.uid);
         //this.user.isLoggedIn = true;
-        //localStorage.setItemObject('user', JSON.stringify(this.user));
+        localStorage.setItemObject('user', JSON.stringify(this.user));
         this.routerExtensions.navigate(["/home"], { clearHistory: true});
       },
       function (errorMessage) {

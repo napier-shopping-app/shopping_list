@@ -101,7 +101,7 @@ export class MapComponent implements OnInit {
         this.mapView.addMarker(marker);
        
 
-        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=55.953251,-3.188267&query=' + this.shopQuery)
+        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery)
         .then((response) => response.json())
         .then((r) => {
             //console.log(r.response.groups[0].items[0].venue.name);
@@ -209,7 +209,7 @@ export class MapComponent implements OnInit {
         if (isIOS) {
             console.log("Setting a marker...");
             
-            fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=40&ll=55.953251,-3.188267&query=' + this.shopQuery)
+            fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery)
                 .then((response) => response.json())
                 .then((r) => {
                     //console.log(r.response.groups[0].items[0].venue.name);
