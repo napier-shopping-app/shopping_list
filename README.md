@@ -15,6 +15,8 @@ A location based shopping app
 9. Login page is now start page, unless user is logged in already then it's home
 10. user details now need to be pulled from firebase instead of locally (?)
 11. Facebook login still has issues with the app being in development mode
+12. Map functionality added for both iPhone and Android using Google Maps (Request api key for development use).
+13. Added map scroll bar for shops - allows user to select shop and show markers based on shop + user location. 
 
 # Home
 
