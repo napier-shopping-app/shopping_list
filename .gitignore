@@ -69,3 +69,5 @@ typings/
 ehthumbs.db
 Thumbs.db
 *.dSYM
+
+nativescript_google_maps_api.xml

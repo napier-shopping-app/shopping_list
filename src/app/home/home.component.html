@@ -1,4 +1,4 @@
-<ActionBar class="action-bar" >
+<ActionBar class="action-bar">
     <!-- 
     Use the NavigationButton as a side-drawer button in Android
     because ActionItems are shown on the right side of the ActionBar
@@ -17,29 +17,46 @@
 </ActionBar>
 
 <StackLayout orientation="vertical">
-
-    <ScrollView orientation="horizontal" verticalAlignment="top">
-        <StackLayout orientation="horizontal" backgroundColor="{{ selected ? 'red' : 'white'}}" #stackLay>
-
-        </StackLayout>
-    </ScrollView>
-    
-<Button class="btn btn-primary btn-active" id="button" text="View List" (tap)="viewList($event)"></Button>
-<!-- <Button class="btn btn-primary btn-active" id="button" text="Add Item" (tap)="showModal()"></Button> -->
+    <!-- <Button class="btn btn-primary btn-active" id="button" text="View List" (tap)="viewList($event)"></Button>
+ -->
+    <!-- <Button class="btn btn-primary btn-active" id="button" text="Add Item" (tap)="showModal()"></Button> -->
     <GridLayout>
-            <ListView class="list-group" [items]="list" verticalAlignment="bottom" width="100%" height="75%" (longPress)="onLongPress($event)">
-                    <ng-template let-list="item">
-                        <StackLayout class="list-group-item">
-                            <Label [text]="list.values" (tap)="selectItem($event)" style="text-decoration: none"></Label>
-                        </StackLayout>
+        <ScrollView orientation="horizontal">
+            <StackLayout orientation="horizontal" style="margin-left:2%;margin-right:2%;height:10%;">
+                <Button (tap)="select($event)" class="btn btn-primary btn-active"
+                    style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#00539F;"
+                    id="deepskyblue" text="Tesco"></Button>
+                <Button (tap)="select($event)" class="btn btn-primary btn-active"
+                    style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:orange;"
+                    text="Sainsbury's"></Button>
+                <Button (tap)="select($event)" class="btn btn-primary btn-active"
+                    style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#78BE20;"
+                    text="Asda"></Button>
+                <Button (tap)="select($event)" class="btn btn-primary btn-active"
+                    style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#FFDA1A;"
+                    text="IKEA"></Button>
+                <Button (tap)="select($event)" class="btn btn-primary btn-active"
+                    style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#00563F;"
+                    text="Morrisons"></Button>
+            </StackLayout>
+        </ScrollView>
+
+        <ScrollView>
+            <PullToRefresh (refresh)="refreshList($event)">
+                <ListView class="list-group" [items]="itemList" verticalAlignment="bottom" width="100%" height="75%"
+                    (onLongPress)="onLongPress($event)" (tap)="selectItem($event)">
+                    <ng-template let-item="item">
+                        <GridLayout class="list-group-item" rows="*">
+                            <Label [text]="item" (tap)="selectItem($event)" style="text-decoration: none"></Label>
+                        </GridLayout>
                     </ng-template>
                 </ListView>
-        <StackLayout #test>
+            </PullToRefresh>
+        </ScrollView>
 
-        </StackLayout>
         <FAB [class.selected]="isComponentSelected('/addList')" (tap)="onNavItemTap('/addList')"
             style="height: 10%;width: 20%;margin: 10%;background-color: #ff4081;horizontal-align: right;vertical-align: bottom;"
             icon="res://iconplus" rippleColor="#f1f1f1" class="fab-button"></FAB>
+
     </GridLayout>
-    
 </StackLayout>

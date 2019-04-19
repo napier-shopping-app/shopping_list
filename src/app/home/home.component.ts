@@ -1,18 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef,ViewContainerRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, ViewContainerRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import { ActionItems } from "tns-core-modules/ui/action-bar/action-bar";
-import { EventData, backgroundImageProperty, eachDescendant } from "tns-core-modules/ui/page/page";
 import { registerElement } from 'nativescript-angular/element-registry';
-import { NavigationEnd, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
-import { Button } from "tns-core-modules/ui/button";
-import {Label} from "tns-core-modules/ui/label";
-import { StackLayout } from "ui/layouts/stack-layout";
 import * as localstorage from "nativescript-localstorage";
+import * as Geolocation from "nativescript-geolocation";
 import * as firebase from "nativescript-plugin-firebase";
 import { Item } from "../shared/item.model";
-import { forEach } from "@angular/router/src/utils/collection";
+import { PullToRefresh } from 'nativescript-pulltorefresh';
 
 
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
@@ -28,58 +24,140 @@ export class HomeComponent implements OnInit {
     @ViewChild('test') test: ElementRef;
     private _activatedUrl: string;
 
-    public itemList: Array<Item>;
-    public list: Array<string>;
+    public itemList = [];
+    public tempList;
+    public tempName: string;
 
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
-      
-        firebase.getCurrentUser()
-        .then(user => localStorage.setItem("userID", user.uid))
-        .catch(error => console.log(error));
 
+        //gets user ID from firebase
+        firebase.getCurrentUser()
+            .then(user => localStorage.setItem("userID", user.uid))
+            .catch(error => console.log(error));
+
+        this.loadList();
     }
-  
+
     ngAfterViewInit() {
-    
+
     }
 
     ngOnInit(): void {
         // Init your component properties here.
+        this.loadList();
 
-        this.itemList = [];
+        //gets user current location and saves it to localstorage
+        Geolocation.isEnabled().then(function (isEnabled) {
+            if (!isEnabled) {
+                Geolocation.enableLocationRequest().then(function () {
+                }, function (e) {
+                    console.log("Error: " + (e.message || e));
+                });
+            } else {
+                let location = Geolocation.getCurrentLocation({ desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000 }).
+                    then(function (loc) {
+                        if (loc) {
+                            console.log(loc.latitude);
+                            localStorage.setItem("latitude", String(loc.latitude));
+                            localStorage.setItem("longitude", String(loc.longitude));
+                        }
+                    }, function (e) {
+                        console.log("Error: " + e.message);
+                    });
+            }
+        }, function (e) {
+            console.log("Error: " + (e.message || e));
+        });
+        console.log("Current location is: " + localStorage.getItem("latitude") + "/" + localStorage.getItem("longitude"));
+    }
 
-          var onValueEvent = function(result) {
-            //console.log("Event type: " + result.type);
-            //console.log("Key: " + result.key);
-            console.log("Value: " + JSON.stringify(result.value));
+    //get list from firebase and load it to the listview
+    loadList() {
 
-            var jsonObj = JSON.parse(result.value);
-            //console.log("JSON Response: " + JSON.stringify(result));
-            //JSON.stringify(result);
-            //console.log("JSON Response: " + JSON.stringify(result.value.Fresh.Strawberries));
-            for(let i = 0; i < jsonObj.length; i++){
+        var onValueEvent = (result) => {
 
-                this.list.push(jsonObj[i].name);
-                console.log(jsonObj[i].name);
+            this.tempList = [];
+
+            //console.log(result);
+
+            for (var row in result.value) {
+
+                var jsonObj = result.value[row];
+                this.tempList.push(new Item(jsonObj.name, jsonObj.category, jsonObj.completed));
+                //console.log(jsonObj.name + " - " + jsonObj.category);
             }
 
-          };
-        
-          // listen to changes in the /companies path
-          firebase.addValueEventListener(onValueEvent, "/users/" + localStorage.getItem("userID")).then(
-            function(listenerWrapper) {
-              var path = listenerWrapper.path;
-              var listeners = listenerWrapper.listeners; // an Array of listeners added
-              // you can store the wrapper somewhere to later call 'removeEventListeners'
+            localStorage.setItemObject("listArray", this.tempList);
+            this.itemList = [];
+
+            for (let i = 0; i < this.tempList.length; i++) {
+
+                this.itemList.push(this.tempList[i].itemName);
+                
+                //console.log("Testing: " + this.tempList[i].itemName);
+                //console.log("Item Name: " + this.itemList[i]);
             }
-          );
-          this.list = [];
+        };
 
-     /*    for(let i = 0; i < this.itemList.length; i++){
 
-            this.list.push(new Item(this.itemList[i]));
-        } */
+
+        // listen to changes in the /users/'uid' path
+        firebase.addValueEventListener(onValueEvent, "/users/" + localStorage.getItem("userID"))
+            .then(
+                () => {
+                    console.log("Event Listener Added");
+                },
+                (error) => {
+                    console.error("Event Listener Error: " + error);
+                });
+    }
+
+
+
+    onLongPress(event): void{
+
+        console.log(event);
+    }
+
+    selectItem(args) {
+
+        var elem = args.object;
+
+        if(elem.style.textDecoration == "line-through"){
+
+            elem.style.textDecoration = "none";
+            firebase.update(
+                '/users/' + localStorage.getItem("userID") + '/' + elem.text,
+                {
+                    completed: 0
+                }
+            )
+            console.log(elem.text);
+        }
+        else{
+
+            elem.style.textDecoration = "line-through";
+            firebase.update(
+                '/users/' + localStorage.getItem("userID") + '/' + elem.text,
+                {
+                    completed: 1
+                }
+            )
+            console.log(elem.text);
+        }
+    }
+
+    refreshList(args){
+
+        var pullRefresh: PullToRefresh = args.object;
+
+        setTimeout(function(){
+            this.loadList();
+            pullRefresh.refreshing = false;
+        }, 1000);
+
+        console.log("Refreshing List");
     }
 
     onDrawerButtonTap(): void {

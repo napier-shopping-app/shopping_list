@@ -38,6 +38,7 @@ export class AddListComponent implements OnInit {
         }
     }
     showPicker() {
+        
         this.test.nativeElement.style.visibility = "visible";
 
     }
@@ -75,26 +76,35 @@ export class AddListComponent implements OnInit {
         this.shops.push(this.title + "|" + this.listColor);
         localStorage.setItem("Shops", JSON.stringify(this.shops));
         localStorage.setItem(this.title, JSON.stringify(this.items));
-       
+
     }
 
+    //adds new item to firebase RTDB
     addItem(): void {
 
-            console.log(this.uID);
+        console.log(this.uID);
 
-            var item = this.title;
-            //var listID = this.uID;
+        var item = this.title;
+        //var listID = this.uID;
 
+        if (item === "") {
+
+            alert("Please enter an Item Name");
+
+        }
+
+        else {
             firebase.update(
                 '/users/' + this.uID + '/' + item,
                 {
-                    name : item,
-                    category : this.picked,
+                    name: item,
+                    category: this.picked,
                     completed: 0
                 }
             )
 
-        this.routerExtensions.navigate(["/home"], { clearHistory: true });
+            this.routerExtensions.navigate(["/home"], { clearHistory: true });
+        }
     }
 
 }
