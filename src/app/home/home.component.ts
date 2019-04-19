@@ -142,5 +142,6 @@ export class HomeComponent implements OnInit {
 
         return this._activatedUrl === url;
     }
+
 }
 

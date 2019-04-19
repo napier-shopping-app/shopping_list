@@ -1,9 +1,8 @@
-import { Shop } from "./shop.model";
+import { Category } from "../shared/category.model";
 
 export class Item {
 
     public itemName: string;
-    public shop: Shop;
-
+    public category: Category;
 
 }
