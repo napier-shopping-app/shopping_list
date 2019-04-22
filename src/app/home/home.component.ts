@@ -27,14 +27,12 @@ export class HomeComponent implements OnInit {
     public itemList = [];
     public tempList;
     public tempName: string;
+    public user;
+    public uID: string;
 
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
         //gets user ID from firebase
-        firebase.getCurrentUser()
-            .then(user => localStorage.setItem("userID", user.uid))
-            .catch(error => console.log(error));
-
         this.loadList();
 
     }
@@ -45,8 +43,6 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         // Init your component properties here.
-        this.loadList();
-
         //gets user current location and saves it to localstorage
         Geolocation.isEnabled().then(function (isEnabled) {
             if (!isEnabled) {
@@ -58,7 +54,7 @@ export class HomeComponent implements OnInit {
                 let location = Geolocation.getCurrentLocation({ desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000 }).
                     then(function (loc) {
                         if (loc) {
-                            console.log(loc.latitude);
+                            //console.log(loc.latitude);
                             localStorage.setItem("latitude", String(loc.latitude));
                             localStorage.setItem("longitude", String(loc.longitude));
                         }
@@ -70,6 +66,12 @@ export class HomeComponent implements OnInit {
             console.log("Error: " + (e.message || e));
         });
         console.log("Current location is: " + localStorage.getItem("latitude") + "/" + localStorage.getItem("longitude"));
+
+        this.user = localStorage.getItem("user");
+        this.uID = this.user.uid;
+        //console.log(this.user);
+
+        this.loadList();
     }
 
     //get list from firebase and load it to the listview
@@ -94,7 +96,7 @@ export class HomeComponent implements OnInit {
             for (let i = 0; i < this.tempList.length; i++) {
 
                 this.itemList.push(this.tempList[i].itemName);
-                
+
                 //console.log("Testing: " + this.tempList[i].itemName);
                 //console.log("Item Name: " + this.itemList[i]);
             }
@@ -103,7 +105,7 @@ export class HomeComponent implements OnInit {
 
 
         // listen to changes in the /users/'uid' path
-        firebase.addValueEventListener(onValueEvent, "/users/" + localStorage.getItem("userID"))
+        firebase.addValueEventListener(onValueEvent, "/users/" + this.uID)
             .then(
                 () => {
                     console.log("Event Listener Added");
@@ -115,31 +117,33 @@ export class HomeComponent implements OnInit {
 
 
 
-    onLongPress(event): void{
+    onLongPress(event): void {
 
         console.log(event);
     }
 
+    //toggles a strike-through and updates the database
     selectItem(args) {
 
         var elem = args.object;
 
-        if(elem.style.textDecoration == "line-through"){
+        if (elem.style.textDecoration == "line-through") {
 
             elem.style.textDecoration = "none";
             firebase.update(
-                '/users/' + localStorage.getItem("userID") + '/' + elem.text,
+                '/users/' + this.uID + '/' + elem.text,
                 {
                     completed: 0
                 }
             )
             console.log(elem.text);
         }
-        else{
+        else {
 
             elem.style.textDecoration = "line-through";
+            elem.style.fontAttributes = "Bold";
             firebase.update(
-                '/users/' + localStorage.getItem("userID") + '/' + elem.text,
+                '/users/' + this.uID + '/' + elem.text,
                 {
                     completed: 1
                 }
@@ -147,17 +151,15 @@ export class HomeComponent implements OnInit {
             console.log(elem.text);
         }
     }
-    
-        refreshList(args){
 
-        var pullRefresh: PullToRefresh = args.object;
+    refreshList(args) {
 
-        setTimeout(function(){
-            this.loadList();
-            pullRefresh.refreshing = false;
-        }, 1000);
+       
+    }
 
-        console.log("Refreshing List");
+    select(args){
+
+        console.log(args);
     }
 
     onDrawerButtonTap(): void {

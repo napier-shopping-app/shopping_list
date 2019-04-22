@@ -1,15 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { alert, prompt } from "tns-core-modules/ui/dialogs";
-import { TextField } from "tns-core-modules/ui/text-field";
 import * as app from "tns-core-modules/application";
 import { Page } from "tns-core-modules/ui/page/page";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as firebase from "nativescript-plugin-firebase";
 import * as localStorage from "nativescript-localstorage";
-import * as user from "../shared/user.model";
-import { Router } from "@angular/router";
-import { registerContentQuery } from "@angular/core/src/render3";
 
 
 @Component({
@@ -22,6 +18,8 @@ import { registerContentQuery } from "@angular/core/src/render3";
 
 export class LoginComponent implements OnInit {
 
+  public item = "Apples";
+
   constructor(private page: Page, private routerExtensions: RouterExtensions, private zone: NgZone) {
     // Use the component constructor to inject providers.
     this.page.actionBarHidden = true;
@@ -29,15 +27,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // Init your component properties here.
-    localStorage.setItem('Shops', JSON.stringify(this.shops));
-    var listener = { 
-      onAuthStateChanged: function(data) {
+    //checks if user is logged in already then redirects to home
+    var listener = {
+      onAuthStateChanged: function (data) {
 
         console.log(data.loggedIn ? "Logged in to firebase" : "Logged out from firebase");
 
         if (data.loggedIn) {
 
           console.log("User info", data.user);
+          localStorage.setItemObject("user", data.user);
           this.routerExtensions.navigate(['/home'], { clearHistory: true });
         }
       },
@@ -53,12 +52,6 @@ export class LoginComponent implements OnInit {
     const sideDrawer = <RadSideDrawer>app.getRootView();
     sideDrawer.showDrawer();
   }
-  shops = [];
-  bypassLogin(){
-    
-    //localStorage.setItemObject('Shops', JSON.stringify(this.shops));
-    this.routerExtensions.navigate(['/home'], { clearHistory: true });
-  }
 
   //firebase login with google
   google() {
@@ -71,20 +64,39 @@ export class LoginComponent implements OnInit {
     }).then(
       function (user) {
         JSON.stringify(user);
-        console.log(user.email);
-        console.log(user.uid);
+        console.log("Email: " + user.email);
+        console.log("New User: " + user.additionalUserInfo.isNewUser);
+
+        var newUser: boolean = user.additionalUserInfo.isNewUser;
+
+        console.log("UID: " + user.uid);
         //this.user.isLoggedIn = true;
-        localStorage.setItemObject('user', JSON.stringify(this.user));
-        this.routerExtensions.navigate(["/home"], { clearHistory: true});
+        localStorage.setItemObject('user', user);
+
+        
+        //initialises new users with a list and preferences
+        if (newUser) {
+
+          console.log("Preparing new User: " + user.uid);
+          this.prepareNewUser(user.uid);
+
+          this.routerExtensions.navigate(["/home"], { clearHistory: true });
+        }
+        else{
+
+          this.routerExtensions.navigate(["/home"], { clearHistory: true });
+        }
+
       },
       function (errorMessage) {
         console.log(errorMessage);
+        alert(errorMessage);
       }
     );
   }
 
   //FOR TESTING ONLY
-  anon() {
+  /* anon() {
 
     firebase.login(
       {
@@ -101,7 +113,7 @@ export class LoginComponent implements OnInit {
           console.log(errorMessage);
         }
       )
-  }
+  } */
 
   //firebase login with facebook
   facebook() {
@@ -114,9 +126,22 @@ export class LoginComponent implements OnInit {
       }
     }).then(
       function (user) {
+
+        var newUser = user.additionalUserInfo.isNewUser;
         JSON.stringify(user);
-        console.log(user.email);
-        console.log(user.uid);
+        localStorage.setItemObject('user', user);
+
+        if (newUser) {
+
+          console.log("Preparing new User: " + user.uid);
+          this.prepareNewUser(user.uid);
+
+          this.routerExtensions.navigate(["/home"], { clearHistory: true });
+        }
+        else{
+
+          this.routerExtensions.navigate(["/home"], { clearHistory: true });
+        }
 
         //this.user = new User(user.email, user.name);
         //this.user.isLoggedIn = true;
@@ -125,7 +150,29 @@ export class LoginComponent implements OnInit {
       },
       function (errorMessage) {
         console.log(errorMessage);
+        alert(errorMessage);
       }
     );
   }
+
+  prepareNewUser(id): void{
+
+    firebase.update(
+      '/users/' + id + '/grocery_list/' + this.item,
+      {
+        name: this.item,
+        category: "Fresh",
+        completed: 0
+      }
+    )
+
+    firebase.update(
+      '/users/' + id + '/preferences',
+      {
+          radius: 10,
+      }
+    )
+
+  }
+
 }

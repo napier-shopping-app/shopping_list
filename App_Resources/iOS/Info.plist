@@ -56,7 +56,7 @@
 	<key>FacebookAppID</key>
 		<string>992183597836688</string>
 	<key>FacebookDisplayName</key>
-		<string>NapierShopping</string>
+		<string>Napier shopping app</string>
 	<key>LSApplicationQueriesSchemes</key>
 			<array>
 				<string>fbapi</string>

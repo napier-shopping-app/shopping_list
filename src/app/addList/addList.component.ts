@@ -11,8 +11,9 @@ import { RouterExtensions } from "nativescript-angular/router";
 import * as localStorage from "nativescript-localstorage";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
 import * as firebase from "nativescript-plugin-firebase";
+import { User } from "../shared/user.model";
 let categoryList = [" ", "Frozen", "Fresh", "Vegetables", "Fruit", "Meat",
-    "Dairy", "Grain", "Drinks"];
+    "Dairy", "Grain", "Drinks", "Furniture"];
 
 @Component({
     selector: "AddList",
@@ -25,14 +26,13 @@ export class AddListComponent implements OnInit {
     @ViewChild('textField') textField: ElementRef;
     picker: ListPicker;
     private _activatedUrl: string;
-    public shops = [];
     public categories: Array<string> = [];
     public picked: string;
     public uID: string;
+    public user;
 
     constructor(private router: Router, private data: Data, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
-        this.shops = JSON.parse(localStorage.getItem("Shops"));
         for (let category of categoryList) {
             this.categories.push(category);
         }
@@ -51,7 +51,9 @@ export class AddListComponent implements OnInit {
 
     ngOnInit(): void {
         // Init your component properties here.
-        this.uID = localStorage.getItem("userID");
+        this.user = localStorage.getItem("user");
+        this.uID = this.user.uid;
+        console.log(this.uID);
     }
 
     onDrawerButtonTap(): void {
@@ -67,16 +69,6 @@ export class AddListComponent implements OnInit {
         var button = args.object;
         alert(button.id + " has been selected!");
         this.listColor = button.id;
-    }
-
-    save(): void {
-
-        //alert("The list: " + this.title + " with color: " + this.listColor + " has been created!");
-
-        this.shops.push(this.title + "|" + this.listColor);
-        localStorage.setItem("Shops", JSON.stringify(this.shops));
-        localStorage.setItem(this.title, JSON.stringify(this.items));
-
     }
 
     //adds new item to firebase RTDB

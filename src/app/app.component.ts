@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
     //private drawer: RadSideDrawer;
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;
+    public user;
     public userName;
     public emailAddy;
     public userIcon;
@@ -51,17 +52,12 @@ export class AppComponent implements OnInit {
           }
         );
 
-        firebase.getCurrentUser()
-        .then(user => this.userIcon = user.profileImageURL)
-        .catch(error => console.error(error));
+        this.user = localStorage.getItem("user");
 
-        firebase.getCurrentUser()
-        .then(user => this.userName = user.name)
-        .catch(error => console.error(error));
-
-        firebase.getCurrentUser()
-        .then(user => this.emailAddy = user.email)
-        .catch(error => console.error(error));
+        this.userIcon = this.user.photoURL;
+        this.userName = this.user.name;
+        this.emailAddy = this.user.email;
+        this.uID = this.user.uid;
         
         //this.userName = "Placeholder";
         //this.emailAddy = "placeholder@place.holder";
@@ -109,10 +105,12 @@ export class AppComponent implements OnInit {
 
             if(itemList[i].completed == 1){
 
-                firebase.remove("/users/" + localStorage.getItem("userID") + "/" + itemList[i].itemName);
+                firebase.remove("/users/" + this.uID + "/" + itemList[i].itemName);
             }
         }
 
+        console.log("UID: " + this.uID);
+        alert("List Updated");
         this.onNavItemTap('/home');
     }
 
