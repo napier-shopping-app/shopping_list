@@ -4,11 +4,10 @@ import * as app from "tns-core-modules/application";
 import { registerElement } from 'nativescript-angular/element-registry';
 import { Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
-import * as localstorage from "nativescript-localstorage";
+import * as localStorage from "nativescript-localstorage";
 import * as Geolocation from "nativescript-geolocation";
 import * as firebase from "nativescript-plugin-firebase";
 import { Item } from "../shared/item.model";
-import { PullToRefresh } from 'nativescript-pulltorefresh';
 
 
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
@@ -33,8 +32,7 @@ export class HomeComponent implements OnInit {
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
         //gets user ID from firebase
-        this.loadList();
-
+        //this.loadList();
     }
 
     ngAfterViewInit() {

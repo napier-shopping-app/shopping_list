@@ -11,7 +11,7 @@ declare var GMSServices: any;
 
 //
 if (platform.isIOS) { 
-    GMSServices.provideAPIKey("");
+    GMSServices.provideAPIKey("AIzaSyAJ_ZYLoGFy9LiBBAVM0ArWvjWd3NXK82Q");
   }
 
 @NgModule({

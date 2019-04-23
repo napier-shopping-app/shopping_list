@@ -2,21 +2,14 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { registerElement } from 'nativescript-angular/element-registry';
 import * as app from "tns-core-modules/application";
-//import { MapboxViewApi, MapboxView, latitudeProperty, longitudeProperty } from "nativescript-mapbox";
-
 import { Page } from "tns-core-modules/ui/page";
-
-//registerElement("Mapbox", () => MapboxView);
-registerElement("MapView", () => require("nativescript-google-maps-sdk").MapView);
 import { isAndroid, isIOS, device, screen } from "tns-core-modules/platform";
-
-import * as imageSource from "tns-core-modules/image-source";
 import * as Geolocation from "nativescript-geolocation";
-
-import { Image } from "tns-core-modules/ui/image";
-//import { MapboxMarker } from "nativescript-mapbox";
 import { MapView, Position, Marker } from "nativescript-google-maps-sdk";
 import * as localStorage from "nativescript-localstorage";
+
+registerElement("MapView", () => require("nativescript-google-maps-sdk").MapView);
+
 
 @Component({
     selector: "Map",
