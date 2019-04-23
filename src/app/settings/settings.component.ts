@@ -8,8 +8,8 @@ import * as firebase from "nativescript-plugin-firebase";
 import { User } from "../shared/user.model";
 
 
-let labels = ["Account", "Membership Type", "Shared with:", "Map Radius"];
-let values = ["Premium", "N/A", "0.5km"];
+let labels = [];
+let values = [];
 
 @Component({
     selector: "Settings",
@@ -21,8 +21,10 @@ let values = ["Premium", "N/A", "0.5km"];
 
 export class SettingsComponent implements OnInit {
 
+    public user;
     public username = "";
     public memberType = "";
+    public uid;
     public userIcon = "";
     public settings: Array<Settings>;
     public tempUser: User;
@@ -30,27 +32,28 @@ export class SettingsComponent implements OnInit {
     //load the userinfo in the constructor
     constructor(private page: Page) {
         // Use the component constructor to inject providers.
-        this.getUser();
-        this.loadSettings();
+       
     }
 
     ngOnInit(): void {
         // Init your component properties here.
-
+        this.getUser();
+        this.loadSettings();
     }
 
     getUser(): void {
 
-        firebase.getCurrentUser()
-        .then(user => this.username = user.name)
-        .catch(error => console.error(error));
+        this.user = localStorage.getItem("user");
+        this.userIcon = this.user.photoURL;
+        this.username = this.user.displayName;
 
-        firebase.getCurrentUser()
-        .then(user => this.userIcon = user.profileImageURL)
-        .catch(error => console.error(error));
+        console.log(this.user.photoURL);
+        console.log(this.user.displayName);
     }
 
     loadSettings(): void {
+
+        this.user
         
     }
 

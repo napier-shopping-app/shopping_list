@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
         this.user = localStorage.getItem("user");
 
         this.userIcon = this.user.photoURL;
-        this.userName = this.user.name;
+        this.userName = this.user.displayName;
         this.emailAddy = this.user.email;
         this.uID = this.user.uid;
         

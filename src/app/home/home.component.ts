@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit {
 
 
         // listen to changes in the /users/'uid' path
-        firebase.addValueEventListener(onValueEvent, "/users/" + this.uID)
+        firebase.addValueEventListener(onValueEvent, "/users/" + this.uID + '/grocery_list')
             .then(
                 () => {
                     console.log("Event Listener Added");

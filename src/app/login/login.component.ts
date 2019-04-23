@@ -18,7 +18,7 @@ import * as localStorage from "nativescript-localstorage";
 
 export class LoginComponent implements OnInit {
 
-  public item = "Apples";
+  //public item = "Apples";
 
   constructor(private page: Page, private routerExtensions: RouterExtensions, private zone: NgZone) {
     // Use the component constructor to inject providers.
@@ -63,11 +63,13 @@ export class LoginComponent implements OnInit {
       }
     }).then(
       function (user) {
+
         JSON.stringify(user);
         console.log("Email: " + user.email);
         console.log("New User: " + user.additionalUserInfo.isNewUser);
 
         var newUser: boolean = user.additionalUserInfo.isNewUser;
+        var item = "Apples"
 
         console.log("UID: " + user.uid);
         //this.user.isLoggedIn = true;
@@ -78,8 +80,16 @@ export class LoginComponent implements OnInit {
         if (newUser) {
 
           console.log("Preparing new User: " + user.uid);
-          this.prepareNewUser(user.uid);
+          var groceryPath = "/grocery_list/" + item;
+          var prefPath = "/preferences";
+          var data = {};
 
+          data[groceryPath] = {name: item, category: "Fresh", completed: 0};
+          data[prefPath] = {radius: 10};
+
+
+          firebase.update('/users/' + user.uid, data);
+    
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
         }
         else{
@@ -130,11 +140,22 @@ export class LoginComponent implements OnInit {
         var newUser = user.additionalUserInfo.isNewUser;
         JSON.stringify(user);
         localStorage.setItemObject('user', user);
+        var item = "Apples"
+
 
         if (newUser) {
 
           console.log("Preparing new User: " + user.uid);
-          this.prepareNewUser(user.uid);
+
+          var groceryPath = "/grocery_list/" + item;
+          var prefPath = "/preferences";
+          var data = {};
+
+          data[groceryPath] = {name: item, category: "Fresh", completed: 0};
+          data[prefPath] = {radius: 10};
+
+
+          firebase.update('/users/' + user.uid, data);
 
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
         }
@@ -153,26 +174,6 @@ export class LoginComponent implements OnInit {
         alert(errorMessage);
       }
     );
-  }
-
-  prepareNewUser(id): void{
-
-    firebase.update(
-      '/users/' + id + '/grocery_list/' + this.item,
-      {
-        name: this.item,
-        category: "Fresh",
-        completed: 0
-      }
-    )
-
-    firebase.update(
-      '/users/' + id + '/preferences',
-      {
-          radius: 10,
-      }
-    )
-
   }
 
 }

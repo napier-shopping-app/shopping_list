@@ -87,7 +87,7 @@ export class AddListComponent implements OnInit {
 
         else {
             firebase.update(
-                '/users/' + this.uID + '/' + item,
+                '/users/' + this.uID + '/grocery_list/' + item,
                 {
                     name: item,
                     category: this.picked,
