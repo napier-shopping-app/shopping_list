@@ -31,8 +31,8 @@
         <ListView class="list-group" [items]="settings" (itemTap)="onItemTap($event)">
             <ng-template let-settings="item">
                 <StackLayout class="list-group-item">
-                    <Label [text]="settings.labels" style="font-weight: bold"></Label>
-                    <Label [text]="settings.values"></Label>
+                    <Label [text]="settings.nameList" style="font-weight: bold"></Label>
+                    <Label [text]="settings.valueList"></Label>
                 </StackLayout>
             </ng-template>
         </ListView>

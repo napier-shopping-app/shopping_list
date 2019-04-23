@@ -80,15 +80,32 @@ export class LoginComponent implements OnInit {
         if (newUser) {
 
           console.log("Preparing new User: " + user.uid);
-          var groceryPath = "/grocery_list/" + item;
-          var prefPath = "/preferences";
-          var data = {};
+          //var groceryPath = "/grocery_list/" + item;
+          //var prefPath = "/preferences";
+          //var data = {};
+          //var userPath = {[user.uid]: ""};
 
-          data[groceryPath] = {name: item, category: "Fresh", completed: 0};
-          data[prefPath] = {radius: 10};
+          //data[groceryPath] = {name: item, category: "Fresh", completed: 0};
+          //data[prefPath] = {radius: 10};
 
 
-          firebase.update('/users/' + user.uid, data);
+          firebase.push('/lists', 
+          {
+            "grocery_list":{
+
+              [item]:{
+                'name': item,
+                'category': "Fresh",
+                'completed': 0}
+            }
+          })
+          .then( 
+            function(result) {
+              localStorage.setItem("listKey", result.key);
+              console.log("Key: " + result.key);
+            })
+            .catch( function(error) { 
+              console.error(error);})
     
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
         }
@@ -146,17 +163,38 @@ export class LoginComponent implements OnInit {
         if (newUser) {
 
           console.log("Preparing new User: " + user.uid);
+          //var groceryPath = "/grocery_list/" + item;
+          //var prefPath = "/preferences";
+          //var data = {};
+          //var userPath = {[user.uid]: ""};
 
-          var groceryPath = "/grocery_list/" + item;
-          var prefPath = "/preferences";
-          var data = {};
-
-          data[groceryPath] = {name: item, category: "Fresh", completed: 0};
-          data[prefPath] = {radius: 10};
+          //data[groceryPath] = {name: item, category: "Fresh", completed: 0};
+          //data[prefPath] = {radius: 10};
 
 
-          firebase.update('/users/' + user.uid, data);
+          firebase.push('/lists', 
+          {
+            "grocery_list":{
 
+              [item]:{
+                'name': item,
+                'category': "Fresh",
+                'completed': 0}
+            },
+            "preferences": {
+
+              'radius': 10,
+              'account_type': 'Free'
+            }
+          })
+          .then( 
+            function(result) {
+              localStorage.setItem("listKey", result.key);
+              console.log("Key: " + result.key);
+            })
+            .catch( function(error) { 
+              console.error(error);})
+    
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
         }
         else{

@@ -77,6 +77,7 @@ export class AddListComponent implements OnInit {
         console.log(this.uID);
 
         var item = this.title;
+        var key = localStorage.getItem("listKey");
         //var listID = this.uID;
 
         if (item === "") {
@@ -87,7 +88,7 @@ export class AddListComponent implements OnInit {
 
         else {
             firebase.update(
-                '/users/' + this.uID + '/grocery_list/' + item,
+                '/lists/' + key + '/grocery_list/' + item,
                 {
                     name: item,
                     category: this.picked,

@@ -8,9 +8,6 @@ import * as firebase from "nativescript-plugin-firebase";
 import { User } from "../shared/user.model";
 
 
-let labels = [];
-let values = [];
-
 @Component({
     selector: "Settings",
     moduleId: module.id,
@@ -22,12 +19,16 @@ let values = [];
 export class SettingsComponent implements OnInit {
 
     public user;
-    public username = "";
-    public memberType = "";
+    public username;
+    public memberType;
     public uid;
-    public userIcon = "";
+    public userIcon;
     public settings: Array<Settings>;
     public tempUser: User;
+    public valueList = [];
+    public nameList = [];
+    public tempListValue;
+    public tempListName
 
     //load the userinfo in the constructor
     constructor(private page: Page) {
@@ -44,17 +45,15 @@ export class SettingsComponent implements OnInit {
     getUser(): void {
 
         this.user = localStorage.getItem("user");
-        this.userIcon = this.user.photoURL;
-        this.username = this.user.displayName;
 
-        console.log(this.user.photoURL);
-        console.log(this.user.displayName);
+        this.userIcon = this.user.profileImageURL;
+        this.username = this.user.name;
+        this.uid = this.user.uid;
     }
 
     loadSettings(): void {
 
-        this.user
-        
+ 
     }
 
     onDrawerButtonTap(): void {

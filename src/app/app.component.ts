@@ -54,8 +54,8 @@ export class AppComponent implements OnInit {
 
         this.user = localStorage.getItem("user");
 
-        this.userIcon = this.user.photoURL;
-        this.userName = this.user.displayName;
+        this.userIcon = this.user.profileImageURL;
+        this.userName = this.user.name;
         this.emailAddy = this.user.email;
         this.uID = this.user.uid;
         
@@ -100,16 +100,17 @@ export class AppComponent implements OnInit {
     updateList(){
 
         let itemList = localStorage.getItem("listArray");
+        var key = localStorage.getItem("listKey");
 
         for(let i = 0; i < itemList.length; i++){
 
             if(itemList[i].completed == 1){
 
-                firebase.remove("/users/" + this.uID + "/" + itemList[i].itemName);
+                firebase.remove("/lists/" + key + "/grocery_list/" + itemList[i].itemName);
             }
         }
 
-        console.log("UID: " + this.uID);
+        //console.log("UID: " + this.uID);
         alert("List Updated");
         this.onNavItemTap('/home');
     }

@@ -101,9 +101,9 @@ export class HomeComponent implements OnInit {
         };
 
 
-
+        var key = localStorage.getItem("listKey");
         // listen to changes in the /users/'uid' path
-        firebase.addValueEventListener(onValueEvent, "/users/" + this.uID + '/grocery_list')
+        firebase.addValueEventListener(onValueEvent, "/lists/" + key + '/grocery_list')
             .then(
                 () => {
                     console.log("Event Listener Added");
@@ -124,12 +124,13 @@ export class HomeComponent implements OnInit {
     selectItem(args) {
 
         var elem = args.object;
+        var key = localStorage.getItem("listKey");
 
         if (elem.style.textDecoration == "line-through") {
 
             elem.style.textDecoration = "none";
             firebase.update(
-                '/users/' + this.uID + '/' + elem.text,
+                '/lists/' + key + '/grocery_list/' + elem.text,
                 {
                     completed: 0
                 }
@@ -141,7 +142,7 @@ export class HomeComponent implements OnInit {
             elem.style.textDecoration = "line-through";
             elem.style.fontAttributes = "Bold";
             firebase.update(
-                '/users/' + this.uID + '/' + elem.text,
+                '/lists/' + key + '/grocery_list/' + elem.text,
                 {
                     completed: 1
                 }
@@ -150,10 +151,6 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    refreshList(args) {
-
-       
-    }
 
     select(args){
 
