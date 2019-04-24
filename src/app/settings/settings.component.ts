@@ -30,8 +30,7 @@ export class SettingsComponent implements OnInit {
     public tempUser: User;
     public data = [];
     public nameList = [];
-    //public tempListValue;
-    //public tempListName
+
 
     //load the userinfo in the constructor
     constructor(private page: Page) {
@@ -55,9 +54,6 @@ export class SettingsComponent implements OnInit {
     }
 
     loadSettings(): void {
-
-        //tempListName = [];
-        //tempListValue = [];
 
         var onValueEvent = function(result) {
 
@@ -87,7 +83,6 @@ export class SettingsComponent implements OnInit {
         for(let i = 0; i < tempListName.length; i++){
 
             this.data.push({ name: tempListName[i], value: tempListValue[i]});
-            //console.log(tempListName[i], tempListValue[i]);
         }
     }
 
