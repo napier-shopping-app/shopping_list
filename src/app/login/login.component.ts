@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
           var data = {};
 
           data[groceryPath] = { name: item, category: "Fresh", completed: 0 };
-          data[prefPath] = { radius: 10 };
+          data[prefPath] = { account_type: "Free", radius: 10};
 
 
           firebase.update('/users/' + user.uid, data);
