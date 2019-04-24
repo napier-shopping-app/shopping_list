@@ -31,8 +31,6 @@ export class HomeComponent implements OnInit {
 
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
-        //gets user ID from firebase
-        //this.loadList();
     }
 
     ngAfterViewInit() {
@@ -52,7 +50,6 @@ export class HomeComponent implements OnInit {
                 let location = Geolocation.getCurrentLocation({ desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000 }).
                     then(function (loc) {
                         if (loc) {
-                            //console.log(loc.latitude);
                             localStorage.setItem("latitude", String(loc.latitude));
                             localStorage.setItem("longitude", String(loc.longitude));
                         }
@@ -67,7 +64,6 @@ export class HomeComponent implements OnInit {
 
         this.user = localStorage.getItem("user");
         this.uID = this.user.uid;
-        //console.log(this.user);
 
         this.loadList();
     }
@@ -79,13 +75,11 @@ export class HomeComponent implements OnInit {
 
             this.tempList = [];
 
-            //console.log(result);
 
             for (var row in result.value) {
 
                 var jsonObj = result.value[row];
                 this.tempList.push(new Item(jsonObj.name, jsonObj.category, jsonObj.completed));
-                //console.log(jsonObj.name + " - " + jsonObj.category);
             }
 
             localStorage.setItemObject("listArray", this.tempList);
@@ -94,16 +88,11 @@ export class HomeComponent implements OnInit {
             for (let i = 0; i < this.tempList.length; i++) {
 
                 this.itemList.push(this.tempList[i].itemName);
-
-                //console.log("Testing: " + this.tempList[i].itemName);
-                //console.log("Item Name: " + this.itemList[i]);
             }
         };
 
-
-        var key = localStorage.getItem("listKey");
         // listen to changes in the /users/'uid' path
-        firebase.addValueEventListener(onValueEvent, "/lists/" + key + '/grocery_list')
+        firebase.addValueEventListener(onValueEvent, "/users/" + this.user.uid + '/grocery_list')
             .then(
                 () => {
                     console.log("Event Listener Added");
@@ -124,13 +113,12 @@ export class HomeComponent implements OnInit {
     selectItem(args) {
 
         var elem = args.object;
-        var key = localStorage.getItem("listKey");
 
         if (elem.style.textDecoration == "line-through") {
 
             elem.style.textDecoration = "none";
             firebase.update(
-                '/lists/' + key + '/grocery_list/' + elem.text,
+                '/users/' + this.user.uid + '/grocery_list/' + elem.text,
                 {
                     completed: 0
                 }
@@ -142,7 +130,7 @@ export class HomeComponent implements OnInit {
             elem.style.textDecoration = "line-through";
             elem.style.fontAttributes = "Bold";
             firebase.update(
-                '/lists/' + key + '/grocery_list/' + elem.text,
+                '/users/' + this.user.uid + '/grocery_list/' + elem.text,
                 {
                     completed: 1
                 }

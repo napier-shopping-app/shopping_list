@@ -53,7 +53,7 @@ export class SettingsComponent implements OnInit {
 
     loadSettings(): void {
 
- 
+        
     }
 
     onDrawerButtonTap(): void {
