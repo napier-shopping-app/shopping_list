@@ -21,12 +21,12 @@
     <!-- <Button class="btn btn-primary btn-active" id="button" text="Add Item" (tap)="showModal()"></Button> -->
     <ScrollView orientation="horizontal">
             <StackLayout orientation="horizontal" style="margin-left:2%;margin-right:2%;height:25%;">
+                <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:white;color:black;border-color:black;border-width:1px;padding-right:40%;padding-left:40%;" text="All"></Button>
                 <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#00539F;padding-right:40%;padding-left:40%;" text="Tesco"></Button>
                 <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:orange;padding-right:40%;padding-left:40%;" text="Sainsbury's"></Button>
                 <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#78BE20;padding-right:40%;padding-left:40%;" text="Asda"></Button>
                 <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#FFDA1A;padding-right:40%;padding-left:40%;" text="IKEA"></Button>
                 <Button (tap)="select($event)" class="btn btn-primary btn-active"style="border-radius:5%;margin-left:0.5%;border-radius:5%;background-color:#00563F;padding-right:40%;padding-left:40%;" text="Morrisons"></Button>
-
             </StackLayout>
         </ScrollView>
         <StackLayout class="hr-light"></StackLayout>
@@ -41,6 +41,7 @@
                             style="text-decoration: none;font-weight:bold;" (tap)="selectItem($event)" class="list-group-item-heading"></Label>
                             <Label [text]="item.itemCategory" 
                             style="text-decoration: none;" class="list-group-item-text"></Label>
+
                     </StackLayout>
                 </ng-template>
                 <GridLayout *tkListItemSwipeTemplate columns="*,auto" class="gridLayoutLayout">
