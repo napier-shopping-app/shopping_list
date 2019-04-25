@@ -98,7 +98,11 @@ export class MapComponent implements OnInit {
         .then((response) => response.json())
         .then((r) => {
             //console.log(r.response.groups[0].items[0].venue.name);
+            if (shop.includes("All")){
+                this.addMarker();
+            }
             for (let i = 0; i < 40; i++) {
+                
                 if ((r.response.groups[0].items[i].venue.name).toString().includes("Tesco") && shop.includes("Tesco")) {
                     var marker = new Marker();
                     marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);

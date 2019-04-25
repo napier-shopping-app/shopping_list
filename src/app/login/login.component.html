@@ -4,20 +4,21 @@
 
 <FlexboxLayout class="page">
     <StackLayout class="form">
-        <Image class="logo" src=""></Image>
-        <Label class="header" text="Napier Shopping"></Label>
-
+        
+        <Gif src="https://loading.io/spinners/shopping/lg.shopping-cart-loader-icon.gif" height="100" width="100" ></Gif>
+        <Label class="header" text="Napier Shopping" style="font-size:30%;color:#f44336;"></Label>
+        
         <PreviousNextView>
             <GridLayout rows="auto, auto, auto">
 
                 <StackLayout row="1">
-                    <Button class="btn btn-primary" text="Login with Google" (tap)="google()">
+                    <Button class="btn btn-primary" text="Login with Google" (tap)="google()" style="background-color:#f44336;">
                     </Button>
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
 
                <StackLayout row="2">
-                    <Button class="btn btn-primary" text="Login with Facebook" (tap)="facebook()";>
+                    <Button class="btn btn-primary" text="Login with Facebook" (tap)="facebook()" style="background-color:#f44336;";>
                     </Button>
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
