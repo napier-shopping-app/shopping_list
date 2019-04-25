@@ -39,57 +39,8 @@ export class HomeComponent implements OnInit {
 
 
     }
-    
-     onCellSwiping(args: ListViewEventData) {
-        var swipeLimits = args.data.swipeLimits;
-        var currentItemView = args.object;
-        var currentView;
-
-        if (args.data.x > 200) {
-            console.log("Notify perform left action");
-        } else if (args.data.x < -200) {
-            console.log("Notify perform right action");
-        }
-    }
 
 
-     onSwipeCellStarted(args: ListViewEventData) {
-        const swipeLimits = args.data.swipeLimits;
-        const swipeView = args['object'];
-    
-        const rightItem = swipeView.getViewById<View>('delete-view');
-        swipeLimits.left = 0; 
-        swipeLimits.right = rightItem.getMeasuredWidth();
-        swipeLimits.threshold = rightItem.getMeasuredWidth() / 2;
-        
-    }
-    // << angular-listview-swipe-action-release-limits
-    // >> angular-listview-swipe-action-release-execute
-     onSwipeCellFinished(args: ListViewEventData) {
-    }
-    // << angular-listview-swipe-action-release-execute
-    // >> angular-listview-swipe-action-handlers
-     onRightSwipeClick(args) {
-        console.log("Left swipe click");
-        
-           
-            
-        firebase.remove("/users/" + this.user.uid + "/grocery_list/" + args.object.bindingContext.itemName);
-        this.itemList.splice(this.itemList.indexOf(args.object.bindingContext), 1);    
-        
-
-       
-        this.listViewComponent.listView.notifySwipeToExecuteFinished();
-
-    }
-
-     
-    // << angular-listview-swipe-action-handlers
-
-     onPullToRefreshInitiated(args: any) {
-       this.loadList();
-       this.listViewComponent.listView.notifyPullToRefreshFinished();
-    }
     ngOnInit(): void {
         // Init your component properties here.
 
@@ -135,11 +86,59 @@ export class HomeComponent implements OnInit {
         this.shopArray.push(new Shop("Morrisons", "Meat"));
         this.shopArray[4].setCategories("Vegetables");
 
-        console.log(this.shopArray);
+        //console.log(this.shopArray);
 
         this.loadList();
     }
 
+    
+     onCellSwiping(args: ListViewEventData) {
+        var swipeLimits = args.data.swipeLimits;
+        var currentItemView = args.object;
+        var currentView;
+
+        if (args.data.x > 200) {
+            console.log("Notify perform left action");
+        } else if (args.data.x < -200) {
+            console.log("Notify perform right action");
+        }
+    }
+
+
+     onSwipeCellStarted(args: ListViewEventData) {
+        const swipeLimits = args.data.swipeLimits;
+        const swipeView = args['object'];
+    
+        const rightItem = swipeView.getViewById<View>('delete-view');
+        swipeLimits.left = 0; 
+        swipeLimits.right = rightItem.getMeasuredWidth();
+        swipeLimits.threshold = rightItem.getMeasuredWidth() / 2;
+        
+    }
+    // << angular-listview-swipe-action-release-limits
+    // >> angular-listview-swipe-action-release-execute
+     onSwipeCellFinished(args: ListViewEventData) {
+    }
+    // << angular-listview-swipe-action-release-execute
+    // >> angular-listview-swipe-action-handlers
+     onRightSwipeClick(args) {
+
+        console.log("Left swipe click"); 
+        firebase.remove("/users/" + this.user.uid + "/grocery_list/" + args.object.bindingContext.itemName);
+        this.itemList.splice(this.itemList.indexOf(args.object.bindingContext), 1);    
+              
+        this.listViewComponent.listView.notifySwipeToExecuteFinished();
+    }
+
+     
+    // << angular-listview-swipe-action-handlers
+
+     onPullToRefreshInitiated(args: any) {
+       this.loadList();
+       this.listViewComponent.listView.notifyPullToRefreshFinished();
+    }
+
+    
     //get list from firebase and load it to the listview
     loadList() {
 
@@ -221,12 +220,13 @@ export class HomeComponent implements OnInit {
         console.log(args.object.text);
 
         var button = args.object;
-
+        var found = false;
         var shop = button.text;
 
         if (shop.includes("All")) {
 
             this.loadList();
+            found = true;
         }
         else{
 
@@ -249,31 +249,20 @@ export class HomeComponent implements OnInit {
                                     itemCategory: this.tempList[x].category.name,
                                     itemCompleted: this.tempList[x].completed,
                                 });
+                                found = true;
                             }
                         }
                     }
                 }
             }
+        }
 
-            /* for (let i = 0; i < this.shopArray.length; i++) {
-
-                if (this.shopArray[i].shopName.includes(shop)) {
-
-                   var tempCat = this.shopArray[i]._categories;
-                   console.log(tempCat);
-
-                   for(let j = 0; j < this.itemList.length; j++){
-
-                        for(let k = 0; k < tempCat.length; k++){
-
-                            if(this.tempList[j].category.name.includes(tempCat[k].name)){
-
-                                this.itemList.pop();
-                            }
-                        }                     
-                   }
-                }
-            } */
+        if(!found){
+            this.itemList.push({
+                itemName: "No Item Found!",
+                itemCategory: "Add some items to the category",
+                itemCompleted: 0
+            })
         }
     }
 

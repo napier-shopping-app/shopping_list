@@ -65,9 +65,9 @@ export class LoginComponent implements OnInit {
     }).then(
       function (user) {
 
-        JSON.stringify(user);
-        console.log("Email: " + user.email);
-        console.log("New User: " + user.additionalUserInfo.isNewUser);
+        //JSON.stringify(user);
+        //console.log("Email: " + user.email);
+        //console.log("New User: " + user.additionalUserInfo.isNewUser);
 
         var newUser: boolean = user.additionalUserInfo.isNewUser;
         var item = "Apples";

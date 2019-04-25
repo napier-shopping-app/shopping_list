@@ -74,10 +74,9 @@ export class AppComponent implements OnInit {
         });
     }
 
-    updateList(){
+    /* updateList(){
 
         let itemList = localStorage.getItem("listArray");
-        var key = localStorage.getItem("listKey");
 
         for(let i = 0; i < itemList.length; i++){
 
@@ -90,7 +89,7 @@ export class AppComponent implements OnInit {
         //console.log("UID: " + this.uID);
         alert("List Updated");
         this.onNavItemTap('/home');
-    }
+    } */
 
     isComponentSelected(url: string): boolean {
         return this._activatedUrl === url;
