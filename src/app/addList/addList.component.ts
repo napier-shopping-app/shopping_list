@@ -2,16 +2,12 @@ import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import * as view from "tns-core-modules/ui/core/view";
-import { ObservableArray, ChangedData } from "tns-core-modules/data/observable-array";
-import { Validators } from "@angular/forms";
-import { Page } from "tns-core-modules/ui/page";
 import { Data } from "../providers/data/data";
 import { Router, NavigationExtras } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as localStorage from "nativescript-localstorage";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
 import * as firebase from "nativescript-plugin-firebase";
-import { User } from "../shared/user.model";
 let categoryList = [" ", "Frozen", "Fresh", "Vegetables", "Fruit", "Meat",
     "Dairy", "Grain", "Drinks", "Furniture"];
 
@@ -53,7 +49,6 @@ export class AddListComponent implements OnInit {
         // Init your component properties here.
         this.user = localStorage.getItem("user");
         this.uID = this.user.uid;
-        console.log(this.uID);
     }
 
     onDrawerButtonTap(): void {
@@ -74,11 +69,7 @@ export class AddListComponent implements OnInit {
     //adds new item to firebase RTDB
     addItem(): void {
 
-        console.log(this.uID);
-
         var item = this.title;
-        var key = localStorage.getItem("listKey");
-        //var listID = this.uID;
 
         if (item === "") {
 
@@ -88,7 +79,7 @@ export class AddListComponent implements OnInit {
 
         else {
             firebase.update(
-                '/lists/' + key + '/grocery_list/' + item,
+                '/users/' + this.user.uid + '/grocery_list/' + item,
                 {
                     name: item,
                     category: this.picked,

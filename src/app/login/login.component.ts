@@ -21,8 +21,6 @@ registerElement('Gif', () => Gif);
 
 export class LoginComponent implements OnInit {
 
-  //public item = "Apples";
-
   constructor(private page: Page, private routerExtensions: RouterExtensions, private zone: NgZone) {
     // Use the component constructor to inject providers.
     this.page.actionBarHidden = true;
@@ -38,7 +36,7 @@ export class LoginComponent implements OnInit {
 
         if (data.loggedIn) {
 
-          console.log("User info", data.user);
+          //console.log("User info", data.user);
           localStorage.setItemObject("user", data.user);
           this.routerExtensions.navigate(['/home'], { clearHistory: true });
         }
@@ -78,41 +76,24 @@ export class LoginComponent implements OnInit {
         //this.user.isLoggedIn = true;
         localStorage.setItemObject('user', user);
 
-        
+
         //initialises new users with a list and preferences
         if (newUser) {
 
           console.log("Preparing new User: " + user.uid);
-          //var groceryPath = "/grocery_list/" + item;
-          //var prefPath = "/preferences";
-          //var data = {};
-          //var userPath = {[user.uid]: ""};
+          var groceryPath = "/grocery_list/" + item;
+          var prefPath = "/preferences";
+          var data = {};
 
-          //data[groceryPath] = {name: item, category: "Fresh", completed: 0};
-          //data[prefPath] = {radius: 10};
+          data[groceryPath] = { name: item, category: "Fresh", completed: 0 };
+          data[prefPath] = { account_type: "Free", radius: 10};
 
 
-          firebase.push('/lists', 
-          {
-            "grocery_list":{
+          firebase.update('/users/' + user.uid, data);
 
-              [item]:{
-                'name': item,
-                'category': "Fresh",
-                'completed': 0}
-            }
-          })
-          .then( 
-            function(result) {
-              localStorage.setItem("listKey", result.key);
-              console.log("Key: " + result.key);
-            })
-            .catch( function(error) { 
-              console.error(error);})
-    
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
         }
-        else{
+        else {
 
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
         }
@@ -166,49 +147,23 @@ export class LoginComponent implements OnInit {
         if (newUser) {
 
           console.log("Preparing new User: " + user.uid);
-          //var groceryPath = "/grocery_list/" + item;
-          //var prefPath = "/preferences";
-          //var data = {};
-          //var userPath = {[user.uid]: ""};
+          var groceryPath = "/grocery_list/" + item;
+          var prefPath = "/preferences";
+          var data = {};
 
-          //data[groceryPath] = {name: item, category: "Fresh", completed: 0};
-          //data[prefPath] = {radius: 10};
+          data[groceryPath] = { name: item, category: "Fresh", completed: 0 };
+          data[prefPath] = { radius: 10 };
 
 
-          firebase.push('/lists', 
-          {
-            "grocery_list":{
+          firebase.update('/users/' + user.uid, data);
 
-              [item]:{
-                'name': item,
-                'category': "Fresh",
-                'completed': 0}
-            },
-            "preferences": {
-
-              'radius': 10,
-              'account_type': 'Free'
-            }
-          })
-          .then( 
-            function(result) {
-              localStorage.setItem("listKey", result.key);
-              console.log("Key: " + result.key);
-            })
-            .catch( function(error) { 
-              console.error(error);})
-    
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
         }
-        else{
+        else {
 
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
         }
 
-        //this.user = new User(user.email, user.name);
-        //this.user.isLoggedIn = true;
-        //localStorage.setItemObject('user', JSON.stringify(this.user));
-        //this.routerExtensions.navigate(["/home"], { clearHistory: true});
       },
       function (errorMessage) {
         console.log(errorMessage);
