@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "org.nativescript.napierShoppingList1",
+    "id": "org.nativescript.napierShoppingList",
     "tns-android": {
       "version": "5.1.0"
     },

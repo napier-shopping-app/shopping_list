@@ -83,6 +83,11 @@ export class SettingsComponent implements OnInit {
         for(let i = 0; i < tempListName.length; i++){
 
             this.data.push({ name: tempListName[i], value: tempListValue[i]});
+
+            if(this.data[i].name.includes("Radius")){
+
+                localStorage.setItem("radius", this.data[i].value);
+            }
         }
     }
 

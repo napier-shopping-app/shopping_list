@@ -92,7 +92,6 @@ export class HomeComponent implements OnInit {
                     itemName: this.tempList[i].itemName,
                     itemCategory: this.tempList[i].category.name,
                     itemCompleted: this.tempList[i].completed,
-                    
                 });
             }
         };

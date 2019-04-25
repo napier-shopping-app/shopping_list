@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
         console.log("New User: " + user.additionalUserInfo.isNewUser);
 
         var newUser: boolean = user.additionalUserInfo.isNewUser;
-        var item = "Apples"
+        var item = "Apples";
 
         console.log("UID: " + user.uid);
         //this.user.isLoggedIn = true;
@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
           var data = {};
 
           data[groceryPath] = { name: item, category: "Fresh", completed: 0 };
-          data[prefPath] = { account_type: "Free", radius: 10};
+          data[prefPath] = { account_type: "Free", radius: 10000};
 
 
           firebase.update('/users/' + user.uid, data);
@@ -141,7 +141,7 @@ export class LoginComponent implements OnInit {
         var newUser = user.additionalUserInfo.isNewUser;
         JSON.stringify(user);
         localStorage.setItemObject('user', user);
-        var item = "Apples"
+        var item = "Apples";
 
 
         if (newUser) {
@@ -152,7 +152,7 @@ export class LoginComponent implements OnInit {
           var data = {};
 
           data[groceryPath] = { name: item, category: "Fresh", completed: 0 };
-          data[prefPath] = { radius: 10 };
+          data[prefPath] = { account_type: "Free", radius: 10000 };
 
 
           firebase.update('/users/' + user.uid, data);

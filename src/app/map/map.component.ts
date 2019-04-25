@@ -26,6 +26,7 @@ export class MapComponent implements OnInit {
     private client_id = "1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2";
     private client_secret = "WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45";
     private shopQuery = "tesco,asda,sainsbury's,ikea,morrisons";
+    private radius = localStorage.getItem("radius");
     private mapView: MapView;
     constructor(private page: Page) {
       
@@ -94,7 +95,7 @@ export class MapComponent implements OnInit {
         this.mapView.addMarker(marker);
        
 
-        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery)
+        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery + '&radius=' + this.radius)
         .then((response) => response.json())
         .then((r) => {
             //console.log(r.response.groups[0].items[0].venue.name);
@@ -206,7 +207,7 @@ export class MapComponent implements OnInit {
         if (isIOS) {
             console.log("Setting a marker...");
             
-            fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery)
+            fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery + '&radius=' + this.radius)
                 .then((response) => response.json())
                 .then((r) => {
                     //console.log(r.response.groups[0].items[0].venue.name);

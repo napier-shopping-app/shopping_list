@@ -1,6 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -11,7 +12,7 @@ declare var GMSServices: any;
 
 //
 if (platform.isIOS) { 
-    GMSServices.provideAPIKey("");
+    GMSServices.provideAPIKey("AIzaSyAJ_ZYLoGFy9LiBBAVM0ArWvjWd3NXK82Q");
   }
 
 @NgModule({
@@ -21,7 +22,8 @@ if (platform.isIOS) {
     imports: [
         AppRoutingModule,
         NativeScriptModule,
-        NativeScriptUISideDrawerModule
+        NativeScriptUISideDrawerModule,
+        NativeScriptUIListViewModule
     ],
     declarations: [
         AppComponent
