@@ -7,6 +7,7 @@ import { isAndroid, isIOS, device, screen } from "tns-core-modules/platform";
 import * as Geolocation from "nativescript-geolocation";
 import { MapView, Position, Marker } from "nativescript-google-maps-sdk";
 import * as localStorage from "nativescript-localstorage";
+import * as firebase from "nativescript-plugin-firebase";
 
 registerElement("MapView", () => require("nativescript-google-maps-sdk").MapView);
 
@@ -22,17 +23,33 @@ export class MapComponent implements OnInit {
     //private map: MapboxViewApi;
     public latitude: number = 55.953251; // Edinburgh Lat/Long
     public longitude: number = -3.188267;
-    
+    private user = localStorage.getItem("user");
     private client_id = "1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2";
     private client_secret = "WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45";
     private shopQuery = "tesco,asda,sainsbury's,ikea,morrisons";
-    private radius = localStorage.getItem("radius");
+    private radius ;
     private mapView: MapView;
     constructor(private page: Page) {
-      
-        // Use the component constructor to inject providers.
+        var onValueEvent = function(result) {
 
+            localStorage.setItemObject("radius", result.value.radius);
+           
+            //console.log(result.value.radius);
+        }
+        
+
+        firebase.addValueEventListener(onValueEvent, "/users/" + this.user.uid + '/preferences')
+            .then(
+                () => {
+                    console.log("Event Listener Added");
+                },
+                (error) => {
+                    console.error("Event Listener Error: " + error);
+                });
+        // Use the component constructor to inject providers.
+        this.radius = localStorage.getItem("radius");
     }
+    
 
     ngOnInit(): void {
         Geolocation.isEnabled().then(function (isEnabled) {
