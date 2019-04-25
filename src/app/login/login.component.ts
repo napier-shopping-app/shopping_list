@@ -7,6 +7,9 @@ import { RouterExtensions } from "nativescript-angular/router";
 import * as firebase from "nativescript-plugin-firebase";
 import * as localStorage from "nativescript-localstorage";
 
+import { registerElement } from 'nativescript-angular/element-registry';
+import { Gif } from 'nativescript-gif';
+registerElement('Gif', () => Gif);
 
 @Component({
   selector: "Login",

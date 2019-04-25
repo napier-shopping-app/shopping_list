@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
     ngAfterViewInit() {
 
     }
+    
 
     ngOnInit(): void {
         // Init your component properties here.
@@ -93,7 +94,12 @@ export class HomeComponent implements OnInit {
 
             for (let i = 0; i < this.tempList.length; i++) {
 
-                this.itemList.push(this.tempList[i].itemName);
+                this.itemList.push({
+                    itemName: this.tempList[i].itemName,
+                    itemCategory: this.tempList[i].category.name,
+                    itemCompleted: this.tempList[i].completed,
+                    
+                });
 
                 //console.log("Testing: " + this.tempList[i].itemName);
                 //console.log("Item Name: " + this.itemList[i]);

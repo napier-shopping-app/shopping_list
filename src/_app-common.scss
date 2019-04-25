@@ -1,4 +1,4 @@
-// Place any CSS rules you want to apply on both iOS and Android here.
+            // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
 // Font icon class
 .fa {
@@ -82,7 +82,7 @@ $sidedrawer-list-icon-size: 20;
             &.selected {
                 background-color: $item-active-background;
                 Label {
-                    color: $item-active-color;
+                    color: #f44336;
                 }
             }
         }

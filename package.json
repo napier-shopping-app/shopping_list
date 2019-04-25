@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "org.nativescript.napierShoppingList",
+    "id": "org.nativescript.napierShoppingList1",
     "tns-android": {
       "version": "5.1.0"
     },
@@ -27,6 +27,7 @@
     "nativescript-angular": "~7.1.0",
     "nativescript-floatingactionbutton": "5.0.0",
     "nativescript-geolocation": "5.0.0",
+    "nativescript-gif": "4.0.2",
     "nativescript-google-maps-sdk": "2.7.0",
     "nativescript-localstorage": "^2.0.0",
     "nativescript-mapbox": "4.3.1",
