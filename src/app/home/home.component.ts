@@ -8,8 +8,10 @@ import * as localStorage from "nativescript-localstorage";
 import * as Geolocation from "nativescript-geolocation";
 import * as firebase from "nativescript-plugin-firebase";
 import { Item } from "../shared/item.model";
+import { ListViewEventData } from "nativescript-ui-listview";
+import { RadListViewComponent } from "nativescript-ui-listview/angular";
+import { View } from 'tns-core-modules/ui/core/view';
 import { Shop } from "../shared/shop.model";
-import { empty } from "rxjs";
 
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 
@@ -22,6 +24,7 @@ registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 export class HomeComponent implements OnInit {
     @ViewChild('stackLay') stackLay: ElementRef;
     @ViewChild('test') test: ElementRef;
+    @ViewChild("myListView") listViewComponent: RadListViewComponent;
     private _activatedUrl: string;
 
     public itemList = [];
@@ -36,7 +39,57 @@ export class HomeComponent implements OnInit {
 
 
     }
+    
+     onCellSwiping(args: ListViewEventData) {
+        var swipeLimits = args.data.swipeLimits;
+        var currentItemView = args.object;
+        var currentView;
 
+        if (args.data.x > 200) {
+            console.log("Notify perform left action");
+        } else if (args.data.x < -200) {
+            console.log("Notify perform right action");
+        }
+    }
+
+
+     onSwipeCellStarted(args: ListViewEventData) {
+        const swipeLimits = args.data.swipeLimits;
+        const swipeView = args['object'];
+    
+        const rightItem = swipeView.getViewById<View>('delete-view');
+        swipeLimits.left = 0; 
+        swipeLimits.right = rightItem.getMeasuredWidth();
+        swipeLimits.threshold = rightItem.getMeasuredWidth() / 2;
+        
+    }
+    // << angular-listview-swipe-action-release-limits
+    // >> angular-listview-swipe-action-release-execute
+     onSwipeCellFinished(args: ListViewEventData) {
+    }
+    // << angular-listview-swipe-action-release-execute
+    // >> angular-listview-swipe-action-handlers
+     onRightSwipeClick(args) {
+        console.log("Left swipe click");
+        
+           
+            
+        firebase.remove("/users/" + this.user.uid + "/grocery_list/" + args.object.bindingContext.itemName);
+        this.itemList.splice(this.itemList.indexOf(args.object.bindingContext), 1);    
+        
+
+       
+        this.listViewComponent.listView.notifySwipeToExecuteFinished();
+
+    }
+
+     
+    // << angular-listview-swipe-action-handlers
+
+     onPullToRefreshInitiated(args: any) {
+       this.loadList();
+       this.listViewComponent.listView.notifyPullToRefreshFinished();
+    }
     ngOnInit(): void {
         // Init your component properties here.
 
