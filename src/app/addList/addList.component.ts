@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import * as view from "tns-core-modules/ui/core/view";
 import { Data } from "../providers/data/data";
 import { Router, NavigationExtras } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -9,7 +8,7 @@ import * as localStorage from "nativescript-localstorage";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
 import * as firebase from "nativescript-plugin-firebase";
 let categoryList = [" ", "Frozen", "Fresh", "Vegetables", "Fruit", "Meat",
-    "Dairy", "Grain", "Drinks", "Furniture"];
+    "Dairy", "Grain", "Drinks", "Furniture", "Stationary"];
 
 @Component({
     selector: "AddList",

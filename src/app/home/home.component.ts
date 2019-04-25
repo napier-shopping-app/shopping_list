@@ -8,7 +8,8 @@ import * as localStorage from "nativescript-localstorage";
 import * as Geolocation from "nativescript-geolocation";
 import * as firebase from "nativescript-plugin-firebase";
 import { Item } from "../shared/item.model";
-
+import { Shop } from "../shared/shop.model";
+import { empty } from "rxjs";
 
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 
@@ -28,18 +29,17 @@ export class HomeComponent implements OnInit {
     public tempName: string;
     public user;
     public uID: string;
+    public shopArray = [];
 
     constructor(private router: Router, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject services.
-    }
 
-    ngAfterViewInit() {
 
     }
-    
 
     ngOnInit(): void {
         // Init your component properties here.
+
         //gets user current location and saves it to localstorage
         Geolocation.isEnabled().then(function (isEnabled) {
             if (!isEnabled) {
@@ -65,6 +65,24 @@ export class HomeComponent implements OnInit {
 
         this.user = localStorage.getItem("user");
         this.uID = this.user.uid;
+
+        this.shopArray.push(new Shop("Tesco", "Fresh"));
+        this.shopArray[0].setCategories("Fruit");
+
+        this.shopArray.push(new Shop("Sainsbury's", "Frozen"));
+        this.shopArray[1].setCategories("Dairy");
+        this.shopArray[1].setCategories("Drinks");
+
+        this.shopArray.push(new Shop("Asda", "Grain"));
+        this.shopArray[2].setCategories("Drinks");
+
+        this.shopArray.push(new Shop("IKEA", "Furniture"));
+        this.shopArray[3].setCategories("Stationary");
+
+        this.shopArray.push(new Shop("Morrisons", "Meat"));
+        this.shopArray[4].setCategories("Vegetables");
+
+        console.log(this.shopArray);
 
         this.loadList();
     }
@@ -145,9 +163,65 @@ export class HomeComponent implements OnInit {
     }
 
 
-    select(args){
+    select(args) {
 
-        console.log(args);
+        console.log(args.object.text);
+
+        var button = args.object;
+
+        var shop = button.text;
+
+        if (shop.includes("All")) {
+
+            this.loadList();
+        }
+        else{
+
+            this.itemList.splice(0, this.itemList.length);
+
+            for(let i = 0; i < this.shopArray.length; i++){
+
+                if(this.shopArray[i].shopName.includes(shop)){
+
+                    var tempCat = this.shopArray[i]._categories;
+
+                    for(let j = 0; j < tempCat.length; j++){
+
+                        for(let x = 0; x < this.tempList.length; x++){
+
+                            if(this.tempList[x].category.name.includes(tempCat[j].name)){
+
+                                this.itemList.push({
+                                    itemName: this.tempList[x].itemName,
+                                    itemCategory: this.tempList[x].category.name,
+                                    itemCompleted: this.tempList[x].completed,
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* for (let i = 0; i < this.shopArray.length; i++) {
+
+                if (this.shopArray[i].shopName.includes(shop)) {
+
+                   var tempCat = this.shopArray[i]._categories;
+                   console.log(tempCat);
+
+                   for(let j = 0; j < this.itemList.length; j++){
+
+                        for(let k = 0; k < tempCat.length; k++){
+
+                            if(this.tempList[j].category.name.includes(tempCat[k].name)){
+
+                                this.itemList.pop();
+                            }
+                        }                     
+                   }
+                }
+            } */
+        }
     }
 
     onDrawerButtonTap(): void {

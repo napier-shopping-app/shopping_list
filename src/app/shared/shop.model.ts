@@ -3,15 +3,15 @@ import { Category } from "../shared/category.model";
 export class Shop{
 
     public shopName: string;
-    public _categories: Array<Category>;
+    public _categories = [];
 
     constructor(shopName, category){
         
         this.shopName = shopName;
-        this._categories.push(category);
+        this._categories.push(new Category(category));
     }
 
-    public set categories(category){
+    public setCategories(category){
 
         this._categories.push(new Category(category));
     }
