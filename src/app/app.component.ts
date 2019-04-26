@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
     public emailAddy;
     public userIcon;
     public uID;
-    //public user: User;
 
     constructor(private router: Router, private routerExtensions: RouterExtensions, private changeDetectionRef: ChangeDetectorRef) {
         // Use the component constructor to inject services.
@@ -54,33 +53,11 @@ export class AppComponent implements OnInit {
 
         this.user = localStorage.getItem("user");
 
-        this.userIcon = this.user.photoURL;
-        this.userName = this.user.displayName;
+        this.userIcon = this.user.profileImageURL;
+        this.userName = this.user.name;
         this.emailAddy = this.user.email;
         this.uID = this.user.uid;
-        
-        //this.userName = "Placeholder";
-        //this.emailAddy = "placeholder@place.holder";
     }
-
-    /* ngAfterViewInit(): void{
-
-         this.drawer = this.drawerComponent.sideDrawer;
-        this.changeDetectionRef.detectChanges();
-
-        if(isIOS){
-            this.drawer.ios.defaultSideDrawer.allowEdgeSwipe = false;
-        }
-    } */
-
-    // onLoaded(){
-
-    //     // if(isAndroid){
-
-    //     //     this.drawer.android.setTouchTargetThreshold(0);
-    //     // }
-
-    // } 
 
     get sideDrawerTransition(): DrawerTransitionBase {
 
@@ -97,7 +74,7 @@ export class AppComponent implements OnInit {
         });
     }
 
-    updateList(){
+    /* updateList(){
 
         let itemList = localStorage.getItem("listArray");
 
@@ -105,14 +82,14 @@ export class AppComponent implements OnInit {
 
             if(itemList[i].completed == 1){
 
-                firebase.remove("/users/" + this.uID + "/" + itemList[i].itemName);
+                firebase.remove("/users/" + this.user.uid + "/grocery_list/" + itemList[i].itemName);
             }
         }
 
-        console.log("UID: " + this.uID);
+        //console.log("UID: " + this.uID);
         alert("List Updated");
         this.onNavItemTap('/home');
-    }
+    } */
 
     isComponentSelected(url: string): boolean {
         return this._activatedUrl === url;

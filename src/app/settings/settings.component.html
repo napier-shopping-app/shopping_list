@@ -28,11 +28,11 @@
         </StackLayout>
     </GridLayout>
     <GridLayout row="1" col="0">
-        <ListView class="list-group" [items]="settings" (itemTap)="onItemTap($event)">
-            <ng-template let-settings="item">
-                <StackLayout class="list-group-item">
-                    <Label [text]="settings.labels" style="font-weight: bold"></Label>
-                    <Label [text]="settings.values"></Label>
+        <ListView class="list-group" [items]="data" (itemTap)="onItemTap($event)">
+            <ng-template let-item="item">
+                <StackLayout class="list-group-item" rows="*" columns="auto, *">
+                    <Label row="0" col="0" [text]="item.name" style="font-weight: bold"></Label>
+                    <Label row="0" col="1" [text]="item.value"></Label>
                 </StackLayout>
             </ng-template>
         </ListView>

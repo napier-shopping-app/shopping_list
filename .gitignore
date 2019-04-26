@@ -3,6 +3,7 @@ hooks/
 node_modules/
 platforms/
 .cloud/
+App_Resources/Android/src/Napier group project – Firebase console_files
 
 # NativeScript Template
 *.js.map

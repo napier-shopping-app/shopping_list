@@ -7,6 +7,7 @@ import { isAndroid, isIOS, device, screen } from "tns-core-modules/platform";
 import * as Geolocation from "nativescript-geolocation";
 import { MapView, Position, Marker } from "nativescript-google-maps-sdk";
 import * as localStorage from "nativescript-localstorage";
+import * as firebase from "nativescript-plugin-firebase";
 
 registerElement("MapView", () => require("nativescript-google-maps-sdk").MapView);
 
@@ -22,16 +23,33 @@ export class MapComponent implements OnInit {
     //private map: MapboxViewApi;
     public latitude: number = 55.953251; // Edinburgh Lat/Long
     public longitude: number = -3.188267;
-    
+    private user = localStorage.getItem("user");
     private client_id = "1QWWA3GAGXBLY0P2DXBNDHZJSZ3EJITMODKAVZTI3P3PDTN2";
     private client_secret = "WXQMS5ZCI0W4FTYNS4AJSZM12GRSKHNCZPFH4NHHFLV0YY45";
     private shopQuery = "tesco,asda,sainsbury's,ikea,morrisons";
+    private radius ;
     private mapView: MapView;
     constructor(private page: Page) {
-      
-        // Use the component constructor to inject providers.
+        var onValueEvent = function(result) {
 
+            localStorage.setItemObject("radius", result.value.radius);
+           
+            //console.log(result.value.radius);
+        }
+        
+
+        firebase.addValueEventListener(onValueEvent, "/users/" + this.user.uid + '/preferences')
+            .then(
+                () => {
+                    console.log("Event Listener Added");
+                },
+                (error) => {
+                    console.error("Event Listener Error: " + error);
+                });
+        // Use the component constructor to inject providers.
+        this.radius = localStorage.getItem("radius");
     }
+    
 
     ngOnInit(): void {
         Geolocation.isEnabled().then(function (isEnabled) {
@@ -94,11 +112,15 @@ export class MapComponent implements OnInit {
         this.mapView.addMarker(marker);
        
 
-        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery)
+        fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery + '&radius=' + this.radius)
         .then((response) => response.json())
         .then((r) => {
             //console.log(r.response.groups[0].items[0].venue.name);
+            if (shop.includes("All")){
+                this.addMarker();
+            }
             for (let i = 0; i < 40; i++) {
+                
                 if ((r.response.groups[0].items[i].venue.name).toString().includes("Tesco") && shop.includes("Tesco")) {
                     var marker = new Marker();
                     marker.position = Position.positionFromLatLng(r.response.groups[0].items[i].venue.location.lat, r.response.groups[0].items[i].venue.location.lng);
@@ -202,7 +224,7 @@ export class MapComponent implements OnInit {
         if (isIOS) {
             console.log("Setting a marker...");
             
-            fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery)
+            fetch('https://api.foursquare.com/v2/venues/explore?client_id=' + this.client_id + '&client_secret=' + this.client_secret + '&v=20180323&limit=50&ll=' + this.latitude + ',' + this.longitude + '&query=' + this.shopQuery + '&radius=' + this.radius)
                 .then((response) => response.json())
                 .then((r) => {
                     //console.log(r.response.groups[0].items[0].venue.name);
