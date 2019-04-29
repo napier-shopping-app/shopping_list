@@ -70,6 +70,7 @@ export class HomeComponent implements OnInit {
         this.user = localStorage.getItem("user");
         this.uID = this.user.uid;
 
+        //initialises shops, this will need to be changed to firebase, so changes can be made and it can be customised
         this.shopArray.push(new Shop("Tesco", "Fresh"));
         this.shopArray[0].setCategories("Fruit");
 
@@ -184,7 +185,7 @@ export class HomeComponent implements OnInit {
         console.log(event);
     }
 
-    //toggles a strike-through and updates the database
+    //toggles a strike-through and updates the database with completed status
     selectItem(args) {
 
         var elem = args.object;
@@ -214,7 +215,7 @@ export class HomeComponent implements OnInit {
         }
     }
 
-
+    //select shop button, this filters the list based on the categories that are assigned to the shop
     select(args) {
 
         console.log(args.object.text);
@@ -256,7 +257,7 @@ export class HomeComponent implements OnInit {
                 }
             }
         }
-
+        
         if(!found){
             this.itemList.push({
                 itemName: "No Item Found!",
