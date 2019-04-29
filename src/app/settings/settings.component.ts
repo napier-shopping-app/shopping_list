@@ -44,6 +44,7 @@ export class SettingsComponent implements OnInit {
         this.loadSettings();
     }
 
+    //gets user information from localstorage
     getUser(): void {
 
         this.user = localStorage.getItem("user");
@@ -53,6 +54,7 @@ export class SettingsComponent implements OnInit {
         this.uid = this.user.uid;
     }
 
+    //loads user preferences from firebase, saves to localstorage and pushes them to array
     loadSettings(): void {
 
         var onValueEvent = function(result) {
@@ -103,6 +105,7 @@ export class SettingsComponent implements OnInit {
     }
 }
 
+//old class used for setttings, should be used in future
 class Settings {
 
     constructor(public labels: string, public values: string) {
