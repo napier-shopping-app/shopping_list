@@ -45,7 +45,7 @@ export class AddListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // Init your component properties here.
+        // Init your component properties here. The user data needs to be loaded for the database to work
         this.user = localStorage.getItem("user");
         this.uID = this.user.uid;
     }
