@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // Init your component properties here.
-    //checks if user is logged in already then redirects to home
+    
+    //checks if user is logged in already then redirects to home and saves the user info to localstorage
     var listener = {
       onAuthStateChanged: function (data) {
 
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit {
     sideDrawer.showDrawer();
   }
 
-  //firebase login with google
+  //firebase login with google checks if the user is new and initialises
   google() {
     firebase.login({
       type: firebase.LoginType.GOOGLE,
@@ -126,7 +127,7 @@ export class LoginComponent implements OnInit {
       )
   } */
 
-  //firebase login with facebook
+  //firebase login with facebook checks if the user is new and initialises
   facebook() {
     firebase.login({
       type: firebase.LoginType.FACEBOOK,
